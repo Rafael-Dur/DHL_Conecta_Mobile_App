@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "loginFuncional",
+    "slug": "loginFuncional",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/LogoDHL.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splashDHL.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#FFCC00"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/LogoDHL.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/LogoDHL.png"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}
