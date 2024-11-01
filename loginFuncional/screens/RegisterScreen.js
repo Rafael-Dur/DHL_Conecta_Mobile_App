@@ -14,7 +14,7 @@ export default function RegisterScreen({ navigation }) {
 
   const handleRegister = () => {
     if (!firstName) {
-      Alert.alert('Error', 'El nombre es obligatorio.');
+      Alert.alert('Error', 'El nombre es obligatorio!!!');
       return;
     }
     // Aquí puedes agregar más validaciones si es necesario
