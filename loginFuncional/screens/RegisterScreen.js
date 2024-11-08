@@ -1,6 +1,10 @@
+// RegisterScreen.js
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Button from '../components/Button';
+import TextField from '../components/TextField';
+import Header from '../components/Header';
 
 export default function RegisterScreen({ navigation }) {
   const [firstName, setFirstName] = useState('');
@@ -28,82 +32,44 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
-        <Text style={styles.title}>Registrate!</Text>
-        <Text style={styles.subtitle}>Crea una cuenta para continuar</Text>
+        <Header title="Registrate!" subtitle="Crea una cuenta para continuar" />
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre"
-            placeholderTextColor="#999"
-            value={firstName}
-            onChangeText={setFirstName}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Apellido"
-            placeholderTextColor="#999"
-            value={lastName}
-            onChangeText={setLastName}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Correo electrónico"
-            placeholderTextColor="#999"
-            value={email}
-            onChangeText={setEmail}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Número de teléfono"
-            placeholderTextColor="#999"
-            value={phone}
-            onChangeText={setPhone}
-            keyboardType="phone-pad"
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            placeholderTextColor="#999"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={secureTextEntry}
-          />
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => setSecureTextEntry(!secureTextEntry)}
-          >
-            <Ionicons name={secureTextEntry ? "eye-off" : "eye"} size={24} color="gray" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Confirmar contraseña"
-            placeholderTextColor="#999"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry={secureConfirmTextEntry}
-          />
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => setSecureConfirmTextEntry(!secureConfirmTextEntry)}
-          >
-            <Ionicons name={secureConfirmTextEntry ? "eye-off" : "eye"} size={24} color="gray" />
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Registrarse</Text>
-        </TouchableOpacity>
+        <TextField
+          placeholder="Nombre"
+          value={firstName}
+          onChangeText={setFirstName}
+        />
+        <TextField
+          placeholder="Apellido"
+          value={lastName}
+          onChangeText={setLastName}
+        />
+        <TextField
+          placeholder="Correo electrónico"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextField
+          placeholder="Número de teléfono"
+          value={phone}
+          onChangeText={setPhone}
+          keyboardType="phone-pad"
+        />
+        <TextField
+          placeholder="Contraseña"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={secureTextEntry}
+          setSecureTextEntry={setSecureTextEntry}
+        />
+        <TextField
+          placeholder="Confirmar contraseña"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry={secureConfirmTextEntry}
+          setSecureTextEntry={setSecureConfirmTextEntry}
+        />
+        <Button title="Registrarse" onPress={handleRegister} />
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.registerText}>¿Ya tienes una cuenta? Inicia sesión</Text>
         </TouchableOpacity>
@@ -122,53 +88,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 70,
-  },
-  logo: {
-    marginBottom: 20,
-    maxHeight: "auto",
-    maxWidth: "auto",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: '#f9f9f9',
-    width: '80%',
-    maxWidth: 350,
-    marginBottom: 15,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  iconContainer: {
-    padding: 5,
-  },
-  button: {
-    backgroundColor: '#FF0000',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   registerText: {
     color: '#0000FF',
