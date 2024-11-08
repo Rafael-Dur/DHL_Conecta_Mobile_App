@@ -38,6 +38,9 @@ export default function LoginScreen({ navigation }) {
           <Ionicons name={secureTextEntry ? "eye-off" : "eye"} size={24} color="gray" />
         </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate('Validate_Mail')}>
+        <Text style={styles.registerText}>¿Olvidó la contraseña?</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Ingresar</Text>
       </TouchableOpacity>
