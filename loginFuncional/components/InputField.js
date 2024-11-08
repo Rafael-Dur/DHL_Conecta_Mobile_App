@@ -1,29 +1,39 @@
+// components/InputField.js
 import React from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const TextField = ({ placeholder, value, onChangeText, secureTextEntry, setSecureTextEntry }) => {
+export default function InputField({
+  placeholder,
+  value,
+  onChangeText,
+  keyboardType = 'default',
+  secureTextEntry = false,
+  iconName,
+  setSecureTextEntry,
+}) {
   return (
     <View style={styles.inputContainer}>
+      {iconName && <Ionicons name={iconName} size={24} color="gray" />}
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor="#999"
         value={value}
         onChangeText={onChangeText}
+        keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
       />
-      {secureTextEntry !== undefined && (
-        <TouchableOpacity
-          style={styles.iconContainer}
+      {setSecureTextEntry && (
+        <Ionicons
+          name={secureTextEntry ? 'eye-off' : 'eye'}
+          size={24}
+          color="gray"
           onPress={() => setSecureTextEntry(!secureTextEntry)}
-        >
-          <Ionicons name={secureTextEntry ? "eye-off" : "eye"} size={24} color="gray" />
-        </TouchableOpacity>
+        />
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -36,7 +46,9 @@ const styles = StyleSheet.create({
     width: '80%',
     marginLeft: 20,
     marginRight: 20,
-    paddingHorizontal: "auto",
+    paddingHorizontal: 20,
+    marginLeft: 20,
+    marginRight: 20,
     marginBottom: 15,
     maxHeight: 40,
     maxWidth: 350,
@@ -51,5 +63,3 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 });
-
-export default TextField;

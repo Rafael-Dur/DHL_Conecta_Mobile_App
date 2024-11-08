@@ -1,29 +1,12 @@
-// RegisterScreen.js
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Alert, ScrollView, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import Button from '../components/Button';
-import TextField from '../components/TextField';
+import React from 'react';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
+import Button from '../components/Button';
 
 export default function RegisterScreen({ navigation }) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
-
-  const handleRegister = () => {
-    if (!firstName) {
-      Alert.alert('Error', 'El nombre es obligatorio!!!');
-      return;
-    }
-    // Aquí puedes agregar más validaciones si es necesario
-
-    // Lógica de registro
+  // Función para manejar el registro exitoso desde RegisterForm
+  const handleSuccessfulRegister = () => {
     Alert.alert('Registro exitoso', '¡Bienvenido!', [
       { text: 'OK', onPress: () => navigation.navigate('Login') },
     ]);
@@ -32,44 +15,9 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Header title="Registrate!" subtitle="Crea una cuenta para continuar" />
-
-        <TextField
-          placeholder="Nombre"
-          value={firstName}
-          onChangeText={setFirstName}
-        />
-        <TextField
-          placeholder="Apellido"
-          value={lastName}
-          onChangeText={setLastName}
-        />
-        <TextField
-          placeholder="Correo electrónico"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextField
-          placeholder="Número de teléfono"
-          value={phone}
-          onChangeText={setPhone}
-          keyboardType="phone-pad"
-        />
-        <TextField
-          placeholder="Contraseña"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={secureTextEntry}
-          setSecureTextEntry={setSecureTextEntry}
-        />
-        <TextField
-          placeholder="Confirmar contraseña"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry={secureConfirmTextEntry}
-          setSecureTextEntry={setSecureConfirmTextEntry}
-        />
-        <Button title="Registrarse" onPress={handleRegister} />
+        <Header title="¡Regístrate!" subtitle="Crea una cuenta para continuar" />
+        {/* Renderizar RegisterForm y pasar la función handleSuccessfulRegister */}
+        <RegisterForm onRegister={handleSuccessfulRegister} />
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.registerText}>¿Ya tienes una cuenta? Inicia sesión</Text>
         </TouchableOpacity>
@@ -88,6 +36,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 70,
+  },
+  Button:{
+    marginBottom: 20,
+    backgroundColor: '#007bff',
+    width: '100%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   registerText: {
     color: '#0000FF',

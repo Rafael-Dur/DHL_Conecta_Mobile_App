@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import Button from '../components/Button';
-import TextField from '../components/TextField';
+import TextField from '../components/InputField';
 import Header from '../components/Header';
 
 export default function LoginScreen({ navigation }) {
