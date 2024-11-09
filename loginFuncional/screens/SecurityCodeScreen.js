@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import PasswordField from '../components/PasswordField';
+import TextField from '../components/TextField';
 
 const SecurityCodeScreen = () => {
   const [securityCode, setSecurityCode] = useState('');
@@ -24,19 +24,11 @@ const SecurityCodeScreen = () => {
         <Text style={styles.backText}>Volver</Text>
       </TouchableOpacity>
 
-      <PasswordField
+      <TextField
         placeholder="Ingrese el código aquí"
         value={securityCode}
         onChangeText={setSecurityCode}
-        secureTextEntry={!isCodeVisible}
-        rightIcon={
-          <Ionicons
-            name={isCodeVisible ? "eye-off" : "eye"}
-            size={20}
-            color="gray"
-            onPress={() => setIsCodeVisible(!isCodeVisible)}
-          />
-        }
+        keyboardType="numeric"
       />
 
       <Text style={styles.instructionText}>
