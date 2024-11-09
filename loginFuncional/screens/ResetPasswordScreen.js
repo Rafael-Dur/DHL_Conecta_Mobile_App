@@ -34,7 +34,6 @@ const ResetPasswordScreen = () => {
       <PasswordField
         //label="Contraseña nueva"
         placeholder="Nueva Contraseña"
-        placeholderTextColor="#999"
         value={newPassword}
         onChangeText={setNewPassword}
         secureTextEntry={!isNewPasswordVisible}
@@ -52,7 +51,6 @@ const ResetPasswordScreen = () => {
       <PasswordField
         //label="Confirmar contraseña"
         placeholder="Confirmar Contraseña"
-        placeholderTextColor="#999"
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry={!isConfirmPasswordVisible}
@@ -79,10 +77,9 @@ const ResetPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 60,
+    backgroundColor: '#fff',
   },
   logo: {
     fontSize: 40,

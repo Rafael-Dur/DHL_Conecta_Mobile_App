@@ -56,10 +56,9 @@ const SecurityCodeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 60,
+    backgroundColor: '#fff',
   },
   logo: {
     fontSize: 40,
