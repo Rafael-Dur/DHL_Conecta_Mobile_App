@@ -1,10 +1,10 @@
-// RegisterScreen.js
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity,Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
 import TextField from '../components/TextField';
 import Header from '../components/Header';
+import SuccessModal from '../components/SuccessModal'; // Importa el modal de éxito
 
 export default function RegisterScreen({ navigation }) {
   const [firstName, setFirstName] = useState('');
@@ -15,18 +15,16 @@ export default function RegisterScreen({ navigation }) {
   const [phone, setPhone] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
+  const [isSuccessVisible, setSuccessVisible] = useState(false);
 
   const handleRegister = () => {
     if (!firstName) {
       Alert.alert('Error', 'El nombre es obligatorio!!!');
       return;
     }
-    // Aquí puedes agregar más validaciones si es necesario
 
-    // Lógica de registro
-    Alert.alert('Registro exitoso', '¡Bienvenido!', [
-      { text: 'OK', onPress: () => navigation.navigate('Login') },
-    ]);
+    // Si todo está bien, mostramos el modal de éxito
+    setSuccessVisible(true);
   };
 
   return (
@@ -73,6 +71,15 @@ export default function RegisterScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.registerText}>¿Ya tienes una cuenta? Inicia sesión</Text>
         </TouchableOpacity>
+
+        <SuccessModal
+          visible={isSuccessVisible}
+          onClose={() => setSuccessVisible(false)}
+          title={"¡Registro exitoso!"}
+          message="Tu registro se realizó correctamente"
+          showButton={true}
+
+        />
       </ScrollView>
     </View>
   );
