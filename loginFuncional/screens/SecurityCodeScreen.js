@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import TextField from '../components/TextField';
+import InputField from '../components/InputField';
+
 
 const SecurityCodeScreen = () => {
   const [securityCode, setSecurityCode] = useState('');
@@ -16,31 +17,32 @@ const SecurityCodeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
-      <Text style={styles.title}>Ingrese código de seguridad</Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
+        <Text style={styles.title}>Ingrese código de seguridad</Text>
 
-      <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Validate_Mail') }}>
-        <Ionicons name="chevron-back" size={24} color="red" />
-        <Text style={styles.backText}>Volver</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Validate_Mail') }}>
+          <Ionicons name="chevron-back" size={24} color="red" />
+          <Text style={styles.backText}>Volver</Text>
+        </TouchableOpacity>
 
-      <TextField
-        placeholder="Ingrese el código aquí"
-        value={securityCode}
-        onChangeText={setSecurityCode}
-        keyboardType="numeric"
-      />
+        <InputField
+          placeholder="Ingrese el código aquí"
+          value={securityCode}
+          onChangeText={setSecurityCode}
+          keyboardType="numeric"
+        />
 
-      <Text style={styles.instructionText}>
-        Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
-      </Text>
+        <Text style={styles.instructionText}>
+          Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
+        </Text>
 
-      <Button
-        title="Continuar"
-        onPress={handleContinue}
-        style={styles.continueButton}
-      />
-
+        <Button
+          title="Continuar"
+          onPress={handleContinue}
+          style={styles.continueButton}
+        />
+      </ScrollView>
     </View>
   );
 };
@@ -51,6 +53,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 20,
+    paddingTop: 70,
+    width: 'auto',
   },
   logo: {
     fontSize: 40,

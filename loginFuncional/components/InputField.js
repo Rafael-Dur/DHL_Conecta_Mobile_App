@@ -43,15 +43,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: '#f9f9f9',
-    width: '80%',
-    marginLeft: 20,
-    marginRight: 20,
-    paddingHorizontal: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    width: '100%',
+    //marginLeft: 20,
+    //marginRight: 20,
     marginBottom: 15,
     maxHeight: 40,
-    maxWidth: 350,
   },
   input: {
     flex: 1,
@@ -62,4 +58,5 @@ const styles = StyleSheet.create({
   iconContainer: {
     padding: 5,
   },
+
 });

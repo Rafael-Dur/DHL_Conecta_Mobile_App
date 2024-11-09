@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
 import TextField from '../components/TextField';
 import { useNavigation } from '@react-navigation/native';
+import InputField from '../components/InputField';
 
 
 const ValidateMailScreen = () => {
@@ -16,28 +17,29 @@ const ValidateMailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
-      <Text style={styles.title}>Ingrese su correo electrónico</Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
+        <Text style={styles.title}>Ingrese su correo electrónico</Text>
 
-      <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Login') }}>
-        <Ionicons name="chevron-back" size={24} color="red" />
-        <Text style={styles.backText}>Volver</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Login') }}>
+          <Ionicons name="chevron-back" size={24} color="red" />
+          <Text style={styles.backText}>Volver</Text>
+        </TouchableOpacity>
 
-      <TextField
-        label="Correo electrónico"
-        placeholder="Ingrese su correo electrónico"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
+        <InputField
+          label="Correo electrónico"
+          placeholder="Ingrese su correo electrónico"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
 
-      <Button
-        title="Continuar"
-        onPress= { handleContinue }
-        style={styles.continueButton}
-      />
-
+        <Button
+          title="Continuar"
+          onPress={handleContinue}
+          style={styles.continueButton}
+        />
+      </ScrollView>
     </View>
   );
 };
@@ -45,9 +47,18 @@ const ValidateMailScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+
+  },
+  scrollContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    paddingBottom: 20,
+    paddingTop: 70,
+    width: 'auto',
   },
   logo: {
     fontSize: 40,

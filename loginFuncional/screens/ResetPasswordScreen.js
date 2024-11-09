@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
 import PasswordField from '../components/PasswordField';
 import { useNavigation } from '@react-navigation/native';
+import InputField from '../components/InputField';
 
 
 const ResetPasswordScreen = () => {
@@ -24,53 +25,55 @@ const ResetPasswordScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
-      <Text style={styles.title}>Cambiar contraseña</Text>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
+        <Text style={styles.title}>Cambiar contraseña</Text>
 
-      <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-        <Ionicons name="chevron-back" size={24} color="red" />
-        <Text style={styles.backText}>Volver</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+          <Ionicons name="chevron-back" size={24} color="red" />
+          <Text style={styles.backText}>Volver</Text>
+        </TouchableOpacity>
 
-      <PasswordField
-        //label="Contraseña nueva"
-        placeholder="Nueva Contraseña"
-        value={newPassword}
-        onChangeText={setNewPassword}
-        secureTextEntry={!isNewPasswordVisible}
-        rightIcon={
-          <TouchableOpacity onPress={() => setIsNewPasswordVisible(!isNewPasswordVisible)}>
-            <Ionicons
-              name={isNewPasswordVisible ? "eye-off" : "eye"}
-              size={20}
-              color="gray"
-            />
-          </TouchableOpacity>
-        }
-      />
+        <InputField
+          //label="Contraseña nueva"
+          placeholder="Nueva Contraseña"
+          value={newPassword}
+          onChangeText={setNewPassword}
+          secureTextEntry={!isNewPasswordVisible}
+          rightIcon={
+            <TouchableOpacity onPress={() => setIsNewPasswordVisible(!isNewPasswordVisible)}>
+              <Ionicons
+                name={isNewPasswordVisible ? "eye-off" : "eye"}
+                size={20}
+                color="gray"
+              />
+            </TouchableOpacity>
+          }
+        />
 
-      <PasswordField
-        //label="Confirmar contraseña"
-        placeholder="Confirmar Contraseña"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry={!isConfirmPasswordVisible}
-        rightIcon={
-          <TouchableOpacity onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}>
-            <Ionicons
-              name={isConfirmPasswordVisible ? "eye-off" : "eye"}
-              size={20}
-              color="gray"
-            />
-          </TouchableOpacity>
-        }
-      />
+        <InputField
+          //label="Confirmar contraseña"
+          placeholder="Confirmar Contraseña"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry={!isConfirmPasswordVisible}
+          rightIcon={
+            <TouchableOpacity onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}>
+              <Ionicons
+                name={isConfirmPasswordVisible ? "eye-off" : "eye"}
+                size={20}
+                color="gray"
+              />
+            </TouchableOpacity>
+          }
+        />
 
-      <Button
-        title="Cambiar"
-        onPress={handlePasswordReset}
-        style={styles.changeButton}
-      />
+        <Button
+          title="Cambiar"
+          onPress={handlePasswordReset}
+          style={styles.changeButton}
+        />
+      </ScrollView>
     </View>
   );
 };
@@ -81,6 +84,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 20,
+    paddingTop: 70,
+    width: 'auto',
   },
   logo: {
     fontSize: 40,

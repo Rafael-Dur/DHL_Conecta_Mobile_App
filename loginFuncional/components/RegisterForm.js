@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Alert, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, Alert, TouchableOpacity, Text } from 'react-native';
 import InputField from './InputField';
 import Button from './Button';
 import ErrorAlert from './ErrorAlert';
@@ -35,7 +35,7 @@ export default function RegisterForm({ onRegister }) {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <InputField placeholder="Nombre" value={firstName} onChangeText={setFirstName} />
       <InputField placeholder="Apellido" value={lastName} onChangeText={setLastName} />
       <InputField
@@ -70,3 +70,13 @@ export default function RegisterForm({ onRegister }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    width: '70%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

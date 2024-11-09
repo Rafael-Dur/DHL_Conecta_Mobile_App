@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     width: '80%',
     marginLeft: 20,
     marginRight: 20,
-    paddingHorizontal: "auto",
+    //paddingHorizontal: "auto",
     marginBottom: 15,
     maxHeight: 40,
     maxWidth: 350,
