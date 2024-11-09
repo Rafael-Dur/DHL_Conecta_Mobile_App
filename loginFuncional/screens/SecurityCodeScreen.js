@@ -32,7 +32,7 @@ const SecurityCodeScreen = () => {
       />
 
       <Text style={styles.instructionText}>
-        Acceda a au correo electrónico{"\n"}para obtener su código de recuperación
+        Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
       </Text>
 
       <Button

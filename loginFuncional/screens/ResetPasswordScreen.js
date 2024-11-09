@@ -15,6 +15,7 @@ const ResetPasswordScreen = () => {
 
   const handlePasswordReset = () => {
     // Lógica para cambiar la contraseña
+    navigation.navigate('Login');
   };
 
   const handleBack = () => {
