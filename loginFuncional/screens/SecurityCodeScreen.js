@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
-import TextField from '../components/TextField';
 import { useNavigation } from '@react-navigation/native';
+import PasswordField from '../components/PasswordField';
 
 const SecurityCodeScreen = () => {
   const [securityCode, setSecurityCode] = useState('');
@@ -24,8 +24,7 @@ const SecurityCodeScreen = () => {
         <Text style={styles.backText}>Volver</Text>
       </TouchableOpacity>
 
-      <TextField
-        label="Código de recuperación"
+      <PasswordField
         placeholder="Ingrese el código aquí"
         value={securityCode}
         onChangeText={setSecurityCode}
