@@ -51,10 +51,13 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     //justifyContent: 'center',
+  
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 70,
-    width: '70%',
+    width: '100%',
+    //marginLeft: 10,
+    //marginRight: 10,
   },
   registerText: {
     color: '#0000FF',

@@ -59,7 +59,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 70,
-    width: 'auto',
+    width: '100%',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
   logo: {
     fontSize: 40,
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 30,
-    marginLeft: 280,
+    marginLeft: 260,
   },
   backText: {
     color: 'red',
