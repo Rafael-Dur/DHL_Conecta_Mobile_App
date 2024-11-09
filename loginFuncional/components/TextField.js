@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    fontFamily: 'Delivery2',
     height: 40,
     marginLeft: 10,
     marginRight: 10,
