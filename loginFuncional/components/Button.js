@@ -23,7 +23,7 @@ const getStyles = (styleType) => {
           paddingHorizontal: 20,
           borderRadius: 5,
           marginTop: 20,
-          width: '80%', // same width as TextField
+          width: '80%',
           maxHeight: 40,
           maxWidth: 350,
         },
@@ -31,7 +31,7 @@ const getStyles = (styleType) => {
           color: '#FF0000',
           fontSize: 16,
           fontWeight: 'bold',
-  
+
         },
       });
     default:
@@ -42,10 +42,11 @@ const getStyles = (styleType) => {
           paddingHorizontal: 20,
           borderRadius: 5,
           marginTop: 20,
-          width: '80%', // same width as TextField
+          width: '80%', 
           maxHeight: 40,
           maxWidth: 350,
           alignItems: 'center',
+          justifyContent: 'center',
         },
         buttonText: {
           color: '#FFFFFF',

@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
   headerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   logo: {
-    marginBottom: 54,
+    marginBottom: 60,
     maxHeight: "auto",
     maxWidth: "auto",
   },
@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
   title2: {
     fontFamily: 'Delivery',
     fontSize: 30,
-    marginBottom: 54,
+    marginBottom: 10,
   },
   subtitle: {
     fontFamily: 'Delivery2',
     fontSize: 30,
     color: '#666',
-    marginBottom: 20,
+    marginBottom: 10,
   },
 });
 

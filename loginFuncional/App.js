@@ -6,6 +6,9 @@ import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ResetPasswordScreen from './screens/ResetPasswordScreen';
+import ValidateMailScreen from './screens/ValidateMailScreen';
+import SecurityCodeScreen from './screens/SecurityCodeScreen.js';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +40,9 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Validate_Mail" component={ValidateMailScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Security_Code" component={SecurityCodeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Reset_Password" component={ResetPasswordScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
