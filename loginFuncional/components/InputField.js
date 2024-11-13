@@ -43,11 +43,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: '#f9f9f9',
-    width: '100%',
+    width: '80%',
     //marginLeft: 20,
     //marginRight: 20,
     marginBottom: 15,
     maxHeight: 40,
+    maxWidth: 350,
   },
   input: {
     flex: 1,

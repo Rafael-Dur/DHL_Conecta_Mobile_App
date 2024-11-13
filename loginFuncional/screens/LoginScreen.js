@@ -1,8 +1,6 @@
-// LoginScreen.js
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import Button from '../components/Button';
-import TextField from '../components/InputField';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
 
@@ -13,7 +11,6 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Header title="Bienvenido a" title2={"Envíos DHL Conecta"} />
         <InputField
           placeholder="Correo electrónico"
@@ -34,8 +31,6 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.registerText}>Regístrate ahora</Text>
         </TouchableOpacity>
-      </ScrollView>
-
     </View>
   );
 
@@ -48,16 +43,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-  },
-  scrollContainer: {
-    //justifyContent: 'center',
-  
-    alignItems: 'center',
-    paddingBottom: 20,
-    paddingTop: 70,
-    width: '100%',
-    //marginLeft: 10,
-    //marginRight: 10,
   },
   registerText: {
     color: '#0000FF',

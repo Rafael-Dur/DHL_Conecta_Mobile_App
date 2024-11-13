@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
-
+import Header from '../components/Header';
 
 const SecurityCodeScreen = () => {
   const [securityCode, setSecurityCode] = useState('');
@@ -17,9 +17,7 @@ const SecurityCodeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
-        <Text style={styles.title}>Ingrese código de seguridad</Text>
+        <Header title="Ingrese código " title2={"de seguridad"} />
 
         <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Validate_Mail') }}>
           <Ionicons name="chevron-back" size={24} color="red" />
@@ -42,7 +40,6 @@ const SecurityCodeScreen = () => {
           onPress={handleContinue}
           style={styles.continueButton}
         />
-      </ScrollView>
     </View>
   );
 };
@@ -53,27 +50,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-  },
-  scrollContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 20,
-    paddingTop: 70,
-    width: '100%',
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  logo: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: 'red',
-    marginBottom: 30,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
   },
   backButton: {
     flexDirection: 'row',

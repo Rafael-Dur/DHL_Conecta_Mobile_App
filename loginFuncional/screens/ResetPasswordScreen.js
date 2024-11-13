@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import PasswordField from '../components/PasswordField';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
+import Header from '../components/Header';
 
 
 const ResetPasswordScreen = () => {
@@ -25,11 +26,10 @@ const ResetPasswordScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
-        <Text style={styles.title}>Cambiar contraseña</Text>
+        <Header 
+        title="Ingrese su correo electrónico"/>
 
-        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+         <TouchableOpacity style={styles.backButton} onPress={handleBack}>
           <Ionicons name="chevron-back" size={24} color="red" />
           <Text style={styles.backText}>Volver</Text>
         </TouchableOpacity>
@@ -73,7 +73,6 @@ const ResetPasswordScreen = () => {
           onPress={handlePasswordReset}
           style={styles.changeButton}
         />
-      </ScrollView>
     </View>
   );
 };
@@ -81,24 +80,10 @@ const ResetPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
-  },
-  scrollContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 20,
-    paddingTop: 70,
+    justifyContent: 'center',
     width: '100%',
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
-  logo: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: 'red',
-    marginBottom: 30,
   },
   title: {
     fontSize: 24,
@@ -109,8 +94,9 @@ const styles = StyleSheet.create({
   backButton: {
     flexDirection: 'row',
     alignItems: 'right',
-    marginBottom: 30,
-    marginLeft: 260,
+    marginBottom: 50,
+    marginLeft: 220,
+
   },
   backText: {
     color: 'red',

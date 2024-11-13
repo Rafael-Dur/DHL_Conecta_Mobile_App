@@ -1,37 +1,40 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
-import SuccessModal from '../components/SuccessModal'; // Importa el modal de éxito
+import SuccessModal from '../components/SuccessModal';
 
 export default function RegisterScreen({ navigation }) {
-  // Función para manejar el registro exitoso desde RegisterForm
   const [isSuccessVisible, setSuccessVisible] = React.useState(false);
+
   const handleSuccessfulRegister = () => {
-    Alert.alert('Registro exitoso', '¡Bienvenido!', [
-      { text: 'OK', onPress: () => navigation.navigate('Login') },
-    ]);
-        // Si todo está bien, mostramos el modal de éxito
-        setSuccessVisible(true);
+    setSuccessVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setSuccessVisible(false);
+    navigation.navigate('Login'); 
   };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Header title="¡Regístrate!" subtitle="Crea una cuenta para continuar" />
+        
         {/* Renderizar RegisterForm y pasar la función handleSuccessfulRegister */}
         <RegisterForm onRegister={handleSuccessfulRegister} />
+
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.registerText}>¿Ya tienes una cuenta? Inicia sesión</Text>
         </TouchableOpacity>
 
+        {/* Mostrar el modal de éxito */}
         <SuccessModal
           visible={isSuccessVisible}
-          onClose={() => setSuccessVisible(false)}
-          title={"¡Registro exitoso!"}
+          onClose={handleCloseModal}
+          title="¡Registro exitoso!"
           message="Tu registro se realizó correctamente"
           showButton={true}
-
         />
       </ScrollView>
     </View>

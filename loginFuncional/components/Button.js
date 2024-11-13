@@ -23,9 +23,9 @@ const getStyles = (styleType) => {
           paddingHorizontal: 20,
           borderRadius: 5,
           marginTop: 20,
-          width: '100%', // same width as TextField
-          //maxHeight: 40,
-          //maxWidth: 350,
+          width: '80%',
+          maxHeight: 40,
+          maxWidth: 350,
         },
         buttonText: {
           color: '#FF0000',
@@ -42,9 +42,9 @@ const getStyles = (styleType) => {
           paddingHorizontal: 20,
           borderRadius: 5,
           marginTop: 20,
-          width: '100%', // same width as TextField
-          //maxHeight: 40,
-          //maxWidth: 350,
+          width: '80%', 
+          maxHeight: 40,
+          maxWidth: 350,
           alignItems: 'center',
           justifyContent: 'center',
         },
