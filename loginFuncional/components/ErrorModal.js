@@ -1,10 +1,8 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONT_SIZES } from '../constants/constants';
 
-
-const SuccessModal = ({ visible, onClose,title,subtitle, message, showButton = true }) => (
+const ErrorModal = ({ visible, onClose,title, message, showButton = true }) => (
   <Modal
     animationType="slide"
     transparent={true}
@@ -18,15 +16,16 @@ const SuccessModal = ({ visible, onClose,title,subtitle, message, showButton = t
           <Ionicons name="close" size={24} color="gray" />
         </TouchableOpacity>
 
+        {/* Icono de tick verde */}
         <View style={styles.iconContainer}>
           <Ionicons name="checkmark-circle" size={80} color="#4caf50" />
         </View>
         
-        <Text style={styles.successTitle}>{title}</Text>
-        <Text style={styles.successSubTitle}>{subtitle}</Text>
+        {/* Mensaje personalizado */}
+        <Text style={styles.errorTitle}>{title}</Text>
         <Text style={styles.message}>{message}</Text>
-        <Text style={styles.messageAditional}>{message}</Text>
         
+        {/* Botón opcional, basado en la prop `showButton` */}
         {showButton && (
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.buttonText}>Cerrar</Text>
@@ -63,18 +62,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   
   },
-  successTitle: {
+  errorTitle: {
     fontFamily: 'Delivery',
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
-  },
-  successSubTitle: {
-    fontFamily: 'Delivery2',
-    fontSize: 15,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: COLORS.red,
   },
   message: {
     fontFamily: 'Delivery2',
@@ -82,16 +74,6 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,
-    flexWrap: 'wrap', 
-    width: '80%',
-    
-  },
-  messageAditional: {
-    fontFamily: 'Delivery',
-    fontSize: 30,
-    color: '#333',
-    textAlign: 'center',
-    marginBomargnittom: 20,
     flexWrap: 'wrap', 
     width: '80%',
     
@@ -115,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SuccessModal;
+export default ErrorModal;

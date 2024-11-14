@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-nati
 import Button from '../components/Button';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
+import ClickeableText from '../components/ClickeableText';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -24,13 +25,22 @@ export default function LoginScreen({ navigation }) {
           secureTextEntry={secureTextEntry}
           setSecureTextEntry={setSecureTextEntry}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('Validate_Mail')}>
-          <Text style={styles.registerText}>¿Olvidó la contraseña?</Text>
-        </TouchableOpacity>
+        <ClickeableText
+        navigation={navigation}
+        onPress={() => navigation.navigate('Validate_Mail')}
+        title=""
+        clickeableText="¿Olvidó la contraseña?"
+        styleType="link"
+        singleLink
+      />
         <Button title="Ingresar" onPress={() => { /* handle login */ }} />
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerText}>Regístrate ahora</Text>
-        </TouchableOpacity>
+        <ClickeableText
+        navigation={navigation}
+        onPress={() => navigation.navigate('Register')}
+        title="¿No tienes Usuario?"
+        clickeableText="Regístrate ahora"
+        styleType="link"
+      />
     </View>
   );
 

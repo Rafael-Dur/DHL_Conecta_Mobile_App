@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { COLORS } from '../constants/constants';
 
 const Button = ({ onPress, title, styleType }) => {
   const styles = getStyles(styleType);
@@ -16,8 +17,8 @@ const getStyles = (styleType) => {
     case 'outlined':
       return StyleSheet.create({
         button: {
-          backgroundColor: '#FFFFFF',
-          borderColor: '#FF0000',
+          backgroundColor: COLORS.white,
+          borderColor: COLORS.red,
           borderWidth: 1,
           paddingVertical: 10,
           paddingHorizontal: 20,
@@ -28,7 +29,7 @@ const getStyles = (styleType) => {
           maxWidth: 350,
         },
         buttonText: {
-          color: '#FF0000',
+          color: COLORS.red,
           fontSize: 16,
           fontWeight: 'bold',
 
@@ -37,7 +38,7 @@ const getStyles = (styleType) => {
     default:
       return StyleSheet.create({
         button: {
-          backgroundColor: '#FF0000',
+          backgroundColor: COLORS.red,
           paddingVertical: 10,
           paddingHorizontal: 20,
           borderRadius: 5,
@@ -49,7 +50,7 @@ const getStyles = (styleType) => {
           justifyContent: 'center',
         },
         buttonText: {
-          color: '#FFFFFF',
+          color: COLORS.white,
           fontSize: 16,
           fontWeight: 'bold',
         },
