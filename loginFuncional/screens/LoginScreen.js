@@ -16,7 +16,7 @@ export default function LoginScreen({ navigation }) {
 
   const handleCloseModal = () => {
     setIsErrorModalVisible(false);
-    navigation.navigate('Register'); 
+    navigation.navigate('Register');
   };
 
   return (
@@ -61,8 +61,8 @@ export default function LoginScreen({ navigation }) {
         title="¡Hubo un problema!"
         message="No se pudo registrar la cuenta de usuario :("
         showButton
-        onLeftPress={() => handleCloseModal()}
-        onRightPress={() => setIsErrorModalVisible(false)}
+        onLeftPress={() => setIsErrorModalVisible(false)}
+        onRightPress={() => handleCloseModal()}
       />
     </View>
   );
