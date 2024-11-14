@@ -8,7 +8,7 @@ const Header = ({ title, subtitle , title2 }) => {
       <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.title2}>{title2}</Text>
-      <Text style={styles.subtitle}>{subtitle}</Text>
+      {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
     </View>
   );
 };
