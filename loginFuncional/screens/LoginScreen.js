@@ -13,8 +13,10 @@ export default function LoginScreen({ navigation }) {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
-  const handleLogin = () => {
-    setIsErrorModalVisible(true);
+
+  const handleCloseModal = () => {
+    setIsErrorModalVisible(false);
+    navigation.navigate('Register'); 
   };
 
   return (
@@ -56,11 +58,11 @@ export default function LoginScreen({ navigation }) {
         visible={isErrorModalVisible}
         leftButtonText='Intentar luego'
         rightButtonText='Reintentar'
-        onLeftPress={() => setIsErrorModalVisible(false)} 
-        onRightPress={() => setIsErrorModalVisible(false)}
         title="¡Hubo un problema!"
         message="No se pudo registrar la cuenta de usuario :("
-        showButton={true}
+        showButton
+        onLeftPress={() => handleCloseModal()}
+        onRightPress={() => setIsErrorModalVisible(false)}
       />
     </View>
   );

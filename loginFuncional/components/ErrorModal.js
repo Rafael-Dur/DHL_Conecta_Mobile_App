@@ -9,10 +9,10 @@ const ErrorModal = ({
   onClose,
   title,
   message,
-  leftButtonText = "Cancelar",
-  rightButtonText = "Aceptar",
+  leftButtonText,
+  rightButtonText,
   onLeftPress ,
-  onRightPress ,
+  onRightPress,
   showButton,
 }) => (
   <Modal
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexWrap: 'wrap',
     width: '80%',
+    maxWidth: 800,
 
 
   },
