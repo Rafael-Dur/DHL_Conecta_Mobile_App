@@ -21,18 +21,23 @@ const getStyles = (styleType) => {
           borderColor: COLORS.red,
           borderWidth: 1,
           paddingVertical: 10,
-          paddingHorizontal: 20,
-          borderRadius: 5,
+          paddingHorizontal: 10,
+          borderRadius: 7,
           marginTop: 20,
-          width: '80%',
+          width: '80%', 
           maxHeight: 40,
-          maxWidth: 350,
+          maxWidth: 800,
+          alignItems: 'center',
+          justifyContent: 'center',
+          outlineColor: COLORS.red,
+          marginRight: 25,
+          marginLeft: 25,
+          
         },
         buttonText: {
           color: COLORS.red,
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: 'bold',
-
         },
       });
     default:
@@ -40,19 +45,22 @@ const getStyles = (styleType) => {
         button: {
           backgroundColor: COLORS.red,
           paddingVertical: 10,
-          paddingHorizontal: 20,
-          borderRadius: 5,
+          paddingHorizontal: 10,
+          borderRadius: 7,
           marginTop: 20,
           width: '80%', 
           maxHeight: 40,
           maxWidth: 350,
           alignItems: 'center',
           justifyContent: 'center',
+          marginRight: 25,
+          marginLeft: 25,
         },
         buttonText: {
           color: COLORS.white,
           fontSize: 16,
           fontWeight: 'bold',
+          alignContent: 'center',
         },
       });
   }

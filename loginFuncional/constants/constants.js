@@ -2,6 +2,7 @@ export const COLORS = {
     white: "#ffffff",
     black: "#000000",
     red: "#D40511",
+    yellow : "#FFCC00",
   };
   
   export const FONT_SIZES = {

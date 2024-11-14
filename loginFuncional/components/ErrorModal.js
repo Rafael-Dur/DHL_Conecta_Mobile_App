@@ -1,8 +1,20 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/constants';
+import ButtonGroup from './ButtonGroup';
 
-const ErrorModal = ({ visible, onClose,title, message, showButton = true }) => (
+const ErrorModal = ({
+  visible,
+  onClose,
+  title,
+  message,
+  leftButtonText = "Cancelar",
+  rightButtonText = "Aceptar",
+  onLeftPress ,
+  onRightPress ,
+  showButton,
+}) => (
   <Modal
     animationType="slide"
     transparent={true}
@@ -16,21 +28,21 @@ const ErrorModal = ({ visible, onClose,title, message, showButton = true }) => (
           <Ionicons name="close" size={24} color="gray" />
         </TouchableOpacity>
 
-        {/* Icono de tick verde */}
         <View style={styles.iconContainer}>
-          <Ionicons name="checkmark-circle" size={80} color="#4caf50" />
+          <Ionicons name="warning-sharp" size={80} color={COLORS.yellow} />
         </View>
-        
-        {/* Mensaje personalizado */}
+
         <Text style={styles.errorTitle}>{title}</Text>
         <Text style={styles.message}>{message}</Text>
-        
-        {/* Botón opcional, basado en la prop `showButton` */}
+
         {showButton && (
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.buttonText}>Cerrar</Text>
-          </TouchableOpacity>
-        )}
+          <ButtonGroup
+            leftButtonTitle= {leftButtonText}
+            onLeftPress={onLeftPress}
+            leftStyleType="outlined"
+            rightButtonTitle= {rightButtonText}
+            onRightPress={onRightPress}
+          />)}
       </View>
     </View>
   </Modal>
@@ -39,7 +51,7 @@ const ErrorModal = ({ visible, onClose,title, message, showButton = true }) => (
 const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,
-    justifyContent: 'center',    
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
@@ -60,7 +72,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginBottom: 20,
-  
+
   },
   errorTitle: {
     fontFamily: 'Delivery',
@@ -74,26 +86,10 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
     marginBottom: 20,
-    flexWrap: 'wrap', 
+    flexWrap: 'wrap',
     width: '80%',
-    
-  },
-  closeButton: {
-    backgroundColor: '#FF0000',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-    width: '80%',
-    maxHeight: 40,
-    maxWidth: 350,
-    alignItems: 'center',
-  },
-  buttonText: {    
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Delivery',
+
+
   },
 });
 
