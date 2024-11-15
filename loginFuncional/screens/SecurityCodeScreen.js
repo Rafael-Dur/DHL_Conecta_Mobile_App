@@ -17,29 +17,29 @@ const SecurityCodeScreen = () => {
 
   return (
     <View style={styles.container}>
-        <Header title="Ingrese código " title2={"de seguridad"} />
+      <Header title="Ingrese código " title2={"de seguridad"} />
 
-        <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Validate_Mail') }}>
-          <Ionicons name="chevron-back" size={24} color="red" />
-          <Text style={styles.backText}>Volver</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Validate_Mail') }}>
+        <Ionicons name="chevron-back" size={24} color="red" />
+        <Text style={styles.backText}>Volver</Text>
+      </TouchableOpacity>
 
-        <InputField
-          placeholder="Ingrese el código aquí"
-          value={securityCode}
-          onChangeText={setSecurityCode}
-          keyboardType="numeric"
-        />
+      <InputField
+        placeholder="Ingrese el código aquí"
+        value={securityCode}
+        onChangeText={setSecurityCode}
+        keyboardType="numeric"
+      />
 
-        <Text style={styles.instructionText}>
-          Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
-        </Text>
+      <Text style={styles.instructionText}>
+        Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
+      </Text>
 
-        <Button
-          title="Continuar"
-          onPress={handleContinue}
-          style={styles.continueButton}
-        />
+      <Button
+        title="Continuar"
+        onPress={handleContinue}
+        style={styles.continueButton}
+      />
     </View>
   );
 };
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 10,
     marginBottom: 20,
+
   },
   continueButton: {
     width: '100%',

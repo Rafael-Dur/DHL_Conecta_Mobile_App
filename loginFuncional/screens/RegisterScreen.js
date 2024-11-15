@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
 import SuccessModal from '../components/SuccessModal';
+import ClickeableText from '../components/ClickeableText';
 
 export default function RegisterScreen({ navigation }) {
   const [isSuccessVisible, setSuccessVisible] = React.useState(false);
@@ -24,9 +25,13 @@ export default function RegisterScreen({ navigation }) {
         {/* Renderizar RegisterForm y pasar la función handleSuccessfulRegister */}
         <RegisterForm onRegister={handleSuccessfulRegister} />
 
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.registerText}>¿Ya tienes una cuenta? Inicia sesión</Text>
-        </TouchableOpacity>
+        <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate('Login')}
+          title="¿Ya tienes una cuenta?"
+          clickeableText="Inicia sesión"
+          styleType="link"
+        />
 
         {/* Mostrar el modal de éxito */}
         <SuccessModal

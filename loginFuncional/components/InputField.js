@@ -29,6 +29,8 @@ export default function InputField({
           size={24}
           color="gray"
           onPress={() => setSecureTextEntry(!secureTextEntry)}
+          marginRight={10}
+
         />
       )}
     </View>
