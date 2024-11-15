@@ -13,14 +13,14 @@ export default function RegisterScreen({ navigation }) {
 
   const handleCloseModal = () => {
     setSuccessVisible(false);
-    navigation.navigate('Login'); 
+    navigation.navigate('Login');
   };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Header title="¡Regístrate!" subtitle="Crea una cuenta para continuar" />
-        
+
         {/* Renderizar RegisterForm y pasar la función handleSuccessfulRegister */}
         <RegisterForm onRegister={handleSuccessfulRegister} />
 
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollContainer: {
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 20,
+    //paddingBottom: 20,
     paddingTop: 70,
   },
   Button: {

@@ -24,7 +24,8 @@ const getStyles = (styleType) =>
     singleLinkContainer: {
       alignItems: 'flex-end',
       marginBottom: 30,
-
+      paddingRight: 45,
+      alignSelf: 'flex-end',
     },
     title: {
       fontFamily: 'Delivery',
