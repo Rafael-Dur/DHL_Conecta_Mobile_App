@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    //alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },
@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 70,
-    paddingLeft: 70,
-    paddingRight: 70,
-    width: '100%',
-    //marginLeft: 10,
-    //marginRight: 10,
+    //paddingLeft: 10,
+    //paddingRight: 10,
+    width: '80%',
+    marginLeft: 20,
+    marginRight: 20,
   },
 
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
 import SuccessModal from '../components/SuccessModal';
@@ -50,21 +50,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    //alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
   },
   scrollContainer: {
-    //justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
-    //paddingBottom: 20,
+    paddingBottom: 20,
     paddingTop: 70,
-    paddingLeft: 70,
-    paddingRight: 70,
-    width: '100%',
-    //marginLeft: 10,
-    //marginRight: 10,
   },
-
-
+  Button: {
+    marginBottom: 20,
+    backgroundColor: '#007bff',
+    width: '100%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  registerText: {
+    color: '#0000FF',
+    marginTop: 20,
+    textDecorationLine: 'underline',
+  },
 });

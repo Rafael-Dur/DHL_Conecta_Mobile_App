@@ -18,10 +18,10 @@ const BackButton = () => {
 const styles = StyleSheet.create({
     backButton: {
         flexDirection: 'row',
-        //justifyContent: 'space-between',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 30,
-        //marginLeft: 260,
+        marginLeft: 200,
         alignSelf: 'flex-end',
     },
     backText: {

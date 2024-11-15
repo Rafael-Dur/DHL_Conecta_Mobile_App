@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { Text, StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
@@ -50,7 +50,9 @@ export default function LoginScreen({ navigation }) {
         clickeableText="Regístrate ahora"
         styleType="link"
       />
-
+      <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
+        <Text style={styles.errorButtonText}>Error Modal</Text>
+      </TouchableOpacity>
 
       <ErrorModal
         visible={isErrorModalVisible}
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    //alignItems: 'center',
+    alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },
