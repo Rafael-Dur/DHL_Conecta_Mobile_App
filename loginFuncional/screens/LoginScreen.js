@@ -50,9 +50,7 @@ export default function LoginScreen({ navigation }) {
         clickeableText="Regístrate ahora"
         styleType="link"
       />
-      <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
-        <Text style={styles.errorButtonText}>Error Modal</Text>
-      </TouchableOpacity>
+
 
       <ErrorModal
         visible={isErrorModalVisible}

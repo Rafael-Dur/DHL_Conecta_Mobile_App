@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
@@ -20,8 +20,8 @@ export default function App() {
     await Font.loadAsync({
       Delivery: require('./assets/fonts/Delivery_A_CdBlk.ttf'),
       Delivery2: require('./assets/fonts/Delivery_A_CdLt.ttf'),
-       
-    
+
+
     });
     setFontsLoaded(true);
   };

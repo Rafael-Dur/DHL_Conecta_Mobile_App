@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
 import SuccessModal from '../components/SuccessModal';
