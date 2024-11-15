@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const Header = ({ title, subtitle , title2 }) => {
+const Header = ({ title, subtitle, title2 }) => {
   return (
     <View style={styles.headerContainer}>
       <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />
@@ -27,17 +27,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    //marginBottom: 10,
   },
   title2: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    //marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
     color: '#666',
-    marginBottom: 20,
+    //marginBottom: 20,
   },
 });
 

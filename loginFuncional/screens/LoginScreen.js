@@ -1,10 +1,10 @@
 // LoginScreen.js
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import Button from '../components/Button';
-import TextField from '../components/InputField';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
+import UnderlineText from '../components/UnderlineText';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -27,13 +27,10 @@ export default function LoginScreen({ navigation }) {
           secureTextEntry={secureTextEntry}
           setSecureTextEntry={setSecureTextEntry}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('Validate_Mail')}>
-          <Text style={styles.registerText}>¿Olvidó la contraseña?</Text>
-        </TouchableOpacity>
+        <UnderlineText title="¿Olvidó la contraseña?" navigateTo='Validate_Mail' />
         <Button title="Ingresar" onPress={() => { /* handle login */ }} />
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerText}>Regístrate ahora</Text>
-        </TouchableOpacity>
+        <UnderlineText title="Regístrate ahora" navigateTo='Register' />
+
       </ScrollView>
 
     </View>
@@ -45,23 +42,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },
   scrollContainer: {
-    //justifyContent: 'center',
-  
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 70,
+    paddingLeft: 70,
+    paddingRight: 70,
     width: '100%',
     //marginLeft: 10,
     //marginRight: 10,
-  },
-  registerText: {
-    color: '#0000FF',
-    marginTop: 20,
-    textDecorationLine: 'underline',
   },
 });
