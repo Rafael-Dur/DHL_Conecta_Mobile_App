@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },

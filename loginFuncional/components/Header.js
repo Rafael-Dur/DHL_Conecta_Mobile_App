@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const Header = ({ title, subtitle , title2 }) => {
+const Header = ({ title, subtitle, title2 }) => {
   return (
     <View style={styles.headerContainer}>
       <Image source={require('../assets/LogoDHL.png')} style={styles.logo} />

@@ -50,25 +50,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    //alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   scrollContainer: {
     //justifyContent: 'center',
     alignItems: 'center',
     //paddingBottom: 20,
     paddingTop: 70,
-  },
-  Button: {
-    marginBottom: 20,
-    backgroundColor: '#007bff',
+    paddingLeft: 70,
+    paddingRight: 70,
     width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    //marginLeft: 10,
+    //marginRight: 10,
   },
-  registerText: {
-    color: '#0000FF',
-    marginTop: 20,
-    textDecorationLine: 'underline',
-  },
+
+
 });
