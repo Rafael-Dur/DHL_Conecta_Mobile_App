@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
 import BackButton from '../components/BackButton';
 
-
 const SecurityCodeScreen = () => {
   const [securityCode, setSecurityCode] = useState('');
   const navigation = useNavigation();
 
+  // Validación del código de seguridad
+  const validateSecurityCode = (code) => /^\d{6}$/.test(code);
+
   const handleContinue = () => {
+    // Validar si el campo está vacío
+    if (!securityCode.trim()) {
+      return Alert.alert('Error', 'Por favor, ingrese el código de seguridad.');
+    }
+
+    // Validar que el código sea numérico y tenga 6 dígitos
+    if (!validateSecurityCode(securityCode)) {
+      return Alert.alert(
+        'Código inválido',
+        'El código debe contener exactamente 6 dígitos numéricos.'
+      );
+    }
+
     navigation.navigate('Reset_Password');
   };
 
@@ -19,7 +34,7 @@ const SecurityCodeScreen = () => {
     <View style={styles.container}>
       <Header title="Ingrese código " title2={"de seguridad"} />
 
-      <BackButton onPress={() => { navigation.navigate('Validate_Mail') }} />
+      <BackButton onPress={() => navigation.navigate('Validate_Mail')} />
 
       <InputField
         placeholder="Ingrese el código aquí"
@@ -36,7 +51,7 @@ const SecurityCodeScreen = () => {
         title="Continuar"
         onPress={handleContinue}
       />
-    </View >
+    </View>
   );
 };
 
@@ -55,8 +70,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 10,
     marginBottom: 20,
-
   },
+
 });
 
 export default SecurityCodeScreen;
