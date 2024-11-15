@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-// Importa los íconos desde tus assets si tienes archivos SVG o PNG
 const packageIcon = require('../assets/package-icon.png');
 const documentIcon = require('../assets/document-icon.png');
 const dhlLogo = require('../assets/LogoDHL.png');
 
 export default function HomeScreen({ navigation }) {
+  const { width, height } = useWindowDimensions();
+
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -17,14 +18,14 @@ export default function HomeScreen({ navigation }) {
 
       {/* Mensaje de bienvenida */}
       <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Bienvenido!</Text>
+        <Text style={styles.welcomeText}>¡Bienvenido!</Text>
         <Text style={styles.subText}>¿Qué necesitas enviar hoy?</Text>
       </View>
 
       {/* Tarjetas de opciones */}
       <View style={styles.cardContainer}>
         {/* Tarjeta de Paquete */}
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={[styles.card, { width: width * 0.4 }]}>
           <Image source={packageIcon} style={styles.cardIcon} />
           <Text style={styles.cardTitle}>Paquete</Text>
           <Text style={styles.cardDescription}>
@@ -34,7 +35,7 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
 
         {/* Tarjeta de Documento */}
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={[styles.card, { width: width * 0.4 }]}>
           <Image source={documentIcon} style={styles.cardIcon} />
           <Text style={styles.cardTitle}>Documento</Text>
           <Text style={styles.cardDescription}>
@@ -62,23 +63,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f4f4',
+    alignItems: 'center',
   },
   header: {
     backgroundColor: '#FFD700',
-    paddingVertical: 20,
+    width: '100%',
+    paddingVertical: '5%',
     alignItems: 'center',
   },
   logo: {
-    width: 100,
-    height: 40,
+    width: '30%',
+    height: undefined,
+    aspectRatio: 3,
     resizeMode: 'contain',
   },
   welcomeContainer: {
-    marginVertical: 20,
+    marginVertical: '5%',
     alignItems: 'center',
   },
   welcomeText: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#000',
   },
@@ -90,12 +94,12 @@ const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 20,
+    marginVertical: '5%',
+    width: '90%',
   },
   card: {
     backgroundColor: '#fff',
-    width: 150,
-    padding: 15,
+    padding: '5%',
     borderRadius: 10,
     alignItems: 'center',
     elevation: 5,
@@ -111,14 +115,14 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#C00',
     marginBottom: 5,
   },
   cardDescription: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: 12,
     color: '#777',
   },
   infoIcon: {
@@ -129,8 +133,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#fff',
+    width: '100%',
     paddingVertical: 10,
     borderTopWidth: 1,
     borderColor: '#ddd',
+    position: 'absolute',
+    bottom: 0,
   },
 });
