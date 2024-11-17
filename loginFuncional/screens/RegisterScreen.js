@@ -4,6 +4,9 @@ import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
 import SuccessModal from '../components/SuccessModal';
 import ClickeableText from '../components/ClickeableText';
+import HeaderContainer from '../components/HeadContainer';
+import BodyContainer from '../components/BodyContainer'
+import { COLORS } from '../constants/constants';
 
 export default function RegisterScreen({ navigation }) {
   const [isSuccessVisible, setSuccessVisible] = React.useState(false);
@@ -18,11 +21,12 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Header title="¡Regístrate!" subtitle="Crea una cuenta para continuar" />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-        {/* Renderizar RegisterForm y pasar la función handleSuccessfulRegister */}
+      <HeaderContainer>
+        <Header title="¡Regístrate!" subtitle="Crea una cuenta para continuar" />
+      </HeaderContainer>
+      <BodyContainer>
         <RegisterForm onRegister={handleSuccessfulRegister} />
 
         <ClickeableText
@@ -38,37 +42,26 @@ export default function RegisterScreen({ navigation }) {
           visible={isSuccessVisible}
           onClose={handleCloseModal}
           title="¡Registro exitoso!"
-          message="Tu registro se realizó correctamente"
+          subtitle="Tu registro se realizó correctamente"
+          message="Esto es una prueba larga , larga , larga , larga Esto es una prueba larga , larga , larga , larga"
           showButton={true}
         />
-      </ScrollView>
-    </View>
+      </BodyContainer>
+    </ScrollView>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
   },
   scrollContainer: {
+    backgroundColor: COLORS.white,
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
-    paddingTop: 70,
   },
-  Button: {
-    marginBottom: 20,
-    backgroundColor: '#007bff',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  registerText: {
-    color: '#0000FF',
-    marginTop: 20,
-    textDecorationLine: 'underline',
-  },
+
 });
