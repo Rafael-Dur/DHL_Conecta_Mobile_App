@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
@@ -10,6 +10,7 @@ const ValidateMailScreen = () => {
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
 
+  // Validación del correo electrónico
   const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
 
   const handleContinue = () => {
@@ -33,6 +34,9 @@ const ValidateMailScreen = () => {
         <Header title="Ingrese su correo" title2="electrónico" />
 
         <BackButton onPress={() => navigation.navigate('Login')} />
+
+        {/* Etiqueta para el Input */}
+        <Text style={styles.label}>Ingrese su correo</Text>
 
         <InputField
           placeholder="Ingrese su correo electrónico"
@@ -62,8 +66,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 70,
     width: '80%',
-    marginLeft: 20,
-    marginRight: 20,
+  },
+  label: {
+    alignSelf: 'flex-start',
+    marginLeft: 40,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 14,
   },
 });
 
