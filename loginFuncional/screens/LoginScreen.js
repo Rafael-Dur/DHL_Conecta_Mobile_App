@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import Button from '../components/Button';
 import Header from '../components/Header';
@@ -7,25 +7,38 @@ import ClickeableText from '../components/ClickeableText';
 import ErrorModal from '../components/ErrorModal';
 import HeaderContainer from '../components/HeadContainer';
 import BodyContainer from '../components/BodyContainer'
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, clearError } from '../features/auth/authSlice';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { response, error, jwtToken, loading } = useSelector((state) => state.auth);
 
-  const handleCloseModal = () => {
-    setIsErrorModalVisible(false);
-    navigation.navigate('Register');
-  };
+
 
   const handleLogin = () => {
-    if (email && password) {
-      navigation.navigate('Home');
-    } else {
-      setIsErrorModalVisible(true); // Mostrar modal de error si los campos están vacíos
-    }
+    const loginData = { email, password };
+    dispatch(loginUser(loginData));
   };
+
+  const handleClearError = () => {
+    dispatch(clearError());
+  };
+
+  const handleCloseModal = () => {
+    dispatch(clearError());
+  };
+
+  // Efecto para redirigir si el inicio de sesión es exitoso
+  useEffect(() => {
+    if (jwtToken) {
+      navigation.navigate('Home'); 
+    }
+  }, [jwtToken, navigation]);
 
   return (
     <View style={styles.container}>
@@ -62,6 +75,19 @@ export default function LoginScreen({ navigation }) {
           styleType="link"
         />
 
+        {loading && <Text style={styles.loadingText}>Cargando...</Text>}
+        {response && (
+          <View style={styles.responseContainer}>
+            <Text>Token:</Text>
+            <Text> {JSON.stringify(jwtToken, null, 2)}</Text>
+          </View>
+        )}
+        {error && (
+          <View style={styles.responseContainer}>
+            <Text>Error:</Text>
+            <Text>{typeof error === 'string' ? error : JSON.stringify(error, null, 2)}</Text>
+          </View>
+        )}
         <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
           <Text style={styles.errorButtonText}>Error Modal</Text>
         </TouchableOpacity>
@@ -88,6 +114,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     paddingHorizontal: 20,
+
+  },
+  responseContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    paddingHorizontal: 20,
+    maxWidth: 350,
+
   },
   errorButtonText: {
     color: '#FF0000',
