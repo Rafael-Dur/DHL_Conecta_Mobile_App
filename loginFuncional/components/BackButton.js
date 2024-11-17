@@ -3,31 +3,43 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { COLORS } from '../constants/constants';
 
 const BackButton = () => {
     const navigation = useNavigation();
 
     return (
+        <View style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-back" size={24} color="red" />
+            <Ionicons name="chevron-back" size={14} color={COLORS.red} />
             <Text style={styles.backText}>Volver</Text>
         </TouchableOpacity>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    backButton: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+    container: {
+        flex :1,
         alignItems: 'center',
-        marginBottom: 30,
-        marginLeft: 200,
-        alignSelf: 'flex-end',
-    },
+        marginVertical: 50, 
+        width: '100%',
+      },
+    backButton: {
+        alignItems: 'flex-end',
+        backgroundColor: COLORS.white,
+        width: '100%',
+        //marginBottom: 15,
+        maxHeight: 40,
+        maxWidth: 350,
+      },
     backText: {
-        color: 'red',
-        fontSize: 16,
-        marginLeft: 5,
+        
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        color: COLORS.red,
+        fontSize: 14,
+        fontWeight: 'bold',
     },
 });
 

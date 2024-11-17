@@ -26,7 +26,7 @@ const getStyles = (styleType) =>
     },
     singleLinkContainer: {
       alignItems: 'flex-end',
-      backgroundColor: '#f9f9f9',
+      backgroundColor: COLORS.white,
       width: '100%',
       marginBottom: 15,
       maxHeight: 40,
