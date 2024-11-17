@@ -47,6 +47,8 @@ const ResetPasswordScreen = () => {
 
       <BackButton onPress={handleBack} />
 
+      <Text style={styles.label}>Ingrese su nueva contraseña</Text>
+
       <InputField
         placeholder="Nueva Contraseña"
         value={newPassword}
@@ -54,6 +56,8 @@ const ResetPasswordScreen = () => {
         secureTextEntry={secureTextEntry}
         setSecureTextEntry={setSecureTextEntry}
       />
+
+      <Text style={styles.label}>Repita la contraseña</Text>
 
       <InputField
         placeholder="Confirmar Contraseña"
@@ -76,6 +80,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     paddingHorizontal: 20,
+  },
+  label: {
+    alignSelf: 'flex-start',
+    marginLeft: 40,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 14,
   },
 });
 

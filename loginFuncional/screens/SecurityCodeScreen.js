@@ -32,9 +32,11 @@ const SecurityCodeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Ingrese código " title2={"de seguridad"} />
+      <Header title="Ingrese código" title2={"de seguridad"} />
 
       <BackButton onPress={() => navigation.navigate('Validate_Mail')} />
+
+      <Text style={styles.label}>Código de recuperación</Text>
 
       <InputField
         placeholder="Ingrese el código aquí"
@@ -63,7 +65,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
-
+  label: {
+    alignSelf: 'flex-start',
+    marginLeft: 40,
+    marginBottom: 10,
+    fontWeight: 'bold',
+    color: 'black',
+    fontSize: 14,
+  },
   instructionText: {
     color: 'red',
     textAlign: 'center',
@@ -71,7 +80,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
-
 });
 
 export default SecurityCodeScreen;
