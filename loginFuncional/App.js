@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './store/store';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
@@ -11,6 +12,7 @@ import ValidateMailScreen from './screens/ValidateMailScreen';
 import SecurityCodeScreen from './screens/SecurityCodeScreen';
 import HomeScreen from './screens/HomeScreen';
 import NewShipment from './components/NewShipment';
+
 
 const Stack = createStackNavigator();
 
@@ -34,6 +36,7 @@ export default function App() {
   }
 
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
@@ -45,5 +48,6 @@ export default function App() {
         <Stack.Screen name="NewShipment" component={NewShipment} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }

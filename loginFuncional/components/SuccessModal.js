@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   modalInternal: {
     flex: 1,
-    width: '75%',
+    width: '100%',
     paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center'
