@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import InputField from '../components/InputField';
 import ClickeableText from '../components/ClickeableText';
 import ErrorModal from '../components/ErrorModal';
 import HeaderContainer from '../components/HeadContainer';
-import BodyContainer from '../components/BodyContainer'
+import BodyContainer from '../components/BodyContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, clearError } from '../features/auth/authSlice';
+import { COLORS } from '../constants/constants';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -41,7 +42,7 @@ export default function LoginScreen({ navigation }) {
   }, [jwtToken, navigation]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <HeaderContainer>
         <Header title="Bienvenido a" title2="Envíos DHL Conecta" />
       </HeaderContainer>
@@ -102,7 +103,7 @@ export default function LoginScreen({ navigation }) {
           onRightPress={handleCloseModal}
         />
       </BodyContainer>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -115,6 +116,12 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
 
+  },
+  scrollContainer: {
+    backgroundColor: COLORS.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 20,
   },
   responseContainer: {
     flex: 1,
