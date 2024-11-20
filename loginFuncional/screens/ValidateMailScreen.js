@@ -1,41 +1,52 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
+import BackButton from '../components/BackButton';
 
 const ValidateMailScreen = () => {
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
 
+  // Validación del correo electrónico
+  const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
+
   const handleContinue = () => {
+    if (!email.trim()) {
+      return Alert.alert('Error', 'El correo es obligatorio.');
+    }
+
+    if (!validateEmail(email)) {
+      return Alert.alert(
+        'Correo inválido',
+        'El correo debe ser válido y pertenecer a dominios como gmail, hotmail o yahoo.'
+      );
+    }
+
     navigation.navigate('Security_Code');
   };
 
   return (
     <View style={styles.container}>
-      <Header title="Ingrese su correo electrónico" />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Header title="Ingrese su correo" title2="electrónico" />
 
-      <TouchableOpacity style={styles.backButton} onPress={() => { navigation.navigate('Login') }}>
-        <Ionicons name="chevron-back" size={24} color="red" />
-        <Text style={styles.backText}>Volver</Text>
-      </TouchableOpacity>
+        <BackButton onPress={() => navigation.navigate('Login')} />
 
-      <InputField
-        label="Correo electrónico"
-        placeholder="Ingrese su correo electrónico"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
+        {/* Etiqueta para el Input */}
+        <Text style={styles.label}>Ingrese su correo</Text>
 
-      <Button
-        title="Continuar"
-        onPress={handleContinue}
-        style={styles.continueButton}
-      />
+        <InputField
+          placeholder="Ingrese su correo electrónico"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+
+        <Button title="Continuar" onPress={handleContinue} />
+      </ScrollView>
     </View>
   );
 };
@@ -47,59 +58,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-
   },
-  backButton: {
-    flexDirection: 'row',
+  scrollContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
-    marginLeft: 260,
-  },
-  backText: {
-    color: 'red',
-    fontSize: 16,
-    marginLeft: 5,
-  },
-  inputContainer: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginBottom: 10,
+    paddingBottom: 20,
+    paddingTop: 70,
+    width: '80%',
   },
   label: {
-    fontSize: 12,
-    color: '#666',
-  },
-  input: {
-    fontSize: 16,
-    paddingVertical: 5,
-  },
-  continueButton: {
-    backgroundColor: 'red',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-    width: '100%',
-    alignItems: 'center',
-  },
-  continueButtonText: {
-    color: 'white',
-    fontSize: 16,
+    alignSelf: 'flex-start',
+    marginLeft: 40,
+    marginBottom: 10,
     fontWeight: 'bold',
-  },
-  problemText: {
+    color: 'black',
     fontSize: 14,
-    color: '#666',
-    marginTop: 20,
-  },
-  contactText: {
-    fontSize: 14,
-    color: 'red',
-    fontWeight: 'bold',
   },
 });
 

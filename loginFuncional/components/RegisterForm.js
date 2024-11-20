@@ -3,6 +3,7 @@ import { StyleSheet, View, Alert, TouchableOpacity, Text } from 'react-native';
 import InputField from './InputField';
 import Button from './Button';
 import ErrorAlert from './ErrorAlert';
+import { COLORS } from '../constants/constants';
 
 export default function RegisterForm({ onRegister }) {
   const [firstName, setFirstName] = useState('');
@@ -73,10 +74,10 @@ export default function RegisterForm({ onRegister }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    //flex: 1,
+    backgroundColor: COLORS.white,
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
 });

@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import Button from '../components/Button';
-import PasswordField from '../components/PasswordField';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
-
+import BackButton from '../components/BackButton';
 
 const ResetPasswordScreen = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [secureTextEntry2, setSecureTextEntry2] = useState(true);
   const navigation = useNavigation();
 
+  const validatePassword = (password) => /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
+
   const handlePasswordReset = () => {
-    // Lógica para cambiar la contraseña
+    // Validar si los campos están llenos
+    if (!newPassword.trim() || !confirmPassword.trim()) {
+      return Alert.alert('Error', 'Por favor, complete todos los campos.');
+    }
+
+    // Validar que la nueva contraseña cumpla con los requisitos
+    if (!validatePassword(newPassword)) {
+      return Alert.alert(
+        'Error de contraseña',
+        'La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.'
+      );
+    }
+
+    // Validar que ambas contraseñas coincidan
+    if (newPassword !== confirmPassword) {
+      return Alert.alert('Error', 'Las contraseñas no coinciden.');
+    }
+
     navigation.navigate('Login');
   };
 
@@ -26,53 +43,31 @@ const ResetPasswordScreen = () => {
 
   return (
     <View style={styles.container}>
-        <Header 
-        title="Ingrese su correo electrónico"/>
+      <Header title="Ingrese su nueva contraseña" />
 
-         <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-          <Ionicons name="chevron-back" size={24} color="red" />
-          <Text style={styles.backText}>Volver</Text>
-        </TouchableOpacity>
+      <BackButton onPress={handleBack} />
 
-        <InputField
-          //label="Contraseña nueva"
-          placeholder="Nueva Contraseña"
-          value={newPassword}
-          onChangeText={setNewPassword}
-          secureTextEntry={!isNewPasswordVisible}
-          rightIcon={
-            <TouchableOpacity onPress={() => setIsNewPasswordVisible(!isNewPasswordVisible)}>
-              <Ionicons
-                name={isNewPasswordVisible ? "eye-off" : "eye"}
-                size={20}
-                color="gray"
-              />
-            </TouchableOpacity>
-          }
-        />
+      <Text style={styles.label}>Ingrese su nueva contraseña</Text>
 
-        <InputField
-          //label="Confirmar contraseña"
-          placeholder="Confirmar Contraseña"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry={!isConfirmPasswordVisible}
-          rightIcon={
-            <TouchableOpacity onPress={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}>
-              <Ionicons
-                name={isConfirmPasswordVisible ? "eye-off" : "eye"}
-                size={20}
-                color="gray"
-              />
-            </TouchableOpacity>
-          }
-        />
+      <InputField
+        placeholder="Nueva Contraseña"
+        value={newPassword}
+        onChangeText={setNewPassword}
+        secureTextEntry={secureTextEntry}
+        setSecureTextEntry={setSecureTextEntry}
+      />
 
-        <Button
-          title="Cambiar"
-          onPress={handlePasswordReset}
-          style={styles.changeButton}
-        />
+      <Text style={styles.label}>Repita la contraseña</Text>
+
+      <InputField
+        placeholder="Confirmar Contraseña"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry={secureTextEntry2}
+        setSecureTextEntry={setSecureTextEntry2}
+      />
+
+      <Button title="Cambiar" onPress={handlePasswordReset} />
     </View>
   );
 };
@@ -84,29 +79,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    paddingHorizontal: 20,
   },
-  title: {
-    fontSize: 24,
+  label: {
+    alignSelf: 'flex-start',
+    marginLeft: 40,
+    marginBottom: 10,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  backButton: {
-    flexDirection: 'row',
-    alignItems: 'right',
-    marginBottom: 50,
-    marginLeft: 220,
-
-  },
-  backText: {
-    color: 'red',
-    fontSize: 16,
-    marginLeft: 5,
-  },
-  changeButton: {
-    width: '100%',
-    marginTop: 20,
-    backgroundColor: 'red',
+    color: 'black',
+    fontSize: 14,
   },
 });
 

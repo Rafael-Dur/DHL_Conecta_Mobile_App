@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../constants/constants';
 
 export default function InputField({
   placeholder,
@@ -29,6 +30,8 @@ export default function InputField({
           size={24}
           color="gray"
           onPress={() => setSecureTextEntry(!secureTextEntry)}
+          marginRight={10}
+
         />
       )}
     </View>
@@ -36,14 +39,14 @@ export default function InputField({
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
+    inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: '#000',
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: '#f9f9f9',
-    width: '80%',
+    backgroundColor: COLORS.white,
+    width: '100%',
     //marginLeft: 20,
     //marginRight: 20,
     marginBottom: 15,

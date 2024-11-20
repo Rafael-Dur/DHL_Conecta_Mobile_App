@@ -1,13 +1,20 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONT_SIZES } from '../constants/constants';
-import Button from './Button';
-import BodyContainer from './BodyContainer';
+import { COLORS } from '../constants/constants';
+import ButtonGroup from './ButtonGroup';
 
-
-
-const SuccessModal = ({ visible, onClose, title, subtitle, message, showButton = true }) => (
+const ErrorModal = ({
+  visible,
+  onClose,
+  title,
+  message,
+  leftButtonText,
+  rightButtonText,
+  onLeftPress ,
+  onRightPress,
+  showButton,
+}) => (
   <Modal
     animationType="slide"
     transparent={true}
@@ -21,20 +28,21 @@ const SuccessModal = ({ visible, onClose, title, subtitle, message, showButton =
           <Ionicons name="close" size={24} color="gray" />
         </TouchableOpacity>
 
-        <View style={styles.modalInternal}>
-
-          <View style={styles.iconContainer}>
-            <Ionicons name="checkmark-circle" size={80} color="#4caf50" />
-          </View>
-
-          <Text style={styles.successTitle}>{title}</Text>
-          <Text style={styles.successSubTitle}>{subtitle}</Text>
-          <Text style={styles.message}>{message}</Text>
-
-          {showButton && (
-            <Button title="Cerrar" onPress={onClose} ></Button>
-          )}
+        <View style={styles.iconContainer}>
+          <Ionicons name="warning-sharp" size={80} color={COLORS.yellow} />
         </View>
+
+        <Text style={styles.errorTitle}>{title}</Text>
+        <Text style={styles.message}>{message}</Text>
+
+        {showButton && (
+          <ButtonGroup
+            leftButtonTitle= {leftButtonText}
+            onLeftPress={onLeftPress}
+            leftStyleType="outlined"
+            rightButtonTitle= {rightButtonText}
+            onRightPress={onRightPress}
+          />)}
       </View>
     </View>
   </Modal>
@@ -57,32 +65,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
   },
-  modalInternal: {
-    flex: 1,
-    width: '75%',
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-    alignItems: 'center'
-
-  },
   closeIcon: {
     position: 'absolute',
     top: 10,
     right: 10,
   },
   iconContainer: {
-    marginBottom: 40,
+    marginBottom: 20,
 
   },
-  successTitle: {
+  errorTitle: {
     fontFamily: 'Delivery',
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
-    flexWrap: 'wrap',
-    maxWidth: '80%',
   },
-  successSubTitle: {
+  message: {
     fontFamily: 'Delivery2',
     fontSize: 30,
     color: '#333',
@@ -90,17 +88,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexWrap: 'wrap',
     width: '80%',
-  },
-  message: {
-    fontFamily: 'Delivery2',
-    fontSize: 15,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: COLORS.red,
-    maxWidth: '80%',
-    flexWrap: 'wrap',
+    maxWidth: 800,
+
 
   },
 });
 
-export default SuccessModal;
+export default ErrorModal;
