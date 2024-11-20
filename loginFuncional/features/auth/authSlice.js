@@ -7,9 +7,9 @@ export const loginUser = createAsyncThunk(
   async (loginData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('/api/v1/auth/login', loginData);
-      return response.data; // Retorna la respuesta del login
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message); // En caso de error
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -20,9 +20,9 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('/api/v1/auth/logout');
-      return response.data; // Respuesta de logout
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message); // En caso de error
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
