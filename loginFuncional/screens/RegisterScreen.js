@@ -4,7 +4,7 @@ import RegisterForm from '../components/RegisterForm';
 import Header from '../components/Header';
 import SuccessModal from '../components/SuccessModal';
 import ClickeableText from '../components/ClickeableText';
-import HeaderContainer from '../components/HeadContainer';
+import HeaderContainer from '../components/HeaderContainer';
 import BodyContainer from '../components/BodyContainer'
 import { COLORS } from '../constants/constants';
 

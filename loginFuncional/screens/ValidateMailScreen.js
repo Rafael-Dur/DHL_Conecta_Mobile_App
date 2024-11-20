@@ -5,6 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
 import BackButton from '../components/BackButton';
+import HeaderContainer from '../components/HeaderContainer';
+import BodyContainer from '../components/BodyContainer';
+import { COLORS, FONT_SIZES } from '../constants/constants';
+
 
 const ValidateMailScreen = () => {
   const [email, setEmail] = useState('');
@@ -30,8 +34,11 @@ const ValidateMailScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <HeaderContainer>
         <Header title="Ingrese su correo" title2="electrónico" />
+      </HeaderContainer>
+      <BodyContainer>
+
 
         <BackButton onPress={() => navigation.navigate('Login')} />
 
@@ -46,7 +53,7 @@ const ValidateMailScreen = () => {
         />
 
         <Button title="Continuar" onPress={handleContinue} />
-      </ScrollView>
+      </BodyContainer>
     </View>
   );
 };
@@ -58,22 +65,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    paddingHorizontal: 20,
   },
-  scrollContainer: {
+  /*scrollContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
     paddingTop: 70,
     width: '80%',
-  },
+  },*/
   label: {
     alignSelf: 'flex-start',
-    marginLeft: 40,
+    //marginLeft: 40,
     marginBottom: 10,
     fontWeight: 'bold',
-    color: 'black',
-    fontSize: 14,
+    color: COLORS.black,
+    fontSize: FONT_SIZES.medium,
   },
 });
 

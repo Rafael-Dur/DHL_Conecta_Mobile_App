@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import InputField from '../components/InputField';
 import ClickeableText from '../components/ClickeableText';
 import ErrorModal from '../components/ErrorModal';
-import HeaderContainer from '../components/HeadContainer';
+import HeaderContainer from '../components/HeaderContainer';
 import BodyContainer from '../components/BodyContainer'
 
 export default function LoginScreen({ navigation }) {
