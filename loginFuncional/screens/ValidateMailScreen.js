@@ -67,21 +67,14 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
   },
-  /*scrollContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 20,
-    paddingTop: 70,
-    width: '80%',
-  },*/
   label: {
-    alignSelf: 'flex-start',
-    //marginLeft: 40,
+    alignSelf: 'center',
     marginBottom: 10,
     fontWeight: 'bold',
     color: COLORS.black,
     fontSize: FONT_SIZES.medium,
+    width: '100%',
+    maxWidth: 350,
   },
 });
 
