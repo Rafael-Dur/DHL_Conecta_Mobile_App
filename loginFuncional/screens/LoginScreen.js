@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
   // Efecto para redirigir si el inicio de sesión es exitoso
   useEffect(() => {
     if (jwtToken) {
-      navigation.navigate('Home'); 
+      navigation.navigate('Home');
     }
   }, [jwtToken, navigation]);
 
@@ -75,7 +75,7 @@ export default function LoginScreen({ navigation }) {
           clickeableText="Regístrate ahora"
           styleType="link"
         />
-
+  
         {loading && <Text style={styles.loadingText}>Cargando...</Text>}
         {response && (
           <View style={styles.responseContainer}>
@@ -92,16 +92,16 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
           <Text style={styles.errorButtonText}>Error Modal</Text>
         </TouchableOpacity>
-          <ErrorModal
-            visible={isErrorModalVisible}
-            leftButtonText='Intentar luego'
-            rightButtonText='Reintentar'
-            title="¡Hubo un problema!"
-            message="No se pudo registrar la cuenta de usuario :("
-            showButton
-            onLeftPress={() => setIsErrorModalVisible(false)}
-            onRightPress={handleCloseModal}
-          />
+        <ErrorModal
+          visible={isErrorModalVisible}
+          leftButtonText='Intentar luego'
+          rightButtonText='Reintentar'
+          title="¡Hubo un problema!"
+          message="No se pudo registrar la cuenta de usuario :("
+          showButton
+          onLeftPress={() => setIsErrorModalVisible(false)}
+          onRightPress={handleCloseModal}
+        />
       </BodyContainer>
     </ScrollView>
   );
@@ -137,5 +137,29 @@ const styles = StyleSheet.create({
     color: '#FF0000',
     marginTop: 20,
     fontWeight: 'bold',
+  },
+  loadingText: {
+    color: COLORS.gray,
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+  responseContainer: {
+    marginTop: 20,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: COLORS.gray,
+    borderRadius: 5,
+    backgroundColor: COLORS.lightGray,
+  },
+  responseText: {
+    color: COLORS.green,
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  errorText: {
+    color: COLORS.red,
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
