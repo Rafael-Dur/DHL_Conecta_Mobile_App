@@ -26,12 +26,9 @@ export default function LoginScreen({ navigation }) {
     dispatch(loginUser(loginData));
   };
 
-  const handleClearError = () => {
-    dispatch(clearError());
-  };
-
   const handleCloseModal = () => {
     dispatch(clearError());
+    setIsErrorModalVisible(false);
   };
 
   // Efecto para redirigir si el inicio de sesión es exitoso
@@ -94,13 +91,9 @@ export default function LoginScreen({ navigation }) {
         </TouchableOpacity>
         <ErrorModal
           visible={isErrorModalVisible}
-          leftButtonText='Intentar luego'
-          rightButtonText='Reintentar'
           title="¡Hubo un problema!"
           message="No se pudo registrar la cuenta de usuario :("
-          showButton
-          onLeftPress={handleCloseModal}
-          onRightPress={() => setIsErrorModalVisible(false)}
+          onClose={handleCloseModal}
         />
       </BodyContainer>
     </ScrollView>

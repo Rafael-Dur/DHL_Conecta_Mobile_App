@@ -75,8 +75,8 @@ export default function RegisterScreen({ navigation }) {
           title="¡Hubo un problema!"
           message="No se pudo registrar la cuenta de usuario :("
           showButton
-          onLeftPress={handleCloseModal}
-          onRightPress={() => setIsErrorModalVisible(false)}
+        //  onLeftPress={handleCloseModal}
+       //   onRightPress={() => setIsErrorModalVisible(false)}
         />
       </BodyContainer>
     </ScrollView>
