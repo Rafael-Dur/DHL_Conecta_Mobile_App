@@ -99,8 +99,8 @@ export default function LoginScreen({ navigation }) {
           title="¡Hubo un problema!"
           message="No se pudo registrar la cuenta de usuario :("
           showButton
-          onLeftPress={() => setIsErrorModalVisible(false)}
-          onRightPress={handleCloseModal}
+          onLeftPress={handleCloseModal}
+          onRightPress={() => setIsErrorModalVisible(false)}
         />
       </BodyContainer>
     </ScrollView>

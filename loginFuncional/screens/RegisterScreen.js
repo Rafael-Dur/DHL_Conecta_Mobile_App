@@ -8,9 +8,13 @@ import BodyContainer from '../components/BodyContainer';
 import { COLORS } from '../constants/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../features/auth/accountSlice';
+import SuccessModal from '../components/SuccessModal'; // Asegúrate de tener este componente
+import ErrorModal from '../components/ErrorModal'; // Asegúrate de tener este componente
 
 export default function RegisterScreen({ navigation }) {
   const [responseMessage, setResponseMessage] = React.useState('');
+  const [isErrorModalVisible, setIsErrorModalVisible] = React.useState(false);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = React.useState(false);
   const dispatch = useDispatch();
   const { loading, error, success, message } = useSelector((state) => state.account);
 
@@ -18,14 +22,23 @@ export default function RegisterScreen({ navigation }) {
     dispatch(registerUser(registerData))
       .then((action) => {
         if (action.meta.requestStatus === 'fulfilled') {
+          // Si el registro es exitoso, abrir el Success Modal
           setResponseMessage(action.payload?.message || '¡Registro exitoso!');
+          setIsSuccessModalVisible(true);
         } else {
+          // Si el registro falla, abrir el Error Modal
           const errorMsg = action.payload?.message || 'Error en el registro.';
           setResponseMessage(errorMsg);
+          setIsErrorModalVisible(true);
         }
       });
   };
-  
+
+  const handleCloseModal = () => {
+    setIsErrorModalVisible(false);
+    setIsSuccessModalVisible(false);
+    navigation.navigate('Login')
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -45,18 +58,26 @@ export default function RegisterScreen({ navigation }) {
 
         {loading && <Text style={styles.loadingText}>Cargando...</Text>}
 
-        {/* Mostrar el mensaje de respuesta */}
-        {responseMessage && (
-          <View style={styles.responseContainer}>
-            <Text style={styles.responseText}>{responseMessage}</Text>
-          </View>
-     )}
-     {error && (
-       <View style={styles.responseContainer}>
-         <Text>Error:</Text>
-         <Text>{typeof error === 'string' ? error : JSON.stringify(error, null, 2)}</Text>
-       </View>
-     )}
+        {/* Mostrar el mensaje de respuesta */} 
+
+        <SuccessModal 
+          visible={isSuccessModalVisible}
+          title="¡Registro exitoso!"
+          subtitle={responseMessage}
+          message="Recibirás un correo ni bien te aprueben el acceso."
+          onClose={handleCloseModal}
+        />
+        
+        <ErrorModal
+          visible={isErrorModalVisible}
+          leftButtonText='Intentar luego'
+          rightButtonText='Reintentar'
+          title="¡Hubo un problema!"
+          message="No se pudo registrar la cuenta de usuario :("
+          showButton
+          onLeftPress={handleCloseModal}
+          onRightPress={() => setIsErrorModalVisible(false)}
+        />
       </BodyContainer>
     </ScrollView>
   );
@@ -74,23 +95,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     marginVertical: 10,
-  },
-  responseContainer: {
-    marginTop: 20,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: COLORS.gray,
-    borderRadius: 5,
-    backgroundColor: COLORS.lightGray,
-  },
-  responseText: {
-    color: COLORS.green,
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  errorText: {
-    color: COLORS.red,
-    fontSize: 16,
-    textAlign: 'center',
   },
 });

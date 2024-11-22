@@ -11,7 +11,7 @@ const ErrorModal = ({
   message,
   leftButtonText,
   rightButtonText,
-  onLeftPress ,
+  onLeftPress,
   onRightPress,
   showButton,
 }) => (
@@ -24,9 +24,11 @@ const ErrorModal = ({
     <View style={styles.modalBackground}>
       <View style={styles.modalContainer}>
         {/* Botón de cierre en la esquina superior derecha */}
-        <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
+        
+        {!showButton ? <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
           <Ionicons name="close" size={24} color="gray" />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
+
 
         <View style={styles.iconContainer}>
           <Ionicons name="warning-sharp" size={80} color={COLORS.yellow} />
@@ -37,10 +39,10 @@ const ErrorModal = ({
 
         {showButton && (
           <ButtonGroup
-            leftButtonTitle= {leftButtonText}
+            leftButtonTitle={leftButtonText}
             onLeftPress={onLeftPress}
             leftStyleType="outlined"
-            rightButtonTitle= {rightButtonText}
+            rightButtonTitle={rightButtonText}
             onRightPress={onRightPress}
           />)}
       </View>
