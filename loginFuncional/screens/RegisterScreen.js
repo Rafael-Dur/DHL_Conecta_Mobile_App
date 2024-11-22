@@ -73,10 +73,11 @@ export default function RegisterScreen({ navigation }) {
           leftButtonText='Intentar luego'
           rightButtonText='Reintentar'
           title="¡Hubo un problema!"
-          message="No se pudo registrar la cuenta de usuario :("
+          message={responseMessage}
+          subtitle="No se pudo registrar la cuenta de usuario :("
           showButton
-        //  onLeftPress={handleCloseModal}
-       //   onRightPress={() => setIsErrorModalVisible(false)}
+          onLeftPress={handleCloseModal}
+          onRightPress={() => setIsErrorModalVisible(false)}
         />
       </BodyContainer>
     </ScrollView>

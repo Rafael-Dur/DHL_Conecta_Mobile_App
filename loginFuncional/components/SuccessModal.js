@@ -3,8 +3,6 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONT_SIZES } from '../constants/constants';
 import Button from './Button';
-import BodyContainer from './BodyContainer';
-
 
 
 const SuccessModal = ({ visible, onClose, title, subtitle, message, showButton = true }) => (

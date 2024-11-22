@@ -8,6 +8,7 @@ const ErrorModal = ({
   visible,
   onClose,
   title,
+  subtitle,
   message,
   leftButtonText,
   rightButtonText,
@@ -24,7 +25,7 @@ const ErrorModal = ({
     <View style={styles.modalBackground}>
       <View style={styles.modalContainer}>
         {/* Botón de cierre en la esquina superior derecha */}
-        
+
         {!showButton ? <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
           <Ionicons name="close" size={24} color="gray" />
         </TouchableOpacity> : null}
@@ -35,6 +36,7 @@ const ErrorModal = ({
         </View>
 
         <Text style={styles.errorTitle}>{title}</Text>
+        <Text style={styles.errorSubTitle}>{subtitle}</Text>
         <Text style={styles.message}>{message}</Text>
 
         {showButton && (
@@ -82,8 +84,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
+    flexWrap: 'wrap',
+    maxWidth: '80%',
   },
-  message: {
+  errorSubTitle: {
     fontFamily: 'Delivery2',
     fontSize: 30,
     color: '#333',
@@ -91,10 +95,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexWrap: 'wrap',
     width: '80%',
-    maxWidth: 800,
-
+  },
+  message: {
+    fontFamily: 'Delivery2',
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: COLORS.red,
+    maxWidth: '80%',
+    flexWrap: 'wrap',
 
   },
+
 });
 
 export default ErrorModal;
