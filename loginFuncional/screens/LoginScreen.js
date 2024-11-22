@@ -92,16 +92,16 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
           <Text style={styles.errorButtonText}>Error Modal</Text>
         </TouchableOpacity>
-        <ErrorModal
-          visible={isErrorModalVisible}
-          leftButtonText='Intentar luego'
-          rightButtonText='Reintentar'
-          title="¡Hubo un problema!"
-          message="No se pudo registrar la cuenta de usuario :("
-          showButton
-          onLeftPress={() => setIsErrorModalVisible(false)}
-          onRightPress={handleCloseModal}
-        />
+          <ErrorModal
+            visible={isErrorModalVisible}
+            leftButtonText='Intentar luego'
+            rightButtonText='Reintentar'
+            title="¡Hubo un problema!"
+            message="No se pudo registrar la cuenta de usuario :("
+            showButton
+            onLeftPress={() => setIsErrorModalVisible(false)}
+            onRightPress={handleCloseModal}
+          />
       </BodyContainer>
     </ScrollView>
   );

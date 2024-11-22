@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Alert, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native';
 import InputField from './InputField';
 import Button from './Button';
 import ErrorAlert from './ErrorAlert';
@@ -12,6 +12,7 @@ export default function RegisterForm({ onRegister }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState(new Date()); // Estado para la fecha de nacimiento
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
 
@@ -31,9 +32,22 @@ export default function RegisterForm({ onRegister }) {
     if (password !== confirmPassword)
       return ErrorAlert('Las contraseñas no coinciden.');
 
+    // Preparar los datos para enviar
+    const registerData = {
+      userName: email,  // Usuario ??
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      dateOfBirth: "1985-11-22T15:29:42.850Z",
+      phoneNumber: phone,
+      socialIdCardNumber: phone, // Número de cédula ??
+    };
+
     // Llama a la función onRegister pasada desde RegisterScreen
-    onRegister();
+    onRegister(registerData);
   };
+
 
   return (
     <View style={styles.container}>
@@ -74,10 +88,13 @@ export default function RegisterForm({ onRegister }) {
 
 const styles = StyleSheet.create({
   container: {
-    //flex: 1,
     backgroundColor: COLORS.white,
     width: '100%',
     alignItems: 'center',
-    //justifyContent: 'center',
+  },
+  dateText: {
+    color: COLORS.gray,
+    fontSize: 16,
+    marginVertical: 10,
   },
 });
