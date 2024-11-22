@@ -8,6 +8,7 @@ import BackButton from '../components/BackButton';
 import HeaderContainer from '../components/HeaderContainer';
 import BodyContainer from '../components/BodyContainer';
 import { COLORS, FONT_SIZES } from '../constants/constants';
+import ClickeableText from '../components/ClickeableText';
 
 
 const ValidateMailScreen = () => {
@@ -33,9 +34,9 @@ const ValidateMailScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <HeaderContainer>
-        <Header title="Ingrese su correo" title2="electrónico" />
+        <Header title="Ingrese su correo" title2="electrónico"/>
       </HeaderContainer>
       <BodyContainer>
 
@@ -47,20 +48,32 @@ const ValidateMailScreen = () => {
 
         <InputField
           placeholder="Ingrese su correo electrónico"
-          value={email}
+          value={email} 
           onChangeText={setEmail}
           keyboardType="email-address"
         />
 
         <Button title="Continuar" onPress={handleContinue} />
       </BodyContainer>
-    </View>
+
+      <View style={styles.container2}></View>
+
+      <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate(/* Pagina de soporte */)}
+          title="¿Problemas?"
+          clickeableText="Contáctanos"
+          styleType="link"
+        />
+
+      
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -76,6 +89,11 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 350,
   },
+  container2: {
+    //flex: 1,
+    backgroundColor: '#fff',
+    marginBottom: 150,
+  }
 });
 
 export default ValidateMailScreen;
