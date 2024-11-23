@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
 import BackButton from '../components/BackButton';
+import HeaderContainer from '../components/HeaderContainer';
+import BodyContainer from '../components/BodyContainer';
+import ClickeableText from '../components/ClickeableText';
+import { COLORS, FONT_SIZES } from '../constants/constants';
+
 
 const ResetPasswordScreen = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -42,8 +47,12 @@ const ResetPasswordScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Header title="Ingrese su nueva contraseña" />
+    <ScrollView contentContainerStyle={styles.container}>
+      <HeaderContainer>
+        <Header title="Cambiar"  title2="contraseña" />
+      </HeaderContainer>
+
+      <BodyContainer>
 
       <BackButton onPress={handleBack} />
 
@@ -68,26 +77,44 @@ const ResetPasswordScreen = () => {
       />
 
       <Button title="Cambiar" onPress={handlePasswordReset} />
-    </View>
+
+      </BodyContainer>
+
+      <View style={styles.container2}></View>
+
+      <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate(/* Pagina de soporte */)}
+          title="¿Problemas?"
+          clickeableText="Contáctanos"
+          styleType="link"
+        />
+
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    paddingHorizontal: 20,
   },
   label: {
-    alignSelf: 'flex-start',
-    marginLeft: 40,
+    alignSelf: 'center',
     marginBottom: 10,
     fontWeight: 'bold',
-    color: 'black',
-    fontSize: 14,
+    color: COLORS.black,
+    fontSize: FONT_SIZES.medium,
+    width: '100%',
+    maxWidth: 350,
+  },
+  container2: {
+    //flex: 1,
+    backgroundColor: '#fff',
+    marginBottom: 50,
   },
 });
 

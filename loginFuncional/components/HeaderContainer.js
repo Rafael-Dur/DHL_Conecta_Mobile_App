@@ -8,12 +8,13 @@ export default function HeaderContainer({ children }) {
 
 const styles = StyleSheet.create({
   headerContainer: {
+    flex: 1,
     width: '80%',
     backgroundColor: COLORS.white,
     paddingVertical: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop :  100,
-    
+    paddingTop: 100,
+
   },
 });

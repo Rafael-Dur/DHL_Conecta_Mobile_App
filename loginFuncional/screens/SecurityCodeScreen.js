@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
 import BackButton from '../components/BackButton';
+import { COLORS, FONT_SIZES } from '../constants/constants';
+import ClickeableText from '../components/ClickeableText';
+import HeaderContainer from '../components/HeaderContainer';
+import BodyContainer from '../components/BodyContainer';
 
 const SecurityCodeScreen = () => {
   const [securityCode, setSecurityCode] = useState('');
@@ -31,9 +35,13 @@ const SecurityCodeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Header title="Ingrese código" title2={"de seguridad"} />
+    <ScrollView contentContainerStyle={styles.container}>
 
+    <HeaderContainer>
+      <Header title="Ingrese código" title2={"de seguridad"} />
+    </HeaderContainer>
+
+    <BodyContainer>
       <BackButton onPress={() => navigation.navigate('Validate_Mail')} />
 
       <Text style={styles.label}>Código de recuperación</Text>
@@ -53,32 +61,50 @@ const SecurityCodeScreen = () => {
         title="Continuar"
         onPress={handleContinue}
       />
-    </View>
+      </BodyContainer>
+
+      <View style={styles.container2}></View>
+
+      <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate(/* Pagina de soporte */)}
+          title="¿Problemas?"
+          clickeableText="Contáctanos"
+          styleType="link"
+        />
+
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },
   label: {
-    alignSelf: 'flex-start',
-    marginLeft: 40,
+    alignSelf: 'center',
     marginBottom: 10,
     fontWeight: 'bold',
-    color: 'black',
-    fontSize: 14,
+    color: COLORS.black,
+    fontSize: FONT_SIZES.medium,
+    width: '100%',
+    maxWidth: 350,
   },
   instructionText: {
-    color: 'red',
+    color: COLORS.red,
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: FONT_SIZES.medium,
     marginTop: 10,
     marginBottom: 20,
+  },
+  container2: {
+    //flex: 1,
+    backgroundColor: '#fff',
+    marginBottom: 100,
   },
 });
 

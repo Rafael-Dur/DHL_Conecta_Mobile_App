@@ -9,10 +9,10 @@ export default function BodyContainer({ children }) {
 const styles = StyleSheet.create({
   bodyContainer: {
     flex: 1,
-    width: '100%',
-    backgroundColor : COLORS.white,
+    width: '80%',
+    backgroundColor: COLORS.white,
     paddingHorizontal: 20,
     justifyContent: 'center',
-     alignItems: 'center'
+    alignItems: 'center'
   },
 });
