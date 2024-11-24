@@ -36,12 +36,35 @@ export const getUserData = createAsyncThunk(
   }
 );
 
+//Thunk para cambiar la password :
+export const resetPassword = createAsyncThunk(
+  'password/reset',
+  async (newPassword, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post('/api/v1/accounts/password/reset/validate', newPassword);
+      return response.data; // Regresa la respuesta si es exitosa
+    } catch (error) {
+      if (error.response) {
+        // El servidor respondió con un código de error (ej. 500)
+        return rejectWithValue(error.response.data || 'Error del servidor.');
+      } else if (error.request) {
+        // No hubo respuesta del servidor
+        return rejectWithValue('No se pudo conectar al servidor. Por favor, verifica tu conexión.');
+      } else {
+        // Otro error ocurrió
+        return rejectWithValue(error.message || 'Ocurrió un error desconocido.');
+      }
+    }
+  });
+
+
 const initialState = {
   loading: false,
   success: false,
   error: null,
   message: null,
   userData: null, // Para almacenar los datos obtenidos
+  code: null, 
 };
 
 const accountSlice = createSlice({
@@ -54,6 +77,7 @@ const accountSlice = createSlice({
       state.error = null;
       state.message = null;
       state.userData = null;
+      state.code = null;
     },
   },
   extraReducers: (builder) => {
@@ -84,7 +108,23 @@ const accountSlice = createSlice({
       .addCase(getUserData.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.message = 'Correo enviado con éxito';
+        state.code = action.payload.code;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
+
   },
 });
 

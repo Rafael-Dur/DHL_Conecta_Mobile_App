@@ -34,7 +34,6 @@ export default function RegisterForm({ onRegister }) {
 
     // Preparar los datos para enviar
     const registerData = {
-      userName: email,  // Usuario ??
       email: email,
       password: password,
       firstName: firstName,

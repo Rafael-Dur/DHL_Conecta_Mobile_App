@@ -7,13 +7,20 @@ import Header from '../components/Header';
 import BackButton from '../components/BackButton';
 import HeaderContainer from '../components/HeaderContainer';
 import BodyContainer from '../components/BodyContainer';
+import SuccessModal from '../components/SuccessModal';
 import { COLORS, FONT_SIZES } from '../constants/constants';
 import ClickeableText from '../components/ClickeableText';
+import { resetPassword } from '../features/auth/accountSlice';
+import { useDispatch ,useSelector} from 'react-redux';
 
 
 const ValidateMailScreen = () => {
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [responseMessage, setResponseMessage] = React.useState('');
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = React.useState(false);
+  const { code, message }  = useSelector((state) => state.account);
 
   // Validación del correo electrónico
   const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
@@ -29,14 +36,34 @@ const ValidateMailScreen = () => {
         'El correo debe ser válido y pertenecer a dominios como gmail, hotmail o yahoo.'
       );
     }
+    dispatch(resetPassword(email))
+      .then((action) => {
+        if (action.meta.requestStatus === 'fulfilled') {
+          // Si el registro es exitoso, abrir el Success Modal
+          setResponseMessage(code || 'Cofigo enviado!');
+          setIsSuccessModalVisible(true);
+        } else {
+          // Si el registro falla, abrir el Error Modal
+          const errorMsg = action.payload?.message || 'Error';
+          setResponseMessage(responseMessage);
+          setIsSuccessModalVisible(true);
+        }
+      });
+
+
 
     navigation.navigate('Security_Code');
+  };
+
+  const handleCloseModal = () => {
+    setIsSuccessModalVisible(false);
+ //   navigation.navigate('Login')
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <HeaderContainer>
-        <Header title="Ingrese su correo" title2="electrónico"/>
+        <Header title="Ingrese su correo" title2="electrónico" />
       </HeaderContainer>
       <BodyContainer>
 
@@ -48,25 +75,31 @@ const ValidateMailScreen = () => {
 
         <InputField
           placeholder="Ingrese su correo electrónico"
-          value={email} 
+          value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
         />
-
         <Button title="Continuar" onPress={handleContinue} />
+        <SuccessModal
+          visible={isSuccessModalVisible}
+          title="Código de seguridad"
+          subtitle={code}
+          message={code}
+          onClose={handleCloseModal}
+        />
       </BodyContainer>
 
       <View style={styles.container2}></View>
 
       <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate(/* Pagina de soporte */)}
-          title="¿Problemas?"
-          clickeableText="Contáctanos"
-          styleType="link"
-        />
+        navigation={navigation}
+        onPress={() => navigation.navigate(/* Pagina de soporte */)}
+        title="¿Problemas?"
+        clickeableText="Contáctanos"
+        styleType="link"
+      />
 
-      
+
     </ScrollView>
   );
 };
