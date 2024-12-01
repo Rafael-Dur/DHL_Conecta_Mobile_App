@@ -57,6 +57,26 @@ export const resetPassword = createAsyncThunk(
     }
   });
 
+// Thunk para enviar el correo y obtener el código de recuperación
+export const requestOtp = createAsyncThunk(
+  'account/getOtp',
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post('/api/v1/accounts/password/reset', email);
+      return response.data; // Regresa la respuesta si es exitosa
+    } catch (error) {
+      if (error.response) {
+        // El servidor respondió con un código de error (ej. 500)
+        return rejectWithValue(error.response.data || 'Error del servidor.');
+      } else if (error.request) {
+        // No hubo respuesta del servidor
+        return rejectWithValue('No se pudo conectar al servidor. Por favor, verifica tu conexión.');
+      } else {
+        // Otro error ocurrió
+        return rejectWithValue(error.message || 'Ocurrió un error desconocido.');
+      }
+    }
+  });
 
 const initialState = {
   loading: false,
@@ -64,7 +84,7 @@ const initialState = {
   error: null,
   message: null,
   userData: null, // Para almacenar los datos obtenidos
-  code: null, 
+  code: null,
 };
 
 const accountSlice = createSlice({
@@ -123,9 +143,23 @@ const accountSlice = createSlice({
       .addCase(resetPassword.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(requestOtp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.error = false;
+      })
+      .addCase(requestOtp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.code = action.payload.data.code; // Guardar el código en el estado global
+        state.message = action.payload.message;
+        state.success = true;
+      })
+      .addCase(requestOtp.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message || 'Error al enviar el correo.';
       });
-
-  },
+  }
 });
 
 export const { clearAccountState } = accountSlice.actions;

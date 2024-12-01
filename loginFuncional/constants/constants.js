@@ -1,10 +1,12 @@
 export const COLORS = {
-    white: "#ffffff",
-    black: "#000000",
-    red: "#9A0000",
-    yellow : "#FFCC00",
-  };
-  
+  white: "#ffffff",
+  black: "#000000",
+  red: "#9A0000",
+  yellow: "#FFCC00",
+  greenBright: "#32CD32", // LimeGreen
+  greenFluorescent: "#00FF00", // Alternativa aún más brillante
+  greenBright2: "#28a745",
+};
   export const FONT_SIZES = {
     small: 12,
     medium: 16,

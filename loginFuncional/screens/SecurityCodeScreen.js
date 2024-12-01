@@ -9,10 +9,14 @@ import { COLORS, FONT_SIZES } from '../constants/constants';
 import ClickeableText from '../components/ClickeableText';
 import HeaderContainer from '../components/HeaderContainer';
 import BodyContainer from '../components/BodyContainer';
+import { useSelector } from 'react-redux';
+
 
 const SecurityCodeScreen = () => {
   const [securityCode, setSecurityCode] = useState('');
   const navigation = useNavigation();
+
+  const storedCode = useSelector((state) => state.account.code);
 
   // Validación del código de seguridad
   const validateSecurityCode = (code) => /^\d{6}$/.test(code);
@@ -31,47 +35,51 @@ const SecurityCodeScreen = () => {
       );
     }
 
+    // if (securityCode !== storedCode) {
+    //  return Alert.alert('Error', 'El código ingresado no es correcto.');
+   // }
+
     navigation.navigate('Reset_Password');
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
 
-    <HeaderContainer>
-      <Header title="Ingrese código" title2={"de seguridad"} />
-    </HeaderContainer>
+      <HeaderContainer>
+        <Header title="Ingrese código" title2={"de seguridad"} />
+      </HeaderContainer>
 
-    <BodyContainer>
-      <BackButton onPress={() => navigation.navigate('Validate_Mail')} />
+      <BodyContainer>
+        <BackButton onPress={() => navigation.navigate('Validate_Mail')} />
 
-      <Text style={styles.label}>Código de recuperación</Text>
+        <Text style={styles.label}>Código de recuperación</Text>
 
-      <InputField
-        placeholder="Ingrese el código aquí"
-        value={securityCode}
-        onChangeText={setSecurityCode}
-        keyboardType="numeric"
-      />
+        <InputField
+          placeholder="Ingrese el código aquí"
+          value={securityCode}
+          onChangeText={setSecurityCode}
+          keyboardType="numeric"
+        />
 
-      <Text style={styles.instructionText}>
-        Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
-      </Text>
+        <Text style={styles.instructionText}>
+          Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
+        </Text>
 
-      <Button
-        title="Continuar"
-        onPress={handleContinue}
-      />
+        <Button
+          title="Continuar"
+          onPress={handleContinue}
+        />
       </BodyContainer>
 
       <View style={styles.container2}></View>
 
       <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate(/* Pagina de soporte */)}
-          title="¿Problemas?"
-          clickeableText="Contáctanos"
-          styleType="link"
-        />
+        navigation={navigation}
+        onPress={() => navigation.navigate(/* Pagina de soporte */)}
+        title="¿Problemas?"
+        clickeableText="Contáctanos"
+        styleType="link"
+      />
 
     </ScrollView>
   );
