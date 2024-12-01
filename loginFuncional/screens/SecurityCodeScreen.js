@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, Text, StyleSheet, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
 import BackButton from '../components/BackButton';
+import ClickeableText from '../components/ClickeableText';
+import HeaderContainer from '../components/HeaderContainer';
+import BodyContainer from '../components/BodyContainer';
+import { useSelector } from 'react-redux';
+import { COLORS, FONT_SIZES } from '../constants/constants';
 
 const SecurityCodeScreen = () => {
+  const storedCode = useSelector((state) => state.account.code); // Código almacenado en Redux
   const [securityCode, setSecurityCode] = useState('');
   const navigation = useNavigation();
+
+  // Sincroniza el código almacenado con el estado local
+  useEffect(() => {
+    if (storedCode) {
+      setSecurityCode(storedCode);
+    }
+  }, [storedCode]);
 
   // Validación del código de seguridad
   const validateSecurityCode = (code) => /^\d{6}$/.test(code);
 
   const handleContinue = () => {
-    // Validar si el campo está vacío
     if (!securityCode.trim()) {
       return Alert.alert('Error', 'Por favor, ingrese el código de seguridad.');
     }
 
-    // Validar que el código sea numérico y tenga 6 dígitos
     if (!validateSecurityCode(securityCode)) {
       return Alert.alert(
         'Código inválido',
@@ -27,56 +38,57 @@ const SecurityCodeScreen = () => {
       );
     }
 
+    if (securityCode !== storedCode) {
+      return Alert.alert('Error', 'El código ingresado no es correcto.');
+    }
+
     navigation.navigate('Reset_Password');
   };
 
   return (
-    <View style={styles.container}>
-      <Header title="Ingrese código" title2={"de seguridad"} />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <HeaderContainer>
+        <Header title="Ingrese código" title2="de seguridad" />
+      </HeaderContainer>
 
-      <BackButton onPress={() => navigation.navigate('Validate_Mail')} />
+      <BodyContainer>
+        <BackButton onPress={() => navigation.goBack()} />
+        <InputField
+          placeholder="Ingrese el código aquí"
+          value={securityCode}
+          onChangeText={setSecurityCode}
+          keyboardType="numeric"
+        />
 
-      <Text style={styles.label}>Código de recuperación</Text>
+        <Text style={styles.instructionText}>
+          Accede a tu correo electrónico{"\n"}para obtener el código de recuperación.
+        </Text>
 
-      <InputField
-        placeholder="Ingrese el código aquí"
-        value={securityCode}
-        onChangeText={setSecurityCode}
-        keyboardType="numeric"
-      />
+        <Button title="Continuar" onPress={handleContinue} />
 
-      <Text style={styles.instructionText}>
-        Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
-      </Text>
-
-      <Button
-        title="Continuar"
-        onPress={handleContinue}
-      />
-    </View>
+        <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate('Support')}
+          title="¿Problemas?"
+          clickeableText="Contáctanos"
+          styleType="link"
+        />
+      </BodyContainer>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+  scrollContainer: {
+    backgroundColor: COLORS.white,
     justifyContent: 'center',
-    width: '100%',
-  },
-  label: {
-    alignSelf: 'flex-start',
-    marginLeft: 40,
-    marginBottom: 10,
-    fontWeight: 'bold',
-    color: 'black',
-    fontSize: 14,
+    alignItems: 'center',
+    paddingBottom: 20,
   },
   instructionText: {
-    color: 'red',
+    color: COLORS.red,
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: FONT_SIZES.medium,
     marginTop: 10,
     marginBottom: 20,
   },

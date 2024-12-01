@@ -23,8 +23,9 @@ const styles = StyleSheet.create({
   buttonGroup: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
-    width: '80%', // Adjust width to fit container
+    width: '100%',
     maxWidth: 150,
     marginTop: 20,
   },

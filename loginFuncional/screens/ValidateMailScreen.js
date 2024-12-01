@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
+import ClickeableText from '../components/ClickeableText';
+import ErrorModal from '../components/ErrorModal';
+import SuccessModal from '../components/SuccessModal';
+import HeaderContainer from '../components/HeaderContainer';
+import BodyContainer from '../components/BodyContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { requestOtp, saveEmail } from '../features/auth/accountSlice';
+import { COLORS } from '../constants/constants';
 import BackButton from '../components/BackButton';
 
 const ValidateMailScreen = () => {
   const [email, setEmail] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
+  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { code, loading, errorMsg, success } = useSelector((state) => state.account);
 
   // Validación del correo electrónico
   const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
@@ -25,55 +39,87 @@ const ValidateMailScreen = () => {
       );
     }
 
+    const validateData = { email };
+    dispatch(requestOtp(validateData))
+      .then((action) => {
+        if (action.meta.requestStatus === 'fulfilled' && success) {
+          setResponseMessage(code || '¡Código enviado con éxito!');
+        //  setIsSuccessModalVisible(true);
+        } else {
+          const errorMsg = action.payload?.message || 'Ocurrió un error al enviar el código.';
+          setResponseMessage(errorMsg);
+      //    setIsErrorModalVisible(true);
+        }
+      });
+
+    dispatch(saveEmail(email)); // Guarda el correo en Redux
     navigation.navigate('Security_Code');
   };
 
+  const handleCloseModal = () => {
+    setIsErrorModalVisible(false);
+    setIsSuccessModalVisible(false);
+  };
+
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <HeaderContainer>
         <Header title="Ingrese su correo" title2="electrónico" />
+      </HeaderContainer>
 
-        <BackButton onPress={() => navigation.navigate('Login')} />
-
-        {/* Etiqueta para el Input */}
-        <Text style={styles.label}>Ingrese su correo</Text>
-
+      <BodyContainer>
+      <BackButton onPress={() => navigation.goBack()} />
         <InputField
-          placeholder="Ingrese su correo electrónico"
+          placeholder="Correo electrónico"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
         />
 
-        <Button title="Continuar" onPress={handleContinue} />
-      </ScrollView>
-    </View>
+        <Button title={loading ? "Cargando..." : "Continuar"} onPress={handleContinue} disabled={loading} />
+
+        {loading && <Text style={styles.loadingText}>Enviando código...</Text>}
+
+        <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate('Support')}
+          title="¿Problemas?"
+          clickeableText="Contáctanos"
+          styleType="link"
+        />
+      </BodyContainer>
+
+      {/* Modales */}
+      <SuccessModal
+        visible={isSuccessModalVisible}
+        title="¡Éxito!"
+        subtitle={responseMessage}
+        onClose={handleCloseModal}
+      />
+      <ErrorModal
+        visible={isErrorModalVisible}
+        title="¡Hubo un problema!"
+        subtitle="No se pudo enviar el código."
+        message={responseMessage}
+        onClose={handleCloseModal}
+      />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
   scrollContainer: {
-    flex: 1,
+    backgroundColor: COLORS.white,
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
-    paddingTop: 70,
-    width: '80%',
   },
-  label: {
-    alignSelf: 'flex-start',
-    marginLeft: 40,
-    marginBottom: 10,
-    fontWeight: 'bold',
-    color: 'black',
-    fontSize: 14,
+  
+  loadingText: {
+    color: COLORS.gray,
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 10,
   },
 });
 
