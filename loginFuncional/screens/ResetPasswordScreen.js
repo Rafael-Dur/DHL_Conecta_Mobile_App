@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { resetPassword } from '../features/auth/accountSlice'; // Thunk para manejar el endpoint
+import { resetPassword } from '../features/auth/accountSlice';
 import Button from '../components/Button';
 import InputField from '../components/InputField';
 import Header from '../components/Header';
@@ -13,6 +13,7 @@ import HeaderContainer from '../components/HeaderContainer';
 import BodyContainer from '../components/BodyContainer';
 import ClickeableText from '../components/ClickeableText';
 import { COLORS, FONT_SIZES } from '../constants/constants';
+ 
 
 const ResetPasswordScreen = () => {
   const [newPassword, setNewPassword] = useState('');
@@ -22,13 +23,16 @@ const ResetPasswordScreen = () => {
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.account);
+  const email = useSelector((state) => state.account.email); // Obtiene el correo de Redux
 
   const validatePassword = (password) => /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
 
   const handlePasswordReset = () => {
+    console.log('Email:', email);
     if (!newPassword.trim() || !confirmPassword.trim()) {
       return Alert.alert('Error', 'Por favor, complete todos los campos.');
     }
@@ -43,7 +47,7 @@ const ResetPasswordScreen = () => {
     }
 
     const payload = {
-      email: 'sebaf@gmail.com', 
+      email: email, 
       code: '123456', 
       password: newPassword,
     };
@@ -124,6 +128,8 @@ const ResetPasswordScreen = () => {
         title="¡Hubo un error!"
         subtitle="No se pudo actualizar la contraseña."
         message={responseMessage}
+        onClose={handleCloseModal}
+    
       />
     </ScrollView>
   );

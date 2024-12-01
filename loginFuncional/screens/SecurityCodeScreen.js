@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, StyleSheet, Alert } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
@@ -13,13 +13,22 @@ import { useSelector } from 'react-redux';
 
 
 const SecurityCodeScreen = () => {
+
+  const storedCode = useSelector((state) => state.account.code);
   const [securityCode, setSecurityCode] = useState('');
   const navigation = useNavigation();
 
-  const storedCode = useSelector((state) => state.account.code);
+
 
   // Validación del código de seguridad
   const validateSecurityCode = (code) => /^\d{6}$/.test(code);
+
+  // Sincroniza el código almacenado con el estado local
+  useEffect(() => {
+    if (storedCode) {
+      setSecurityCode(storedCode);
+    }
+  }, [storedCode]);
 
   const handleContinue = () => {
     // Validar si el campo está vacío
@@ -37,7 +46,7 @@ const SecurityCodeScreen = () => {
 
     // if (securityCode !== storedCode) {
     //  return Alert.alert('Error', 'El código ingresado no es correcto.');
-   // }
+    // }
 
     navigation.navigate('Reset_Password');
   };
@@ -62,7 +71,7 @@ const SecurityCodeScreen = () => {
         />
 
         <Text style={styles.instructionText}>
-          Acceda a su correo electrónico{"\n"}para obtener su código de recuperación
+          Accede a tu correo electrónico{"\n"}para obtener el  código de recuperación
         </Text>
 
         <Button

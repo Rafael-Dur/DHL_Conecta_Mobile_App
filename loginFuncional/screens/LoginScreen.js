@@ -73,8 +73,8 @@ export default function LoginScreen({ navigation }) {
         <ErrorModal
           visible={!!error} // Mostrar el modal si hay un error
           title="¡Hubo un problema!"
-          subtitle={typeof error === 'string' ? error : 'No se ha podido iniciar sesión.'}
-          message= {error}        
+          subtitle= "No hemos podido iniciar sesión."   
+          message= {typeof error === 'string' ? error : 'No se ha podido iniciar sesión.'}        
           onClose={handleCloseModal}
         />
       </BodyContainer>

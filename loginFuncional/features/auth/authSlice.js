@@ -7,12 +7,30 @@ export const loginUser = createAsyncThunk(
   async (loginData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('/api/v1/auth/login', loginData);
-      return response.data;
+      return response.data; // Retorna los datos si es exitoso
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message);
+      if (error.response) {
+        const statusCode = error.response.status;
+
+        if (statusCode === 400) {
+          return rejectWithValue({
+            message: error.response.data.message || 'Solicitud inválida. Por favor verifica los datos.',
+            statusCode,
+          });
+        } else if (statusCode === 500) {
+          return rejectWithValue({
+            message: error.response.data.message || 'Error del servidor',
+            statusCode,
+          });
+        }
+      }
+      return rejectWithValue({
+        message: error.message || 'Error desconocido',
+      });
     }
   }
 );
+
 
 // Thunk para el logout
 export const logoutUser = createAsyncThunk(

@@ -15,9 +15,11 @@ const SuccessModal = ({ visible, onClose, title, subtitle, message, showButton =
     <View style={styles.modalBackground}>
       <View style={styles.modalContainer}>
         {/* Botón de cierre en la esquina superior derecha */}
+       { !showButton && (
         <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
           <Ionicons name="close" size={24} color="gray" />
         </TouchableOpacity>
+       )}
 
         <View style={styles.modalInternal}>
 

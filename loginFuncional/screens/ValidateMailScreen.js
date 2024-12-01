@@ -14,6 +14,7 @@ import { requestOtp } from '../features/auth/accountSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorModal from '../components/ErrorModal';
 import { ActivityIndicator } from 'react-native-paper';
+import { saveEmail } from '../features/auth/accountSlice';
 
 
 const ValidateMailScreen = () => {
@@ -22,15 +23,15 @@ const ValidateMailScreen = () => {
   const dispatch = useDispatch();
   const [responseMessage, setResponseMessage] = React.useState('');
   const [isSuccessModalVisible, setIsSuccessModalVisible] = React.useState(false);
-  const { code, message, success, errorMsg ,loading } = useSelector((state) => state.account);
+  const { code, message, success, errorMsg, loading } = useSelector((state) => state.account);
   const [isErrorModalVisible, setIsErrorModalVisible] = React.useState(false);
 
-//  React.useEffect(() => {
+  //  React.useEffect(() => {
   //  if (success && code) {
-    //  console.log('Código recibido:', code);
-     // navigation.navigate('Security_Code');
-   // }
- // }, [success, code, navigation]);
+  //  console.log('Código recibido:', code);
+  // navigation.navigate('Security_Code');
+  // }
+  // }, [success, code, navigation]);
 
   // Validación del correo electrónico
   const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
@@ -62,12 +63,11 @@ const ValidateMailScreen = () => {
         } else {
           const errorMsg = action.payload?.message || 'Error';
           setResponseMessage(responseMessage);
-          setIsErrorModalVisible(true);
+        //  setIsErrorModalVisible(true);
         }
       });
 
-
-
+    dispatch(saveEmail(email)); // Guarda el correo en Redux
     navigation.navigate('Security_Code');
   };
 

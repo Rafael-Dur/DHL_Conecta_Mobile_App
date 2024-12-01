@@ -45,6 +45,14 @@ export const resetPassword = createAsyncThunk(
       return response.data; // Regresa la respuesta si es exitosa
     } catch (error) {
       if (error.response) {
+        // El servidor respondió con un código de error
+        if (error.response.status === 400) {
+          // Manejo específico para el error 400
+          return rejectWithValue(
+            error.response.data?.message ||
+            'Solicitud inválida. Por favor, verifica los datos ingresados.'
+          );
+        }
         // El servidor respondió con un código de error (ej. 500)
         return rejectWithValue(error.response.data || 'Error del servidor.');
       } else if (error.request) {
@@ -66,6 +74,14 @@ export const requestOtp = createAsyncThunk(
       return response.data; // Regresa la respuesta si es exitosa
     } catch (error) {
       if (error.response) {
+        // El servidor respondió con un código de error
+        if (error.response.status === 400) {
+          // Manejo específico para el error 400
+          return rejectWithValue(
+            error.response.data?.message ||
+            'Solicitud inválida. Por favor, verifica los datos ingresados.'
+          );
+        }
         // El servidor respondió con un código de error (ej. 500)
         return rejectWithValue(error.response.data || 'Error del servidor.');
       } else if (error.request) {
@@ -85,6 +101,7 @@ const initialState = {
   message: null,
   userData: null, // Para almacenar los datos obtenidos
   code: null,
+  email: '',
 };
 
 const accountSlice = createSlice({
@@ -98,6 +115,10 @@ const accountSlice = createSlice({
       state.message = null;
       state.userData = null;
       state.code = null;
+      state.email = '';
+    },
+    saveEmail: (state, action) => {
+      state.email = action.payload; // Guardar el correo en Redux
     },
   },
   extraReducers: (builder) => {
@@ -137,7 +158,7 @@ const accountSlice = createSlice({
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.message = 'Correo enviado con éxito';
+        state.message = action.payload.message;
         state.code = action.payload.code;
       })
       .addCase(resetPassword.rejected, (state, action) => {
@@ -162,5 +183,7 @@ const accountSlice = createSlice({
   }
 });
 
+
+export const { saveEmail } = accountSlice.actions;
 export const { clearAccountState } = accountSlice.actions;
 export default accountSlice.reducer;
