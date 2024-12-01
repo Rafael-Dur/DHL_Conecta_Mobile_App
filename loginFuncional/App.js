@@ -13,6 +13,7 @@ import ValidateMailScreen from './screens/ValidateMailScreen';
 import SecurityCodeScreen from './screens/SecurityCodeScreen';
 import HomeScreen from './screens/HomeScreen';
 import NewShipment from './components/NewShipment';
+import ServiceSelection from './screens/ServiceSelection';
 
 const Stack = createStackNavigator();
 
@@ -90,6 +91,11 @@ export default function App() {
             <Stack.Screen
               name="NewShipment"
               component={NewShipment}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ServiceSelection"
+              component={ServiceSelection}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

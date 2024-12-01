@@ -67,6 +67,13 @@ export default function LoginScreen({ navigation }) {
           clickeableText="Regístrate ahora"
           styleType="link"
         />
+          <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate('ServiceSelection')}
+          title="Ver Servicios"
+          clickeableText="Ir"
+          styleType="link"
+        />
   
         {loading && <Text style={styles.loadingText}>Cargando...</Text>}
 

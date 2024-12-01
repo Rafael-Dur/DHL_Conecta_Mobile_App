@@ -6,6 +6,7 @@ export const COLORS = {
   greenBright: "#32CD32", // LimeGreen
   greenFluorescent: "#00FF00", // Alternativa aún más brillante
   greenBright2: "#28a745",
+  gray: "#F2F2F2",
 };
   export const FONT_SIZES = {
     small: 12,
