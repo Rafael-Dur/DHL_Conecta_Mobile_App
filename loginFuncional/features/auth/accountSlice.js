@@ -60,7 +60,7 @@ export const resetPassword = createAsyncThunk(
         return rejectWithValue('No se pudo conectar al servidor. Por favor, verifica tu conexión.');
       } else {
         // Otro error ocurrió
-        return rejectWithValue(error.message || 'Ocurrió un error desconocido.');
+        return rejectWithValue(error. message || 'Ocurrió un error desconocido.');
       }
     }
   });

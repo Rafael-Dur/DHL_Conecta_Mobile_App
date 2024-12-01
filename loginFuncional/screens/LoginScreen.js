@@ -73,7 +73,7 @@ export default function LoginScreen({ navigation }) {
         <ErrorModal
           visible={!!error} // Mostrar el modal si hay un error
           title="¡Hubo un problema!"
-          subtitle= "No hemos podido iniciar sesión."   
+          subtitle= "No hemos podido iniciar sesión." 
           message= {typeof error === 'string' ? error : 'No se ha podido iniciar sesión.'}        
           onClose={handleCloseModal}
         />
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   loadingText: {
-    color: COLORS.gray,
+    color: COLORS.white,
     fontSize: 16,
     textAlign: 'center',
     marginVertical: 10,
