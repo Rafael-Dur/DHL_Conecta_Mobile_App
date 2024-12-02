@@ -14,6 +14,8 @@ import SecurityCodeScreen from './screens/SecurityCodeScreen';
 import HomeScreen from './screens/HomeScreen';
 import NewShipment from './components/NewShipment';
 import ServiceSelection from './screens/ServiceSelection';
+import ShipmentPage from './screens/ShipmentPage';
+
 
 const Stack = createStackNavigator();
 
@@ -96,6 +98,11 @@ export default function App() {
             <Stack.Screen
               name="ServiceSelection"
               component={ServiceSelection}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ShipmentPage"
+              component={ShipmentPage}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
