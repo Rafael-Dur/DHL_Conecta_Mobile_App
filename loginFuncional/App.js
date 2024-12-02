@@ -11,6 +11,7 @@ import ValidateMailScreen from './screens/ValidateMailScreen';
 import SecurityCodeScreen from './screens/SecurityCodeScreen';
 import HomeScreen from './screens/HomeScreen';
 import NewShipment from './components/NewShipment';
+import ShipmentForm4 from './screens/ShipmentForm4';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,7 @@ export default function App() {
         <Stack.Screen name="Reset_Password" component={ResetPasswordScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="NewShipment" component={NewShipment} options={{ headerShown: false }} />
+        <Stack.Screen name="ShipmentForm4" component={ShipmentForm4} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

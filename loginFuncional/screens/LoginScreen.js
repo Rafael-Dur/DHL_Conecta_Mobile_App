@@ -62,6 +62,14 @@ export default function LoginScreen({ navigation }) {
           styleType="link"
         />
 
+        <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate('ShipmentForm4')}
+          clickeableText="ShipmentForm4"
+          styleType="link"
+          singleLink
+        />
+
         <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
           <Text style={styles.errorButtonText}>Error Modal</Text>
         </TouchableOpacity>
