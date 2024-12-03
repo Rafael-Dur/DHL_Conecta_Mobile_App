@@ -44,11 +44,11 @@ const ValidateMailScreen = () => {
       .then((action) => {
         if (action.meta.requestStatus === 'fulfilled' && success) {
           setResponseMessage(code || '¡Código enviado con éxito!');
-        //  setIsSuccessModalVisible(true);
+          //  setIsSuccessModalVisible(true);
         } else {
           const errorMsg = action.payload?.message || 'Ocurrió un error al enviar el código.';
           setResponseMessage(errorMsg);
-      //    setIsErrorModalVisible(true);
+          //    setIsErrorModalVisible(true);
         }
       });
 
@@ -68,7 +68,7 @@ const ValidateMailScreen = () => {
       </HeaderContainer>
 
       <BodyContainer>
-      <BackButton onPress={() => navigation.goBack()} />
+        <BackButton onPress={() => navigation.goBack()} />
         <InputField
           placeholder="Correo electrónico"
           value={email}
@@ -113,8 +113,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
+    flex: 1,
   },
-  
+
   loadingText: {
     color: COLORS.gray,
     fontSize: 16,

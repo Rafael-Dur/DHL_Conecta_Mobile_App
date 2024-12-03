@@ -74,7 +74,7 @@ const ResetPasswordScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <HeaderContainer>
-        <Header title="Cambiar contraseña"/>
+        <Header title="Cambiar contraseña" />
       </HeaderContainer>
 
       <BodyContainer>
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
+    flex: 1,
   },
   loadingText: {
     color: COLORS.gray,

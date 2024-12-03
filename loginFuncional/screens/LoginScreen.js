@@ -8,7 +8,7 @@ import ErrorModal from '../components/ErrorModal';
 import HeaderContainer from '../components/HeaderContainer';
 import BodyContainer from '../components/BodyContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser,responseMessage, clearError } from '../features/auth/authSlice';
+import { loginUser, responseMessage, clearError } from '../features/auth/authSlice';
 import { COLORS } from '../constants/constants';
 
 export default function LoginScreen({ navigation }) {
@@ -20,7 +20,7 @@ export default function LoginScreen({ navigation }) {
   const handleLogin = () => {
     const loginData = { email, password };
     dispatch(loginUser(loginData));
-     };
+  };
 
   const handleCloseModal = () => {
     dispatch(clearError());
@@ -67,21 +67,21 @@ export default function LoginScreen({ navigation }) {
           clickeableText="Regístrate ahora"
           styleType="link"
         />
-          <ClickeableText
+        <ClickeableText
           navigation={navigation}
           onPress={() => navigation.navigate('ServiceSelection')}
           title="Ver Servicios"
           clickeableText="Ir"
           styleType="link"
         />
-  
+
         {loading && <Text style={styles.loadingText}>Cargando...</Text>}
 
         <ErrorModal
           visible={!!error} // Mostrar el modal si hay un error
           title="¡Hubo un problema!"
-          subtitle= "No hemos podido iniciar sesión." 
-          message= {typeof error === 'string' ? error : 'No se ha podido iniciar sesión.'}        
+          subtitle="No hemos podido iniciar sesión."
+          message={typeof error === 'string' ? error : 'No se ha podido iniciar sesión.'}
           onClose={handleCloseModal}
         />
       </BodyContainer>
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
+    flex: 1,
   },
   loadingText: {
     color: COLORS.white,

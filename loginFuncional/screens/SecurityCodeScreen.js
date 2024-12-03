@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
+    flex: 1,
   },
   instructionText: {
     color: COLORS.red,
