@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import InternalHeader from '../components/InternalHeader';
 
 const packageIcon = require('../assets/package-icon.png');
 const documentIcon = require('../assets/document-icon.png');
@@ -12,10 +13,8 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <Image source={dhlLogo} style={styles.logo} />
-      </View>
-
+      <InternalHeader showBackButton={true} />
+    
       {/* Mensaje de bienvenida */}
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeText}>¡Bienvenido!</Text>
@@ -49,7 +48,7 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.bottomNav}>
         <MaterialIcons name="location-on" size={30} color="#C00" />
         <MaterialIcons name="notifications" size={30} color="#C00" />
-        <TouchableOpacity onPress={() => navigation.navigate('NewShipment')}>
+        <TouchableOpacity onPress={() => navigation.navigate('ShipmentPage')}>
           <MaterialIcons name="add-circle" size={50} color="#C00" />
         </TouchableOpacity>
         <MaterialIcons name="local-shipping" size={30} color="#C00" />

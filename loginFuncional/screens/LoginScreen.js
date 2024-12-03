@@ -13,7 +13,7 @@ import { COLORS } from '../constants/constants';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('popo@gmail.com');
-  const [password, setPassword] = useState('Dhl12345!!');
+  const [password, setPassword] = useState('Dhl12345!');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const dispatch = useDispatch();
   const { response, error, jwtToken, loading } = useSelector((state) => state.auth);
@@ -29,7 +29,7 @@ export default function LoginScreen({ navigation }) {
   // Efecto para redirigir si el inicio de sesión es exitoso
   useEffect(() => {
     if (jwtToken) {
-      navigation.navigate('ShipmentPage');
+      navigation.navigate('Home');
     }
   }, [jwtToken, navigation]);
 

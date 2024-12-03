@@ -1,15 +1,16 @@
- import React from "react";
+import React from "react";
 import { StyleSheet, Text, ScrollView, View } from "react-native";
 import ServiceCard from "../components/ServiceCard";
 import BodyContainer from "../components/BodyContainer";
 import { COLORS } from "../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { setShipmentData, createShipment } from "../features/Shipments/ShipmentSlice";
+import InternalHeader from '../components/InternalHeader';
 
 export default function ServiceSelection() {
   const dispatch = useDispatch();
   const { success, error, loading, shipment } = useSelector((state) => state.shipments);
-  
+
   const services = [
     {
       title: "Regalos Familiares",
@@ -82,9 +83,9 @@ export default function ServiceSelection() {
 
   };
 
-
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <internalHeader showBackButton={true} />
       <BodyContainer isGrayBackground={true}>
         <Text style={styles.headerText}>Comenzar envío</Text>
         {services.map((service, index) => (
