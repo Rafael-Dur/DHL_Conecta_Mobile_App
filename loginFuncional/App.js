@@ -14,6 +14,12 @@ import SecurityCodeScreen from './screens/SecurityCodeScreen';
 import HomeScreen from './screens/HomeScreen';
 import NewShipment from './components/NewShipment';
 import ServiceSelection from './screens/ServiceSelection';
+import { LogBox } from 'react-native';
+
+// Ignorar advertencia específica
+LogBox.ignoreLogs([
+  'CountryModal: Support for defaultProps will be removed',
+]);
 
 const Stack = createStackNavigator();
 
