@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Button from '../components/Button';
 import InputField from '../components/InputField';
@@ -9,12 +9,19 @@ import BodyContainer from '../components/BodyContainer';
 import HeaderContainer from '../components/HeaderContainer';
 import { COLORS, FONT_SIZES } from '../constants/constants';
 import QuantitySelector from '../components/QuantitySelector';
+import ArticlesModal from '../components/ArticlesModal';
+import ClickeableText from '../components/ClickeableText';
+import ButtonGroup from '../components/ButtonGroup';
 
 const ShipmentForm4 = () => {
   const [description, setDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [value, setValue] = useState('');
   const [quantity, setQuantity] = useState(1);
+  const [items, setItems] = useState([]);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalValue, setTotalValue] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const categories = [
     { label: 'Electrónica', value: 'electronica' },
@@ -27,24 +34,48 @@ const ShipmentForm4 = () => {
     if (!description.trim() || !selectedCategory || !value.trim() || quantity <= 0) {
       return Alert.alert('Error', 'Por favor, complete todos los campos antes de agregar.');
     }
-    Alert.alert(
-      'Artículo agregado',
-      `Descripción: ${description}, Categoría: ${selectedCategory}, Valor: ${value}, Cantidad: ${quantity}`
-    );
+
+    const newItem = {
+      description,
+      category: selectedCategory,
+      value: parseFloat(value),
+      quantity,
+    };
+
+    setItems([...items, newItem]);
+    setTotalQuantity(totalQuantity + quantity);
+    setTotalValue(totalValue + newItem.value * quantity);
+
+    // Reset fields
     setDescription('');
     setSelectedCategory('');
     setValue('');
     setQuantity(1);
+
+    Alert.alert('Artículo agregado', 'El artículo fue añadido al envío.');
   };
 
+  const toggleModal = () => setIsModalVisible(!isModalVisible);
+
+  const removeItem = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    const updatedTotalQuantity = updatedItems.reduce((sum, item) => sum + item.quantity, 0);
+    const updatedTotalValue = updatedItems.reduce((sum, item) => sum + item.value * item.quantity, 0);
+
+    setItems(updatedItems);
+    setTotalQuantity(updatedTotalQuantity);
+    setTotalValue(updatedTotalValue);
+  };
+
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.bodyContainer}>
         <Text style={styles.title}>Completa los datos </Text>
         <Text style={styles.infoText}>Declara cada artículo: </Text>
 
         <View style={styles.card}>
-          {/* Descripción */}
+
           <Text style={styles.label}>Descripción </Text>
           <InputField
             placeholder="Label/Placeholder"
@@ -53,7 +84,7 @@ const ShipmentForm4 = () => {
           />
           <Text style={styles.additionalInfo}>Información adicional</Text>
 
-          {/* Categoría */}
+
           <Text style={styles.label}>Selecciona una categoría </Text>
           <View style={styles.pickerContainer}>
             <Picker
@@ -68,7 +99,7 @@ const ShipmentForm4 = () => {
           </View>
           <Text style={styles.additionalInfo}>Información adicional</Text>
 
-          {/* Valor y Cantidad */}
+
           <View style={styles.row}>
             <View style={styles.columnLeft}>
               <Text style={styles.label}>Valor (USD)</Text>
@@ -85,40 +116,65 @@ const ShipmentForm4 = () => {
             </View>
           </View>
 
-          {/* Agregar botón */}
+
           <View style={styles.addButtonContainer}>
             <Text style={styles.addButtonText}>Agregar</Text>
-            <View style={styles.addButtonWrapper}>
-              <Button title="+" onPress={handleAddItem} />
+            <View>
+              <Button title="+" styleType="small" onPress={handleAddItem} />
             </View>
           </View>
 
         </View>
 
-        {/* Resumen */}
+
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Artículos: 4 | Valor total: USD 75</Text>
-          <Text style={styles.viewArticles}>Ver artículos</Text>
+          <Text style={styles.footerText}>
+            Artículos: {totalQuantity} | Valor total: USD {totalValue.toFixed(2)}
+          </Text>
+
+          <ClickeableText
+            onPress={toggleModal}
+            clickeableText="Ver artículos"
+            styleType="link"
+            singleLink
+          />
         </View>
 
+
         {/* Botones de navegación */}
-        <View style={styles.navigationButtons}>
-          <Button title="Atrás" onPress={() => Alert.alert('Atrás presionado')} />
-          <Button title="Siguiente" onPress={() => Alert.alert('Siguiente presionado')} />
-        </View>
+
+        <ButtonGroup
+          leftButtonTitle="Atrás"
+          onLeftPress={() => Alert.alert('Atrás presionado')}
+          leftStyleType="outlined"
+          rightButtonTitle="Siguiente"
+          onRightPress={() => Alert.alert('Siguiente presionado')}
+        />
+
+
+        <ArticlesModal
+          isVisible={isModalVisible}
+          items={items}
+          totalQuantity={totalQuantity}
+          totalValue={totalValue}
+          onClose={toggleModal}
+          onRemoveItem={removeItem}
+        />
+
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     paddingHorizontal: 20,
+    paddingTop: 80, //cambiar esto cuando esté el banner
   },
   bodyContainer: {
     flex: 1,
@@ -139,7 +195,7 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     width: '100%',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: COLORS.grey,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -156,7 +212,7 @@ const styles = StyleSheet.create({
     maxWidth: 350,
   },
   card: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: COLORS.grey,
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
@@ -165,10 +221,10 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold',
     marginBottom: 5,
-    color: 'black',
+    color: COLORS.black,
   },
   additionalInfo: {
-    color: 'gray',
+    color: COLORS.grey,
     fontSize: 12,
     marginBottom: 10,
   },
@@ -198,12 +254,9 @@ const styles = StyleSheet.create({
   addButtonText: {
     fontSize: FONT_SIZES.medium,
     fontWeight: 'bold',
-    //marginRight: 10,
+    marginLeft: 10,
     color: COLORS.black,
-  },
-  addButtonWrappers: {
-    maxWidth: 40, // Tamaño del botón
-    maxHeight: 40,
+    marginTop: 15,
   },
 
   footer: {
@@ -221,8 +274,9 @@ const styles = StyleSheet.create({
   },
   navigationButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    justifyContent: 'center',
+    width: '80%',
+    maxWidth: 150,
   },
 });
 

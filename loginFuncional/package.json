@@ -21,6 +21,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.76.3",
     "react-native-elements": "^3.4.3",
+    "react-native-picker": "^4.3.7",
     "react-native-web": "~0.19.10"
   },
   "devDependencies": {

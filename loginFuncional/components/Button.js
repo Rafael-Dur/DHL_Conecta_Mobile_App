@@ -24,7 +24,7 @@ const getStyles = (styleType) => {
           paddingHorizontal: 10,
           borderRadius: 7,
           marginTop: 20,
-          width: '100%', 
+          width: '100%',
           maxHeight: 40,
           maxWidth: 800,
           alignItems: 'center',
@@ -32,12 +32,35 @@ const getStyles = (styleType) => {
           outlineColor: COLORS.red,
           marginRight: 25,
           marginLeft: 25,
-          
+
         },
         buttonText: {
           color: COLORS.red,
           fontSize: 14,
           fontWeight: 'bold',
+        },
+      });
+    case 'small':
+      return StyleSheet.create({
+        button: {
+          backgroundColor: COLORS.red,
+          paddingVertical: 10,
+          paddingHorizontal: 10,
+          borderRadius: 7,
+          marginTop: 20,
+          width: '100%',
+          maxHeight: 40,
+          maxWidth: 40,
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginLeft: 25,
+
+        },
+        buttonText: {
+          color: COLORS.white,
+          fontSize: 16,
+          fontWeight: 'bold',
+          alignContent: 'center',
         },
       });
     default:
@@ -48,7 +71,7 @@ const getStyles = (styleType) => {
           paddingHorizontal: 10,
           borderRadius: 7,
           marginTop: 20,
-          width: '100%', 
+          width: '100%',
           maxHeight: 40,
           maxWidth: 350,
           alignItems: 'center',
