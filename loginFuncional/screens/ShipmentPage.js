@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createShipment, updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import { View, Text, TextInput, Button, ActivityIndicator } from "react-native";
+import InternalHeader from "../components/InternalHeader";
 
 const ShipmentPage = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,9 @@ const ShipmentPage = () => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+
+      <View style={{ padding: 20 }}>
+        <InternalHeader showBackButton = {true}/> 
       <Text style={{ fontSize: 24, fontWeight: "bold" }}>Crear Envío</Text>
       
       {/* Input para actualizar el nombre del remitente */}

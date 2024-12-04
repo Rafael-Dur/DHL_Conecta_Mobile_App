@@ -3,8 +3,10 @@ import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons"; // Asegúrate de instalar este paquete
 import { COLORS } from "../constants/constants";
+import { useNavigation } from '@react-navigation/native';
 
-const Header = ({ showBackButton, onBackPress }) => {
+const Header = ({ showBackButton }) => {
+    const navigation = useNavigation();
   return (
     <LinearGradient
       colors={["#FFF0B2", "#FFDE59", "#FFCC00", "#FFCC00"]}
@@ -13,7 +15,7 @@ const Header = ({ showBackButton, onBackPress }) => {
       style={styles.header}
     >
       {showBackButton && (
-        <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Ionicons name="chevron-back" size={24} color={COLORS.red} />
         </TouchableOpacity>
       )}

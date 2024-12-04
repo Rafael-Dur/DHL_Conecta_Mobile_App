@@ -85,7 +85,7 @@ export default function ServiceSelection() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <internalHeader showBackButton={true} />
+      <InternalHeader showBackButton={true} />
       <BodyContainer isGrayBackground={true}>
         <Text style={styles.headerText}>Comenzar envío</Text>
         {services.map((service, index) => (
