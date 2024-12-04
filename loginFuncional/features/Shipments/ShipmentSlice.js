@@ -4,9 +4,10 @@ import axiosShipmentInstance from '../../api/axiosShipmentsInstance';
 // Acción para crear el envío
 export const createShipment = createAsyncThunk(
   'shipments/createShipment',
-  async (shipmentData, { rejectWithValue }) => {
+  async (shipmentData, {getState, rejectWithValue }) => {
     try {
-      const response = await axiosShipmentInstance.post('/api/v1/shipments/packages', shipmentData);
+      const { shipments } = getState();
+      const response = await axiosShipmentInstance.post('/api/v1/shipments/packages', shipments);
       return response.data; // Devuelve los datos si es exitoso
     } catch (error) {
       if (error.response) {
@@ -40,7 +41,7 @@ const initialState = {
   shipmentPackageType: 1,
   shippingMethod: 1,
   sender: {
-    name: 'PRUEBA!!!',
+    name: 'init',
     address: 'Caldas 1234',
     country: 'Uruguay',
     postalCode: '11900',

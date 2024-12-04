@@ -13,18 +13,19 @@ export default function HomeScreen({ navigation }) {
   const { width } = useWindowDimensions();
   const [selectedCard, setSelectedCard] = useState(null); // Estado local para la tarjeta seleccionada
   const dispatch = useDispatch();
-  const shipment = useSelector((state) => state.shipment); // Selector para obtener el estado actual
+  const shipment = useSelector((state) => state.shipments); // Selector para obtener el estado actual
 
   // Maneja la selección de una tarjeta
   const handleCardPress = (type) => {
     setSelectedCard(type);
-    dispatch(updateShipmentField({ key: "shipmentType", value: type })); // Actualiza el campo en el store
+    dispatch(updateShipmentField ({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
   };
 
   // Navegación basada en la selección
   const handleAddButtonPress = () => {
     if (selectedCard === ShipmentType.Package) {
       navigation.navigate("ServiceSelection"); // Página específica para paquetes
+      //      navigation.navigate("ServiceSelection"); // Página específica para paquetes
     } else if (selectedCard === ShipmentType.Document) {
       navigation.navigate("ShipmentPage"); // Página específica para paquetes
     } else {
@@ -32,15 +33,7 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
-  const handleSelection = (type) => {
-    // Navegación basada en el tipo de envío
-    if (type === ShipmentType.Package) {
-      navigation.navigate("ShipmentSelection");
-    } else if (type === ShipmentType.Document) {
-      navigation.navigate("ShipmentPage");
-    }
-  };
-
+ 
   return (
     <View style={styles.container}>
       {/* Header */}
