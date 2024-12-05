@@ -12,8 +12,8 @@ import { loginUser, responseMessage, clearError } from '../features/auth/authSli
 import { COLORS } from '../constants/constants';
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('popo@gmail.com');
+  const [password, setPassword] = useState('Dhl12345!');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const dispatch = useDispatch();
   const { response, error, jwtToken, loading } = useSelector((state) => state.auth);
@@ -69,7 +69,7 @@ export default function LoginScreen({ navigation }) {
         />
         <ClickeableText
           navigation={navigation}
-          onPress={() => navigation.navigate('ServiceSelection')}
+          onPress={() => navigation.navigate('PaymentMethodScreen')}
           title="Ver Servicios"
           clickeableText="Ir"
           styleType="link"

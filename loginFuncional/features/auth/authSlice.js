@@ -40,7 +40,7 @@ export const logoutUser = createAsyncThunk(
       const response = await axiosInstance.post('/api/v1/auth/logout');
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || error.message);
+      return rejectWithValue(error  .response?.data || error.message);
     }
   }
 );

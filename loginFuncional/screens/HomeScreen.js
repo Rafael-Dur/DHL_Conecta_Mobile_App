@@ -1,20 +1,43 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Alert } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux"; // Redux hooks
+import InternalHeader from "../components/InternalHeader";
+import { ShipmentType } from "../constants/enums";
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice"; // Importa la acción
 
-const packageIcon = require('../assets/package-icon.png');
-const documentIcon = require('../assets/document-icon.png');
-const dhlLogo = require('../assets/LogoDHL.png');
+const packageIcon = require("../assets/package-icon.png");
+const documentIcon = require("../assets/document-icon.png");
 
 export default function HomeScreen({ navigation }) {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
+  const [selectedCard, setSelectedCard] = useState(null); // Estado local para la tarjeta seleccionada
+  const dispatch = useDispatch();
+  const shipment = useSelector((state) => state.shipments); // Selector para obtener el estado actual
 
+  // Maneja la selección de una tarjeta
+  const handleCardPress = (type) => {
+    setSelectedCard(type);
+    dispatch(updateShipmentField ({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
+  };
+
+  // Navegación basada en la selección
+  const handleAddButtonPress = () => {
+    if (selectedCard === ShipmentType.Package) {
+      navigation.navigate("ServiceSelection"); // Página específica para paquetes
+      //      navigation.navigate("ServiceSelection"); // Página específica para paquetes
+    } else if (selectedCard === ShipmentType.Document) {
+      navigation.navigate("ShipmentPage"); // Página específica para paquetes
+    } else {
+      Alert.alert("Error", "Por favor selecciona un tipo de envío antes de continuar.");
+    }
+  };
+
+ 
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <Image source={dhlLogo} style={styles.logo} />
-      </View>
+      <InternalHeader showBackButton={false} />
 
       {/* Mensaje de bienvenida */}
       <View style={styles.welcomeContainer}>
@@ -25,7 +48,14 @@ export default function HomeScreen({ navigation }) {
       {/* Tarjetas de opciones */}
       <View style={styles.cardContainer}>
         {/* Tarjeta de Paquete */}
-        <TouchableOpacity style={[styles.card, { width: width * 0.4 }]}>
+        <TouchableOpacity
+          style={[
+            styles.card,
+            { width: width * 0.4 },
+            selectedCard === ShipmentType.Package && styles.selectedCard, // Estilo seleccionado
+          ]}
+          onPress={() => handleCardPress(ShipmentType.Package)}
+        >
           <Image source={packageIcon} style={styles.cardIcon} />
           <Text style={styles.cardTitle}>Paquete</Text>
           <Text style={styles.cardDescription}>
@@ -35,7 +65,14 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
 
         {/* Tarjeta de Documento */}
-        <TouchableOpacity style={[styles.card, { width: width * 0.4 }]}>
+        <TouchableOpacity
+          style={[
+            styles.card,
+            { width: width * 0.4 },
+            selectedCard === ShipmentType.Document && styles.selectedCard, // Estilo seleccionado
+          ]}
+          onPress={() => handleCardPress(ShipmentType.Document)}
+        >
           <Image source={documentIcon} style={styles.cardIcon} />
           <Text style={styles.cardTitle}>Documento</Text>
           <Text style={styles.cardDescription}>
@@ -49,7 +86,7 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.bottomNav}>
         <MaterialIcons name="location-on" size={30} color="#C00" />
         <MaterialIcons name="notifications" size={30} color="#C00" />
-        <TouchableOpacity onPress={() => navigation.navigate('NewShipment')}>
+        <TouchableOpacity onPress={handleAddButtonPress}>
           <MaterialIcons name="add-circle" size={50} color="#C00" />
         </TouchableOpacity>
         <MaterialIcons name="local-shipping" size={30} color="#C00" />
@@ -62,82 +99,74 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
-    alignItems: 'center',
-  },
-  header: {
-    backgroundColor: '#FFD700',
-    width: '100%',
-    paddingVertical: '5%',
-    alignItems: 'center',
-  },
-  logo: {
-    width: '30%',
-    height: undefined,
-    aspectRatio: 3,
-    resizeMode: 'contain',
+    backgroundColor: "#f4f4f4",
+    alignItems: "center",
   },
   welcomeContainer: {
-    marginVertical: '5%',
-    alignItems: 'center',
+    marginVertical: "5%",
+    alignItems: "center",
   },
   welcomeText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
   },
   subText: {
     fontSize: 18,
-    color: '#555',
+    color: "#555",
     marginTop: 5,
   },
   cardContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: '5%',
-    width: '90%',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: "5%",
+    width: "90%",
   },
   card: {
-    backgroundColor: '#fff',
-    padding: '5%',
+    backgroundColor: "#fff",
+    padding: "5%",
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
+  },
+  selectedCard: {
+    borderColor: "#C00",
+    borderWidth: 2,
   },
   cardIcon: {
     width: 60,
     height: 60,
     marginBottom: 10,
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#C00',
+    fontWeight: "bold",
+    color: "#C00",
     marginBottom: 5,
   },
   cardDescription: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 12,
-    color: '#777',
+    color: "#777",
   },
   infoIcon: {
     marginTop: 10,
   },
   bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    width: "100%",
     paddingVertical: 10,
     borderTopWidth: 1,
-    borderColor: '#ddd',
-    position: 'absolute',
+    borderColor: "#ddd",
+    position: "absolute",
     bottom: 0,
   },
 });

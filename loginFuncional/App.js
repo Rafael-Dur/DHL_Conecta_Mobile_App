@@ -14,12 +14,9 @@ import SecurityCodeScreen from './screens/SecurityCodeScreen';
 import HomeScreen from './screens/HomeScreen';
 import NewShipment from './components/NewShipment';
 import ServiceSelection from './screens/ServiceSelection';
-import { LogBox } from 'react-native';
+import ShipmentPage from './screens/ShipmentPage';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
 
-// Ignorar advertencia específica
-LogBox.ignoreLogs([
-  'CountryModal: Support for defaultProps will be removed',
-]);
 
 const Stack = createStackNavigator();
 
@@ -102,6 +99,16 @@ export default function App() {
             <Stack.Screen
               name="ServiceSelection"
               component={ServiceSelection}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ShipmentPage"
+              component={ShipmentPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="PaymentMethodScreen"
+              component={PaymentMethodScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
