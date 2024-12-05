@@ -69,7 +69,7 @@ export default function LoginScreen({ navigation }) {
         />
           <ClickeableText
           navigation={navigation}
-          onPress={() => navigation.navigate('ServiceSelection')}
+          onPress={() => navigation.navigate('PaymentMethodScreen')}
           title="Ver Servicios"
           clickeableText="Ir"
           styleType="link"

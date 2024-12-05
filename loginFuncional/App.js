@@ -15,6 +15,7 @@ import HomeScreen from './screens/HomeScreen';
 import NewShipment from './components/NewShipment';
 import ServiceSelection from './screens/ServiceSelection';
 import ShipmentPage from './screens/ShipmentPage';
+import PaymentMethodScreen from './screens/PaymentMethodScreen';
 
 
 const Stack = createStackNavigator();
@@ -103,6 +104,11 @@ export default function App() {
             <Stack.Screen
               name="ShipmentPage"
               component={ShipmentPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="PaymentMethodScreen"
+              component={PaymentMethodScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
