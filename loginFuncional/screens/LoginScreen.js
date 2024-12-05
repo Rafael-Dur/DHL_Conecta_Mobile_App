@@ -77,6 +77,17 @@ export default function LoginScreen({ navigation }) {
 
         {loading && <Text style={styles.loadingText}>Cargando...</Text>}
 
+        <ClickeableText
+          navigation={navigation}
+          onPress={() => navigation.navigate('ShipmentForm4')}
+          clickeableText="ShipmentForm4"
+          styleType="link"
+          singleLink
+        />
+
+        <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
+          <Text style={styles.errorButtonText}>Error Modal</Text>
+        </TouchableOpacity>
         <ErrorModal
           visible={!!error} // Mostrar el modal si hay un error
           title="¡Hubo un problema!"
