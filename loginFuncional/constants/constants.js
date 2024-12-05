@@ -3,7 +3,7 @@ export const COLORS = {
   black: "#000000",
   red: "#9A0000",
   yellow: "#FFCC00",
-  grey: "#f9f9f9",
+  grey: "#8C8C8C",
 };
 
 export const FONT_SIZES = {
