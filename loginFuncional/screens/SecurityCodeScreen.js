@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text, StyleSheet, Alert } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  Text,
+  StyleSheet,
+  Alert,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import OTPTextInput from 'react-native-otp-textinput';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
-import InputField from '../components/InputField';
 import Header from '../components/Header';
 import BackButton from '../components/BackButton';
 import ClickeableText from '../components/ClickeableText';
@@ -15,6 +24,7 @@ const SecurityCodeScreen = () => {
   const storedCode = useSelector((state) => state.account.code); // Código almacenado en Redux
   const [securityCode, setSecurityCode] = useState('');
   const navigation = useNavigation();
+  let otpInput = null;
 
   // Sincroniza el código almacenado con el estado local
   useEffect(() => {
@@ -46,44 +56,77 @@ const SecurityCodeScreen = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <HeaderContainer>
-        <Header title="Ingrese código" title2="de seguridad" />
-      </HeaderContainer>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+        >
+          <HeaderContainer>
+            <Header title="Ingrese código" title2="de seguridad" />
+          </HeaderContainer>
 
-      <BodyContainer>
-        <BackButton onPress={() => navigation.goBack()} />
-        <InputField
-          placeholder="Ingrese el código aquí"
-          value={securityCode}
-          onChangeText={setSecurityCode}
-          keyboardType="numeric"
-        />
+          <BodyContainer>
+            <BackButton onPress={() => navigation.goBack()} />
 
-        <Text style={styles.instructionText}>
-          Accede a tu correo electrónico{"\n"}para obtener el código de recuperación.
-        </Text>
+            <OTPTextInput
+              ref={(e) => (otpInput = e)}
+              inputCount={6}
+              handleTextChange={setSecurityCode}
+              containerStyle={styles.otpContainer}
+              textInputStyle={styles.otpInput}
+            />
 
-        <Button title="Continuar" onPress={handleContinue} />
+            <Text style={styles.instructionText}>
+              Accede a tu correo electrónico{"\n"}para obtener el código de recuperación.
+            </Text>
 
-        <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate('Support')}
-          title="¿Problemas?"
-          clickeableText="Contáctanos"
-          styleType="link"
-        />
-      </BodyContainer>
-    </ScrollView>
+            <Button title="Continuar" onPress={handleContinue} />
+
+            <ClickeableText
+              navigation={navigation}
+              onPress={() => navigation.navigate('Support')}
+              title="¿Problemas?"
+              clickeableText="Contáctanos"
+              styleType="link"
+            />
+          </BodyContainer>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   scrollContainer: {
     backgroundColor: COLORS.white,
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
+    flexGrow: 1,
+  },
+  otpContainer: {
+    marginVertical: 10,
+    width: '80%',
+    alignSelf: 'center',
+  },
+  otpInput: {
+    borderWidth: 1,
+    borderColor: COLORS.red,
+    borderRadius: 5,
+    backgroundColor: COLORS.white,
+    color: COLORS.black,
+    fontSize: FONT_SIZES.medium,
+    textAlign: 'center',
+    width: 50,
+    height: 50,
+    marginHorizontal: 5,
     flex: 1,
   },
   instructionText: {
