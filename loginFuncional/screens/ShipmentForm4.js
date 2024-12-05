@@ -12,6 +12,7 @@ import QuantitySelector from '../components/QuantitySelector';
 import ArticlesModal from '../components/ArticlesModal';
 import ClickeableText from '../components/ClickeableText';
 import ButtonGroup from '../components/ButtonGroup';
+import InternalHeader from '../components/InternalHeader';
 
 const ShipmentForm4 = () => {
   const [description, setDescription] = useState('');
@@ -70,8 +71,9 @@ const ShipmentForm4 = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <InternalHeader></InternalHeader>
       <View style={styles.bodyContainer}>
-        <Text style={styles.title}>Completa los datos </Text>
+        <Text style={styles.title}>Completa los datos</Text>
         <Text style={styles.infoText}>Declara cada artículo: </Text>
 
         <View style={styles.card}>
@@ -173,8 +175,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    paddingHorizontal: 20,
-    paddingTop: 80, //cambiar esto cuando esté el banner
+    //paddingHorizontal: 20,
+    //paddingTop: 80, //cambiar esto cuando esté el banner
   },
   bodyContainer: {
     flex: 1,
@@ -187,6 +189,7 @@ const styles = StyleSheet.create({
   title: {
     alignSelf: 'center',
     marginBottom: 10,
+    marginTop: 20,
     fontWeight: 'bold',
     color: COLORS.black,
     fontSize: FONT_SIZES.large,
@@ -195,7 +198,7 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     width: '100%',
-    backgroundColor: COLORS.grey,
+    backgroundColor: COLORS.white,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -205,6 +208,7 @@ const styles = StyleSheet.create({
   infoText: {
     alignSelf: 'center',
     marginBottom: 10,
+    marginTop: 10,
     fontWeight: 'bold',
     color: COLORS.black,
     fontSize: FONT_SIZES.medium,
@@ -212,7 +216,7 @@ const styles = StyleSheet.create({
     maxWidth: 350,
   },
   card: {
-    backgroundColor: COLORS.grey,
+    backgroundColor: COLORS.gray,
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
