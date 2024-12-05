@@ -13,6 +13,8 @@ import ArticlesModal from '../components/ArticlesModal';
 import ClickeableText from '../components/ClickeableText';
 import ButtonGroup from '../components/ButtonGroup';
 import InternalHeader from '../components/InternalHeader';
+import { useNavigation } from '@react-navigation/native';
+
 
 const ShipmentForm4 = () => {
   const [description, setDescription] = useState('');
@@ -23,6 +25,7 @@ const ShipmentForm4 = () => {
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   const categories = [
     { label: 'Electrónica', value: 'electronica' },
@@ -147,7 +150,7 @@ const ShipmentForm4 = () => {
 
         <ButtonGroup
           leftButtonTitle="Atrás"
-          onLeftPress={() => Alert.alert('Atrás presionado')}
+          onLeftPress={() => navigation.navigate('ShipmentForm3')}
           leftStyleType="outlined"
           rightButtonTitle="Siguiente"
           onRightPress={() => Alert.alert('Siguiente presionado')}
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: COLORS.white,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: COLORS.black,
     borderRadius: 5,
     marginBottom: 10,
     maxWidth: 350,

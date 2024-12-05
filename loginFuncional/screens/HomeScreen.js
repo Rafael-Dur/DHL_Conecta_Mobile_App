@@ -18,7 +18,7 @@ export default function HomeScreen({ navigation }) {
   // Maneja la selección de una tarjeta
   const handleCardPress = (type) => {
     setSelectedCard(type);
-    dispatch(updateShipmentField ({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
+    dispatch(updateShipmentField({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
   };
 
   // Navegación basada en la selección
@@ -33,7 +33,7 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
- 
+
   return (
     <View style={styles.container}>
       {/* Header */}

@@ -12,7 +12,10 @@ export default function InputField({
   secureTextEntry = false,
   iconName,
   setSecureTextEntry,
+  styleType,
 }) {
+  const styles = styleType === 'small' ? smallStyles : defaultStyles;
+
   return (
     <View style={styles.inputContainer}>
       {iconName && <Ionicons name={iconName} size={24} color="gray" />}
@@ -38,8 +41,8 @@ export default function InputField({
   );
 }
 
-const styles = StyleSheet.create({
-    inputContainer: {
+const defaultStyles = StyleSheet.create({
+  inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: '#000',
@@ -64,3 +67,32 @@ const styles = StyleSheet.create({
   },
 
 });
+
+const smallStyles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: COLORS.white,
+    width: '100%',
+    //marginLeft: 20,
+    //marginRight: 20,
+    marginBottom: 15,
+    maxHeight: 50,
+    maxWidth: 70,
+  },
+  input: {
+    flex: 1,
+    height: 60,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  iconContainer: {
+    padding: 5,
+  },
+
+});
+
+

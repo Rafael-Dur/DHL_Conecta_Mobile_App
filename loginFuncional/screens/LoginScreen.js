@@ -10,6 +10,7 @@ import BodyContainer from '../components/BodyContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, responseMessage, clearError } from '../features/auth/authSlice';
 import { COLORS } from '../constants/constants';
+import InternalHeader from '../components/InternalHeader';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('popo@gmail.com');
