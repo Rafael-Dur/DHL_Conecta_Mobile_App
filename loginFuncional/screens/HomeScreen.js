@@ -18,7 +18,7 @@ const ShipmentMethodScreen = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null); // Estado para la opción seleccionada
 
   // Maneja la selección de una tarjeta
-  const handleCardPress = (type) => {
+  const handleNextPress = (type) => {
     setSelectedCard(type);
     dispatch(updateShipmentField({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
   };

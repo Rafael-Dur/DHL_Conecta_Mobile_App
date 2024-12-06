@@ -18,12 +18,13 @@ const ShipmentMethodScreen = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null); // Estado para la opción seleccionada
 
   const handleNextPress = () => {
-    navigation.navigate("PaymentMethodScreen"); // Ajusta la navegación según tu flujo.
+    navigation.navigate("ShipmentForm3"); // Navegar a la siguiente pantalla y pasar la opción seleccionada
   };
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option); // Establecer la opción seleccionada
   };
+  
 
   return (
     <SafeAreaView style={styles.safeContainer}>
@@ -80,7 +81,7 @@ const ShipmentMethodScreen = ({ navigation }) => {
 
         {/* Botón siguiente */}
         <Button
-          onPress={handleNextPress}
+          onPress={() => handleNextPress()} 
           title="Siguiente"
           styleType="default"
         />
