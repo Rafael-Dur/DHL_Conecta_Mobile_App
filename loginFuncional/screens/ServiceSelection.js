@@ -8,6 +8,7 @@ import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import InternalHeader from '../components/InternalHeader';
 import { ShipmentPackageType } from "../constants/enums";
 
+
 export default function ServiceSelection({navigation}) {
   const dispatch = useDispatch();
   const { success, error, loading, shipment } = useSelector((state) => state.shipments);
@@ -44,7 +45,7 @@ const handleStore = (type) => {
 };
 const handleCardPress = (type) => {
   handleStore(type);
-  navigation.navigate("ShipmentPage"); 
+  navigation.navigate("ShipmentForm3"); 
 };
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>

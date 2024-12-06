@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Button from '../components/Button';
@@ -14,6 +14,8 @@ import ClickeableText from '../components/ClickeableText';
 import ButtonGroup from '../components/ButtonGroup';
 import InternalHeader from '../components/InternalHeader';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateShipmentField, fetchProductCategories } from "../features/Shipments/ShipmentSlice";
 
 
 const ShipmentForm4 = () => {
@@ -26,13 +28,15 @@ const ShipmentForm4 = () => {
   const [totalValue, setTotalValue] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { loading, success, error, DHLConfirmation, productCategories } = useSelector(
+    (state) => state.shipments
+  );
 
-  const categories = [
-    { label: 'Electrónica', value: 'electronica' },
-    { label: 'Ropa', value: 'ropa' },
-    { label: 'Libros', value: 'libros' },
-    { label: 'Alimentos', value: 'alimentos' },
-  ];
+  useEffect(() => {
+    dispatch(fetchProductCategories());
+  }, [dispatch]);
+
 
   const handleAddItem = () => {
     if (!description.trim() || !selectedCategory || !value.trim() || quantity <= 0) {
@@ -45,6 +49,8 @@ const ShipmentForm4 = () => {
       value: parseFloat(value),
       quantity,
     };
+
+
 
     setItems([...items, newItem]);
     setTotalQuantity(totalQuantity + quantity);
@@ -74,8 +80,8 @@ const ShipmentForm4 = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <InternalHeader></InternalHeader>
-      <View style={styles.bodyContainer}>
+      <InternalHeader showBackButton={true} />
+      <BodyContainer isGrayBackground>
         <Text style={styles.title}>Completa los datos</Text>
         <Text style={styles.infoText}>Declara cada artículo: </Text>
 
@@ -97,8 +103,10 @@ const ShipmentForm4 = () => {
               onValueChange={(itemValue) => setSelectedCategory(itemValue)}
             >
               <Picker.Item label="Seleccione una categoría" value="" />
-              {categories.map((category) => (
-                <Picker.Item label={category.label} value={category.value} key={category.value} />
+              {productCategories.map((category) => (
+                <Picker.Item label={`${category.name} - ${category.description}`} //{category.label} 
+                  value={category.id}
+                  key={category.id} />
               ))}
             </Picker>
           </View>
@@ -153,7 +161,7 @@ const ShipmentForm4 = () => {
           onLeftPress={() => navigation.navigate('ShipmentForm3')}
           leftStyleType="outlined"
           rightButtonTitle="Siguiente"
-          onRightPress={() => Alert.alert('Siguiente presionado')}
+          onRightPress={() => navigation.navigate('PaymentMethodScreen')}
         />
 
 
@@ -165,8 +173,7 @@ const ShipmentForm4 = () => {
           onClose={toggleModal}
           onRemoveItem={removeItem}
         />
-
-      </View>
+      </BodyContainer>
     </ScrollView>
   );
 };
@@ -174,7 +181,7 @@ const ShipmentForm4 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.gray,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',

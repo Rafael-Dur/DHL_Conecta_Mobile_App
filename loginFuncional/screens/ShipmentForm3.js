@@ -8,6 +8,9 @@ import InternalHeader from "../components/InternalHeader";
 import ClickeableText from '../components/ClickeableText';
 import ButtonGroup from '../components/ButtonGroup';
 import { useNavigation } from '@react-navigation/native';
+import { BoxType } from '../constants/enums';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 
 const ShipmentForm3 = () => {
     const [length, setLength] = useState('');
@@ -21,6 +24,8 @@ const ShipmentForm3 = () => {
     const [cost, setCost] = useState(0);
     const navigation = useNavigation();
     const packageIcon = require("../assets/package-icon.png");
+    const dispatch = useDispatch();
+    const { shipmentBox } = useSelector((state) => state.shipments);
 
     // Función para calcular el costo del envío
     const calculateShippingCost = () => {
@@ -55,12 +60,36 @@ const ShipmentForm3 = () => {
         calculateShippingCost();
     }, [length, width, height, weight, dimensionUnit, weightUnit]);
 
+    // Actualizar shipmentBox en el store
+    const handleStore = () => {
+        dispatch(
+            updateShipmentField({
+                key: "shipmentBox",
+                value: {
+                    boxType: BoxType.Box, // Por ejemplo, para tipo de caja
+                    length: parseFloat(length || 3),
+                    width: parseFloat(width || 3),
+                    height: parseFloat(height || 3),
+                    shipmentPackageUnit: dimensionUnit === "cm" ? 1 : 2, // 1 = cm, 2 = in
+                    weight: parseFloat(weight || 3),
+                    weightUnit: weightUnit === "kg" ? 1 : 2, // 1 = kg, 2 = lb
+                },
+            })
+        );
+    };
+    const handleNextButton = () => {
+        handleStore();
+        
+    console.log("DAtos de paquete:", shipmentBox);
+        navigation.navigate("ShipmentForm4");
+    };
+
     return (
         <View style={styles.container}>
-            <InternalHeader />
+            <InternalHeader  showBackButton={true}/>
             <Text style={styles.title}>¿Cómo lo envías?</Text>
             <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
-            <BodyContainer>
+            <BodyContainer isGrayBackground>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.card}>
                         <Image source={packageIcon} style={styles.cardIcon} />
@@ -143,7 +172,7 @@ const ShipmentForm3 = () => {
                     onLeftPress={() => navigation.goBack()}
                     leftStyleType="outlined"
                     rightButtonTitle="Siguiente"
-                    onRightPress={() => navigation.navigate('ShipmentForm4')}
+                    onRightPress={() => handleNextButton()}
                 />
             </BodyContainer>
         </View>
@@ -155,7 +184,7 @@ const ShipmentForm3 = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.gray,
         alignItems: 'center',
         justifyContent: 'center',
     },

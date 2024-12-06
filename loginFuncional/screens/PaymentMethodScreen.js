@@ -7,14 +7,16 @@ import {
   Alert,
   Image,
   useWindowDimensions,
+  ScrollView,
 } from "react-native";
 import InternalHeader from "../components/InternalHeader"; // Header
 import { COLORS } from "../constants/constants"; // Colores
-import Button from "../components/Button"; // Botón reutilizable
+import ButtonGroup from "../components/ButtonGroup"; // Grupo de botones
 import { Banks } from "../constants/enums"; // Enums de Bancos
 import ProgressIndicator from "../components/ProgressIndicator"; // Indicador de progreso
 import { useDispatch, useSelector } from "react-redux";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import BodyContainer from "../components/BodyContainer";
 
 const banks = [
   { id: Banks.BROU, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
@@ -30,16 +32,18 @@ export default function PaymentMethodScreen({ navigation }) {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
   const { success, error, loading, bank } = useSelector((state) => state.shipments);
+  const shipments = useSelector((state) => state.shipments);
+
 
   const handleBankSelect = (bankId) => {
     setSelectedBank(bankId); // Actualiza el estado local
     dispatch(updateShipmentField({ key: "bank", value: bankId })); // Actualiza el estado global
 
-    console.log("Banco seleccionado:", bank);
-
+    
   };
 
   const handlePayment = () => {
+    console.log("Datos hasta acá", shipments);
     if (selectedBank) {
       Alert.alert(
         "Pago realizado",
@@ -52,10 +56,11 @@ export default function PaymentMethodScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       {/* Header */}
       <InternalHeader showBackButton={true} /> 
       {/* Título */}
+      <BodyContainer isGrayBackground={true}>
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeText}>Medio de Pago</Text>
       </View>
@@ -83,20 +88,29 @@ export default function PaymentMethodScreen({ navigation }) {
       </View>
 
       {/* Botones */}
-      <View >
-           <Button title="Pagar" onPress={handlePayment} />
+  
+    </BodyContainer>
+    <View >
+           <ButtonGroup
+            leftButtonTitle="Volver"
+            onLeftPress= {() => navigation.goBack()}
+            leftStyleType="outlined"
+            rightButtonTitle="Pagar"
+            onRightPress={handlePayment}
+          />
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.lightGray, // Fondo similar al de inicio
-    alignItems: "center",
-    paddingHorizontal: 20,
+  scrollContainer: {
+    backgroundColor: COLORS.gray,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 20,
   },
+  
   welcomeContainer: {
     marginVertical: 10,
     alignItems: "center",
@@ -108,7 +122,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: 16,
-    color: COLORS.gray,
+    color: COLORS.black,
     marginTop: 5,
   },
   cardContainer: {

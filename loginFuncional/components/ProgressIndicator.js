@@ -35,8 +35,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 20,
+    justifyContent: 'space-between',
+    marginVertical: 40,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
     flex: 1,
   },
   pasoContainer: {
