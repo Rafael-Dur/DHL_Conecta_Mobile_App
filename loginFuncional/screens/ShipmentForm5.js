@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS, FONT_SIZES } from '../constants/constants';
 import InternalHeader from '../components/InternalHeader';
-import BodyContainer from '../components/BodyContainer'; // Importa BodyContainer
 import ButtonGroup from '../components/ButtonGroup';
-import { useNavigation } from '@react-navigation/native';
-import Checkbox from '../components/Checkbox'; // Importa el nuevo componente Checkbox
+import Checkbox from '../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 const ShipmentForm5 = () => {
+    const shipments = useSelector((state) => state.shipments); // Obtener datos desde Redux
     const navigation = useNavigation();
 
     const [checkboxStates, setCheckboxStates] = useState({
@@ -20,7 +21,7 @@ const ShipmentForm5 = () => {
         insurance: false, // Última opción para seguro
     });
 
-    const totalShippingCost = 125; // Costo inicial del envío
+    const totalShippingCost = 125; // Costo inicial del envío (puedes actualizar esto con datos reales)
     const insuranceCost = 15; // Costo del seguro
     const totalCost = checkboxStates.insurance
         ? totalShippingCost + insuranceCost
@@ -33,10 +34,14 @@ const ShipmentForm5 = () => {
         }));
     };
 
-
     const canProceed = Object.keys(checkboxStates)
         .filter((key) => key !== 'insurance') // Excluir seguro de la validación obligatoria
         .every((key) => checkboxStates[key]); // Verifica que todos los demás estén marcados
+
+    const sender = shipments.sender;
+    const receiver = shipments.receiver;
+    const shipmentBox = shipments.shipmentBox;
+    const shipmentItems = shipments.shipmentItems;
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -50,10 +55,10 @@ const ShipmentForm5 = () => {
                             <View style={styles.cardContent}>
                                 <View style={styles.edit}>
                                     <Text style={styles.sectionTitle}>De</Text>
-                                    <Text>Juan Perez</Text>
-                                    <Text>Av de las Americas 7777 BIS</Text>
-                                    <Text>MADRID, ES</Text>
-                                    <Text>+5981234567</Text>
+                                    <Text>{sender.name}</Text>
+                                    <Text>{sender.address}</Text>
+                                    <Text>{`${sender.city}, ${sender.country}`}</Text>
+                                    <Text>{sender.phoneNumber}</Text>
                                 </View>
 
                                 <TouchableOpacity onPress={() => navigation.navigate('ShipmentForm1')}>
@@ -63,10 +68,8 @@ const ShipmentForm5 = () => {
                                 <Checkbox
                                     value={checkboxStates.from}
                                     onChange={() => handleCheckboxChange('from')}
-
                                 />
                             </View>
-
                         </View>
 
                         {/* Sección "Para" */}
@@ -74,10 +77,10 @@ const ShipmentForm5 = () => {
                             <View style={styles.cardContent}>
                                 <View style={styles.edit}>
                                     <Text style={styles.sectionTitle}>Para</Text>
-                                    <Text>Roberto Perez</Text>
-                                    <Text>18 de Julio 12345</Text>
-                                    <Text>MONTEVIDEO, UY</Text>
-                                    <Text>+5981237676</Text>
+                                    <Text>{receiver.name}</Text>
+                                    <Text>{receiver.address}</Text>
+                                    <Text>{`${receiver.city}, ${receiver.country}`}</Text>
+                                    <Text>{receiver.phoneNumber}</Text>
                                 </View>
 
                                 <TouchableOpacity onPress={() => navigation.navigate('ShipmentForm2')}>
@@ -89,7 +92,6 @@ const ShipmentForm5 = () => {
                                     onChange={() => handleCheckboxChange('to')}
                                 />
                             </View>
-
                         </View>
 
                         {/* Sección "Paquete" */}
@@ -97,8 +99,8 @@ const ShipmentForm5 = () => {
                             <View style={styles.cardContent}>
                                 <View style={styles.edit}>
                                     <Text style={styles.sectionTitle}>Paquete</Text>
-                                    <Text>Carry On (20 Kg)</Text>
-                                    <Text>1 pieza (41.7 x 35.9 x 37.0 cm)</Text>
+                                    <Text>{`Peso: ${shipmentBox.weight} ${shipmentBox.weightUnit === 1 ? 'kg' : 'lb'}`}</Text>
+                                    <Text>{`Dimensiones: ${shipmentBox.length} x ${shipmentBox.width} x ${shipmentBox.height} ${shipmentBox.shipmentPackageUnit === 1 ? 'cm' : 'in'}`}</Text>
                                 </View>
 
                                 <TouchableOpacity onPress={() => navigation.navigate('ShipmentForm3')}>
@@ -110,7 +112,6 @@ const ShipmentForm5 = () => {
                                     onChange={() => handleCheckboxChange('package')}
                                 />
                             </View>
-
                         </View>
 
                         {/* Sección "Artículos" */}
@@ -118,8 +119,8 @@ const ShipmentForm5 = () => {
                             <View style={styles.cardContent}>
                                 <View style={styles.edit}>
                                     <Text style={styles.sectionTitle}>Artículos</Text>
-                                    <Text>Items: 4</Text>
-                                    <Text>Valor total: USD 75</Text>
+                                    <Text>{`Items: ${shipmentItems.length}`}</Text>
+                                    <Text>{`Valor total: USD ${shipmentItems.reduce((acc, item) => acc + item.value, 0)}`}</Text>
                                 </View>
 
                                 <TouchableOpacity onPress={() => navigation.navigate('ShipmentForm4')}>
@@ -131,7 +132,6 @@ const ShipmentForm5 = () => {
                                     onChange={() => handleCheckboxChange('items')}
                                 />
                             </View>
-
                         </View>
                     </View>
 
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: COLORS.white,
         borderRadius: 10,
-        padding: 5,
+        padding: 10,
         marginBottom: 15,
         shadowColor: COLORS.black,
         shadowOpacity: 0.1,
@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
     },
     cardContent: {
         flexDirection: 'row',
-        //justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: 10,
     },
@@ -227,7 +226,6 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     insuranceSection: {
-        //marginTop: 10,
         width: '100%',
     },
     insuranceRow: {
