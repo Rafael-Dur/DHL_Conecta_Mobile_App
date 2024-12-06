@@ -5,25 +5,37 @@ import { COLORS } from "../constants/constants";
 const ProgressBar = ({ currentStep }) => {
   return (
     <View style={styles.progressBar}>
-      {[1, 2, 3, 4, 5].map((step, index) => (
-        <View
-          key={index}
-          style={[
-            styles.stepCircle,
-            currentStep === step
-              ? styles.currentStep
-              : styles.upcomingStep,
-          ]}
-        >
-          <Text
+      {[1, 2, 3, 4, 5].map((step, index, steps) => (
+        <React.Fragment key={index}>
+          {/* Paso circular */}
+          <View
             style={[
-              styles.stepText,
-              currentStep === step && styles.currentStepText,
+              styles.stepCircle,
+              currentStep >= step
+                ? styles.currentStep
+                : styles.upcomingStep,
             ]}
           >
-            {step}
-          </Text>
-        </View>
+            <Text
+              style={[
+                styles.stepText,
+                currentStep >= step && styles.currentStepText,
+              ]}
+            >
+              {step}
+            </Text>
+          </View>
+
+          {/* Línea entre pasos */}
+          {index < steps.length - 1 && (
+            <View
+              style={[
+                styles.stepLine,
+                currentStep > step && styles.currentLine,
+              ]}
+            />
+          )}
+        </React.Fragment>
       ))}
     </View>
   );
@@ -32,7 +44,6 @@ const ProgressBar = ({ currentStep }) => {
 const styles = StyleSheet.create({
   progressBar: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 30,
   },
@@ -58,6 +69,14 @@ const styles = StyleSheet.create({
   },
   currentStepText: {
     color: "#fff",
+  },
+  stepLine: {
+    flex: 1, // Línea ajusta su tamaño al espacio restante
+    height: 2,
+    backgroundColor: "#d3d3d3",
+  },
+  currentLine: {
+    backgroundColor: COLORS.greenBright2,
   },
 });
 
