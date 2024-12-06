@@ -86,7 +86,8 @@ const ShipmentForm3 = () => {
         handleStore();
 
         console.log("Datos de paquete:", shipmentBox);
-        navigation.navigate("ShipmentForm4");
+        (shipmentPackageType === 2) ? navigation.navigate("ShipmentForm5") : navigation.navigate("ShipmentForm4")
+        
     };
 
     return (
