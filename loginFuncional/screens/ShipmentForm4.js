@@ -42,7 +42,7 @@ const ShipmentForm4 = () => {
     console.log("lista de articulos", items);
     dispatch(updateShipmentField({ key: "shipmentItems", value: items }));
 
-    navigation.navigate('PaymentMethodScreen');
+    navigation.navigate('ShipmentForm5');
   };
 
 

@@ -10,8 +10,10 @@ import ButtonGroup from '../components/ButtonGroup';
 import { useNavigation } from '@react-navigation/native';
 import { BoxType } from '../constants/enums';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import { updateShipmentField ,shipmentBox } from "../features/Shipments/ShipmentSlice";
 import ProgressBar from '../components/ProgressBar';
+//import { shipmentBox } from '../features/Shipments/ShipmentSlice';
+
 
 const ShipmentForm3 = () => {
     const [length, setLength] = useState('');
@@ -25,6 +27,16 @@ const ShipmentForm3 = () => {
     const [cost, setCost] = useState(0);
     const navigation = useNavigation();
     const packageIcon = require("../assets/package-icon.png");
+    const [selectedButton, setSelectedButton] = useState(null);
+    const dispatch = useDispatch();
+
+
+
+
+
+    const handlePress = (buttonId) => {
+        setSelectedButton(buttonId);
+    };
 
     // Función para calcular el costo del envío
     const calculateShippingCost = () => {
@@ -247,7 +259,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     boxButton: {
-        backgroundColor: COLORS.lightGray,
+        backgroundColor: COLORS.gray,
         padding: 15,
         borderRadius: 10,
         justifyContent: 'center',

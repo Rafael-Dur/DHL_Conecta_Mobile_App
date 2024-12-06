@@ -39,7 +39,7 @@ const ShipmentForm5 = () => {
 
     return (
         <View style={styles.container}>
-            <InternalHeader />
+            <InternalHeader showBackButton={true}/>
             <View style={styles.bodyContainer}>
                 <Text style={styles.title}>Revisa y confirma antes del pago</Text>
                 <View style={styles.cardContainer}>
@@ -54,7 +54,7 @@ const ShipmentForm5 = () => {
                                 <Text>+5981234567</Text>
                             </View>
 
-                            <TouchableOpacity onPress={() => navigation.navigate({/* pantalla de datos remitente */ })}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ShipmentForm1')}>
                                 <MaterialIcons name="edit" size={24} color={COLORS.red} />
                             </TouchableOpacity>
 
@@ -78,7 +78,7 @@ const ShipmentForm5 = () => {
                                 <Text>+5981237676</Text>
                             </View>
 
-                            <TouchableOpacity onPress={() => navigation.navigate({/* pantalla de datos destinatario */ })}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ShipmentForm2')}>
                                 <MaterialIcons name="edit" size={24} color={COLORS.red} />
                             </TouchableOpacity>
 
@@ -155,9 +155,8 @@ const ShipmentForm5 = () => {
                     leftStyleType="outlined"
                     rightButtonTitle="Siguiente"
                     onRightPress={() => {
-                        if (canProceed) {
-                            alert('Siguiente pantalla');
-                            //navigation.navigate(''); 
+                        if (canProceed) {                           
+                            navigation.navigate('PaymentMethodScreen'); 
                         } else {
                             alert('Debes seleccionar todas las casillas.');
                         }

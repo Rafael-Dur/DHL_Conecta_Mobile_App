@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
+    
+    
+    
   },
   loadingText: {
     color: COLORS.white,
