@@ -33,7 +33,8 @@ export default function PaymentMethodScreen({ navigation }) {
   const [selectedBank, setSelectedBank] = useState(null); // Estado local para el banco seleccionado
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { success, error, loading, DHLConfirmation } = useSelector((state) => state.shipments);
+  const { success, error, loading, DHLConfirmation  } = useSelector((state) => state.shipments);
+   const shipments = useSelector((state) => state.shipments);
 
   const handleBankSelect = (bankId) => {
     setSelectedBank(bankId); // Actualiza el estado local
@@ -45,7 +46,7 @@ export default function PaymentMethodScreen({ navigation }) {
       Alert.alert("Error", "Por favor selecciona un método de pago.");
       return;
     }
-
+    console.log(shipments);
     dispatch(createShipment());
   };
 
@@ -55,7 +56,8 @@ export default function PaymentMethodScreen({ navigation }) {
   };
 
   const handleCloseSuccessModal = () => {
-    navigation.goBack(); // Redirige al usuario después de cerrar el modal de éxito
+   navigation.navigate("Home"); // Redirige al usuario después de cerrar el modal de éxito
+   dispatch(clearShipmentState)
   };
 
   // Maneja cambios en éxito o error

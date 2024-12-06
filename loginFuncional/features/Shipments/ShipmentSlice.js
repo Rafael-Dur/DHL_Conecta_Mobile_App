@@ -47,7 +47,7 @@ const initialState = {
     postalCode: '12',
     neighborhood: '12',
     city: '12',
-    phoneNumber: '123456789',
+    phoneNumber: '+598999999',
   },
   receiver: {
     name: '12',
@@ -56,7 +56,7 @@ const initialState = {
     postalCode: '12',
     neighborhood: '12',
     city: '12',
-    phoneNumber: '549115558',
+    phoneNumber: '+598999999',
   },
   shipmentBox: {
     boxType: 1,
@@ -70,7 +70,7 @@ const initialState = {
   shipmentItems: [
     {
       description: '12',
-      shipmentProductTypeId: '1',
+      shipmentProductTypeId: 'b00b5e4d-dce5-460f-b034-e28b33cb0e9f',
       quantity: 1,
       value: 12,
     },
