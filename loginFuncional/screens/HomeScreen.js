@@ -172,9 +172,4 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
   },
-  addButtonContainer: {
-    position: "absolute",
-    top: -30, // Sobresale hacia arriba de la barra de navegación
-    alignSelf: "center",
-  },
-});
+ });
