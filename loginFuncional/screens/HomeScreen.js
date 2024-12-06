@@ -27,7 +27,7 @@ export default function HomeScreen({ navigation }) {
       navigation.navigate("ServiceSelection"); // Página específica para paquetes
       //      navigation.navigate("ServiceSelection"); // Página específica para paquetes
     } else if (selectedCard === ShipmentType.Document) {
-      navigation.navigate("ShipmentPage"); // Página específica para paquetes
+      navigation.navigate("ShipmentMethodScreen");
     } else {
       Alert.alert("Error", "Por favor selecciona un tipo de envío antes de continuar.");
     }

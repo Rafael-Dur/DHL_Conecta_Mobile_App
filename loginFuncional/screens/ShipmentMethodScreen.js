@@ -48,16 +48,17 @@ const ShipmentMethodScreen = ({ navigation }) => {
             <TouchableOpacity
               style={[
                 styles.option,
-                selectedOption === "recoleccion" && styles.selectedOption, // Aplicar estilo si está seleccionado
+                selectedOption === "recoleccion" && styles.selectedOption, // Estilo seleccionado
               ]}
               onPress={() => handleOptionSelect("recoleccion")}
             >
               <Image
                 source={require("../assets/delivery-van.png")}
                 style={styles.icon}
+                resizeMode="contain" // Mantener la proporción de la imagen
               />
-              <Text style={styles.optionText}>DHL vendrá a buscar el envío</Text>
             </TouchableOpacity>
+            <Text style={styles.optionText}>DHL vendrá a buscar el envío</Text> {/* Texto debajo */}
           </View>
 
           {/* Opción 2 */}
@@ -66,16 +67,17 @@ const ShipmentMethodScreen = ({ navigation }) => {
             <TouchableOpacity
               style={[
                 styles.option,
-                selectedOption === "sucursal" && styles.selectedOption, // Aplicar estilo si está seleccionado
+                selectedOption === "sucursal" && styles.selectedOption, // Estilo seleccionado
               ]}
               onPress={() => handleOptionSelect("sucursal")}
             >
               <Image
                 source={require("../assets/live-tracking.png")}
                 style={styles.icon}
+                resizeMode="contain" // Mantener la proporción de la imagen
               />
-              <Text style={styles.optionText}>Iré a una tienda de DHL</Text>
             </TouchableOpacity>
+            <Text style={styles.optionText}>Iré a una tienda de DHL</Text> {/* Texto debajo */}
           </View>
         </View>
 
@@ -138,7 +140,8 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
   },
   selectedOption: {
-    borderColor: COLORS.primary, // Color del borde cuando está seleccionado
+    borderColor: "red", // Color rojo para el borde cuando está seleccionado
+    borderWidth: 3, // Grosor del borde
     backgroundColor: COLORS.lightBlue, // Color de fondo cuando está seleccionado
   },
   subtitle: {
@@ -149,15 +152,16 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   icon: {
-    width: width * 0.12,
-    height: width * 0.12,
-    marginBottom: 20,
+    width: 150,
+    height: 40,
+    marginBottom: 10,
   },
   optionText: {
     fontSize: width * 0.04,
     textAlign: "center",
     color: COLORS.black,
     marginHorizontal: 10,
+    marginTop: 20,
   },
 });
 
