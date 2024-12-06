@@ -97,4 +97,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 10,
   },
+  modalButtonContainer: {
+    flexDirection: 'row', // Para colocar los botones en una fila (horizontal)
+    justifyContent: 'center', // Centrar los botones
+    alignItems: 'center', // Asegurar que los botones se alineen verticalmente
+    marginTop: 20, // Ajusta el espacio entre el contenido y los botones
+  },
+  modalButton: {
+    marginHorizontal: 10, // Espacio entre los botones
+  },
 });
