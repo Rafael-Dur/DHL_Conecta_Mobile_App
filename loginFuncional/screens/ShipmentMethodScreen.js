@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
-import Button from "../components/Button"; // Importar el componente Button
+import Button from "../components/Button";
 import { COLORS } from "../constants/constants";
 
 
@@ -36,9 +29,7 @@ const ShipmentMethodScreen = ({ navigation }) => {
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Forma de envío</Text>
-          <Text style={styles.subHeaderText}>
-            Selecciona cómo quieres entregar el paquete a DHL.
-          </Text>
+          <Text style={styles.subHeaderText}>Selecciona cómo quieres entregar el paquete a DHL.</Text>
         </View>
 
         {/* Opciones de envío en dos columnas */}

@@ -16,12 +16,15 @@ export default function RegisterForm({ onRegister }) {
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState(''); // Almacena el número formateado
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
+  const [CI, setCI] = useState('');
 
   const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
+  const validateCedula = (CI) => /^[0-9]{6,8}$/.test(CI);
   const validatePassword = (password) => /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
 
   const handleRegister = () => {
     if (!firstName.trim()) return ErrorAlert('El nombre es obligatorio.');
+    if (!validateCedula(CI)) return alert("La cédula debe ser válida.");
     if (!lastName.trim()) return ErrorAlert('El apellido es obligatorio.');
     if (!email.trim() || !validateEmail(email))
       return ErrorAlert('El correo debe ser válido y pertenecer a gmail, hotmail, yahoo o similar.');
@@ -34,6 +37,7 @@ export default function RegisterForm({ onRegister }) {
 
     const registerData = {
       email,
+      CI,
       password,
       firstName,
       lastName,
@@ -47,6 +51,15 @@ export default function RegisterForm({ onRegister }) {
     <View style={styles.container}>
       <InputField placeholder="Nombre" value={firstName} onChangeText={setFirstName} />
       <InputField placeholder="Apellido" value={lastName} onChangeText={setLastName} />
+      
+      {/* Cédula de Identidad (CI) */}
+      <InputField
+        placeholder="Cédula de Identidad"
+        value={CI}
+        onChangeText={setCI} // Asocia el estado de la cédula
+        keyboardType="numeric" // Solo permite números
+      />
+
       <InputField
         placeholder="Correo electrónico"
         value={email}
@@ -93,20 +106,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: COLORS.white,
-    width: '90%',
-    maxWidth: '100%',
-    height: 50, // Misma altura que los demás
+    width: '100%', 
+    height: 50, // Mantener la misma altura que los demás inputs
     justifyContent: 'center',
     paddingHorizontal: 10,
     marginBottom: 15,
   },
+  
   phoneInputTextContainer: {
     backgroundColor: COLORS.white,
     borderRadius: 5,
-    padding: 0, // Elimina márgenes adicionales
+    padding: 0,
   },
   input: {
     flex: 1,
+    height: 50,
     fontSize: 16,
     color: COLORS.black,
     padding: 0, // Ajuste interno para evitar desbordes
@@ -114,7 +128,17 @@ const styles = StyleSheet.create({
   flagButton: {
     marginRight: 10,
   },
+  buttonContainer: {
+    width: '100%',            // Asegura que ocupe todo el ancho disponible
+    alignItems: 'center',     // Centra el contenido horizontalmente
+    justifyContent: 'center', // Alinea el contenido en el centro verticalmente
+    marginTop: 20,            // Espacio entre el formulario y el botón
+    flex: 1,
+  },
+  button: {
+    width: '100%',            // Asegura que ocupe todo el ancho disponible
+    alignItems: 'center',     // Centra el contenido horizontalmente
+    justifyContent: 'center', // Alinea el contenido en el centro verticalmente
+    marginTop: 20,            // Espacio entre el formulario y el botón
+  },
 });
-
-
-
