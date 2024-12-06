@@ -4,7 +4,7 @@ import InputField from './InputField';
 import Button from './Button';
 import ErrorAlert from './ErrorAlert';
 import { COLORS } from '../constants/constants';
-import PhoneInput from 'react-native-phone-number-input';
+//import PhoneInput from 'react-native-phone-number-input';
 
 export default function RegisterForm({ onRegister }) {
   const [firstName, setFirstName] = useState('');
@@ -53,16 +53,7 @@ export default function RegisterForm({ onRegister }) {
         onChangeText={setEmail}
         keyboardType="email-address"
       />
-      <PhoneInput
-        defaultCode="UY"
-        layout="first"
-        onChangeText={setPhoneNumber}
-        onChangeFormattedText={setFormattedPhoneNumber}
-        containerStyle={styles.phoneInputContainer} // Misma altura y bordes
-        textContainerStyle={styles.phoneInputTextContainer}
-        textInputStyle={styles.input} // Coincide con los demás
-        flagButtonStyle={styles.flagButton} // Alineación de la bandera
-      />
+
       <InputField
         placeholder="Contraseña"
         value={password}

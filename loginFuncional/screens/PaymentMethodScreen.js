@@ -5,19 +5,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  Image,
   useWindowDimensions,
 } from "react-native";
-import InternalHeader from "../components/InternalHeader"; // Asumimos que ya tienes este componente
-import { COLORS } from "../constants/constants"; // Define tu esquema de colores
-import Button from "../components/Button";
+import InternalHeader from "../components/InternalHeader"; // Header
+import { COLORS } from "../constants/constants"; // Colores
+import Button from "../components/Button"; // Botón reutilizable
 
 const banks = [
-  { id: 1, name: "BROU", logo: require("../assets/LogoDHL.png") },
-  { id: 2, name: "HSBC", logo: require("../assets/LogoDHL.png") },
-  { id: 3, name: "ITAU", logo: require("../assets/LogoDHL.png") },
-  { id: 4, name: "Santander", logo: require("../assets/LogoDHL.png") },
-  { id: 5, name: "Scotiabank", logo: require("../assets/LogoDHL.png") },
-  { id: 6, name: "VISA", logo: require("../assets/LogoDHL.png") },
+  { id: 1, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
+  { id: 2, name: "HSBC", logo: require("../assets/BankIcon_HSBC.png") },
+  { id: 3, name: "ITAU", logo: require("../assets/BankIcon_ITAU.png") },
+  { id: 4, name: "Santander", logo: require("../assets/BankIcon_SANTANDER.png") },
+  { id: 5, name: "Scotiabank", logo: require("../assets/BankIcon_SCOTIA.png") },
+  { id: 6, name: "VISA", logo: require("../assets/BankIcon_VISA.png") },
 ];
 
 export default function PaymentMethodScreen({ navigation }) {
@@ -30,8 +31,11 @@ export default function PaymentMethodScreen({ navigation }) {
 
   const handlePayment = () => {
     if (selectedBank) {
-      Alert.alert("Pago realizado", `Has seleccionado ${banks.find(bank => bank.id === selectedBank)?.name}`);
-      navigation.goBack(); // Puedes redirigir según lo necesario
+      Alert.alert(
+        "Pago realizado",
+        `Has seleccionado ${banks.find((bank) => bank.id === selectedBank)?.name}`
+      );
+      navigation.goBack(); // Navega hacia atrás
     } else {
       Alert.alert("Error", "Por favor selecciona un método de pago.");
     }
@@ -57,21 +61,24 @@ export default function PaymentMethodScreen({ navigation }) {
       </View>
 
       {/* Título */}
-      <Text style={styles.title}>Medio de Pago</Text>
-      <Text style={styles.subtitle}>¿Cómo quieres pagarlo?</Text>
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.welcomeText}>Medio de Pago</Text>
+        <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
+      </View>
 
-      {/* Bancos */}
-      <View style={styles.banksContainer}>
+      {/* Tarjetas de Bancos */}
+      <View style={styles.cardContainer}>
         {banks.map((bank) => (
           <TouchableOpacity
             key={bank.id}
             style={[
-              styles.bankCard,
+              styles.card,
               selectedBank === bank.id && styles.selectedCard, // Estilo para la tarjeta seleccionada
             ]}
             onPress={() => handleBankSelect(bank.id)}
           >
-            <Text style={styles.bankName}>{bank.name}</Text>
+            <Image source={bank.logo} style={styles.cardIcon} />
+            <Text style={styles.cardTitle}>{bank.name}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -93,7 +100,8 @@ export default function PaymentMethodScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.lightGray, // Fondo similar al de inicio
+    alignItems: "center",
     paddingHorizontal: 20,
   },
   progressContainer: {
@@ -118,40 +126,55 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: COLORS.black,
   },
-  title: {
+  welcomeContainer: {
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  welcomeText: {
     fontSize: 24,
     fontWeight: "bold",
     color: COLORS.black,
-    textAlign: "center",
-    marginVertical: 10,
   },
-  subtitle: {
+  subText: {
     fontSize: 16,
     color: COLORS.gray,
-    textAlign: "center",
-    marginBottom: 20,
+    marginTop: 5,
   },
-  banksContainer: {
+  cardContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
+    width: "100%",
+    marginVertical: 20,
   },
-  bankCard: {
-    width: "45%",
-    backgroundColor: COLORS.lightGray,
-    padding: 15,
+  card: {
+    backgroundColor: COLORS.white,
+    padding: 10,
     borderRadius: 10,
-    marginBottom: 15,
     alignItems: "center",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    width: "45%",
+    marginBottom: 20,
   },
   selectedCard: {
-    borderWidth: 2,
     borderColor: COLORS.red,
+    borderWidth: 2,
   },
-  bankName: {
+  cardIcon: {
+    width: 50,
+    height: 50,
+    marginBottom: 10,
+    resizeMode: "contain",
+  },
+  cardTitle: {
     fontSize: 16,
     fontWeight: "bold",
     color: COLORS.black,
+    textAlign: "center",
   },
   footer: {
     flexDirection: "row",
@@ -167,9 +190,6 @@ const styles = StyleSheet.create({
   },
   backButton: {
     backgroundColor: COLORS.lightRed,
-  },
-  payButton: {
-    backgroundColor: COLORS.red,
   },
   buttonText: {
     color: COLORS.white,
