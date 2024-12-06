@@ -20,6 +20,25 @@ export const createShipment = createAsyncThunk(
     }
   }
 );
+// Acción para crear un envío de documentos
+export const createDocumentShipment = createAsyncThunk(
+  'shipments/createDocumentShipment',
+  async (shipmentData, { getState, rejectWithValue }) => {
+    try {
+      const { shipments } = getState();
+      const response = await axiosShipmentInstance.post('/api/v1/shipments/documents', shipments);
+      return response.data; // Devuelve los datos si es exitoso
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue(error.response.data || 'Error del servidor.');
+      } else if (error.request) {
+        return rejectWithValue('No se pudo conectar al servidor.');
+      } else {
+        return rejectWithValue(error.message || 'Ocurrió un error desconocido.');
+      }
+    }
+  }
+);
 
 // Acción para obtener las categorías de productos
 export const fetchProductCategories = createAsyncThunk(

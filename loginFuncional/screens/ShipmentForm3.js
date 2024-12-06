@@ -18,15 +18,19 @@ const ShipmentForm3 = () => {
     const [width, setWidth] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
+    const [applicableWeight, setapplicableWeight] = useState('');
     const [dimensionUnit, setDimensionUnit] = useState("cm");
     const [weightUnit, setWeightUnit] = useState("kg");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isWeightDropdownOpen, setIsWeightDropdownOpen] = useState(false);
+    const [documentType, setDocumentType] = useState("documentos");
+    const [isDocumentTypeDropdownOpen, setIsDocumentTypeDropdownOpen] = useState(false);
     const [cost, setCost] = useState(0);
     const navigation = useNavigation();
     const packageIcon = require("../assets/package-icon.png");
+    const envelopeIcon = require("../assets/document-icon.png");
     const dispatch = useDispatch();
-    const { shipmentBox } = useSelector((state) => state.shipments);
+    const { shipmentBox, shipmentPackageType } = useSelector((state) => state.shipments);
 
     // Función para calcular el costo del envío
     const calculateShippingCost = () => {
@@ -51,7 +55,7 @@ const ShipmentForm3 = () => {
         const volumetricWeight = (lengthInCm * widthInCm * heightInCm) / 5000;
 
         // Determinar el peso aplicable y calcular el costo
-        const applicableWeight = Math.max(volumetricWeight, weightInKg);
+         setapplicableWeight( Math.max(volumetricWeight, weightInKg));
         const calculatedCost = applicableWeight * 6.25; // Tarifa por kg (ajustar según necesidad)
         setCost(calculatedCost.toFixed(2)); // Actualizar el costo con 2 decimales
     };
@@ -80,25 +84,49 @@ const ShipmentForm3 = () => {
     };
     const handleNextButton = () => {
         handleStore();
-        
-    console.log("DAtos de paquete:", shipmentBox);
+
+        console.log("Datos de paquete:", shipmentBox);
         navigation.navigate("ShipmentForm4");
     };
 
     return (
         <View style={styles.container}>
-            <InternalHeader  showBackButton={true}/>
+            <InternalHeader showBackButton={true} />
             <Text style={styles.title}>¿Cómo lo envías?</Text>
             <ProgressBar currentStep={3} />
             <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
             <BodyContainer isGrayBackground>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.card}>
-                        <Image source={packageIcon} style={styles.cardIcon} />
-                        <Text style={styles.cardTitle}>Caja</Text>
+                        <Image
+                            source={shipmentPackageType === 2 ? envelopeIcon : packageIcon}
+                            style={styles.cardIcon}
+                        />
+                        <Text style={styles.cardTitle}>
+                            {shipmentPackageType === 2 ? "Sobre" : "Caja"}
+                        </Text>
                     </TouchableOpacity>
                     <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
                 </View>
+
+                {/* Mostrar desplegable solo si es tipo 2 */}
+                {shipmentPackageType === 2 && (
+                    <View style={styles.row}>
+                        <Text style={styles.sectionLabel}>Tipo de documento:</Text>
+                        <DropDownPicker
+                            open={isDocumentTypeDropdownOpen}
+                            value={documentType}
+                            items={[
+                                { label: 'Documentos', value: 'documentos' },
+                                { label: 'Pasaportes', value: 'pasaportes' },
+                            ]}
+                            setOpen={setIsDocumentTypeDropdownOpen}
+                            setValue={setDocumentType}
+                            style={styles.dropdown}
+                            dropDownContainerStyle={styles.dropdownContainer}
+                        />
+                    </View>
+                )}
 
                 <Text style={styles.sectionLabel}>Ingresa las medidas:</Text>
                 <View style={styles.row}>
@@ -165,7 +193,7 @@ const ShipmentForm3 = () => {
                 </View>
 
                 <Text style={styles.costText}>
-                    Costo de envío por: {weight || 0} {weightUnit}
+                    Costo de envío por: {applicableWeight || 0} {weightUnit}
                 </Text>
                 <Text style={styles.costAmount}>USD {cost}</Text>
 
@@ -181,8 +209,6 @@ const ShipmentForm3 = () => {
     );
 };
 
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -191,7 +217,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
-        fontFamily: "Delivery", // Fuente personalizada principal
+        fontFamily: "Delivery",
         alignSelf: 'center',
         marginBottom: 10,
         marginTop: 20,
@@ -201,7 +227,7 @@ const styles = StyleSheet.create({
         maxWidth: 350,
     },
     subtitle: {
-        fontFamily: "Delivery2", // Fuente personalizada secundaria
+        fontFamily: "Delivery2",
         marginBottom: 30,
         marginTop: 20,
         color: COLORS.black,
@@ -234,42 +260,13 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     cardTitle: {
-        fontFamily: "Delivery", // Fuente personalizada para títulos
+        fontFamily: "Delivery",
         fontSize: 16,
         color: "#C00",
         marginBottom: 5,
     },
-    boxButton: {
-        backgroundColor: COLORS.lightGray,
-        padding: 15,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-    },
-    boxText: {
-        fontFamily: "Delivery", // Fuente personalizada para botones
-        fontSize: FONT_SIZES.medium,
-    },
-    sectionLabel: {
-        fontFamily: "Delivery", // Fuente personalizada para etiquetas
-        fontSize: FONT_SIZES.medium,
-        marginBottom: 25,
-    },
-    infoIcon: {
-        fontFamily: "Delivery2", // Fuente secundaria para íconos
-        fontSize: FONT_SIZES.small,
-        color: COLORS.grey,
-    },
-    dropdownWrapper: {
-        marginBottom: 15,
-        backgroundColor: COLORS.white,
-        maxWidth: 100, // Tamaño del contenedor del dropdown
-        maxHeight: 50,
-        zIndex: 10, // Asegura que el dropdown no quede oculto detrás de otros componentes
-    },
     dropdown: {
-        fontFamily: "Delivery2", // Fuente personalizada en el dropdown
+        fontFamily: "Delivery2",
         borderColor: COLORS.black,
         borderWidth: 1,
         borderRadius: 5,
@@ -282,27 +279,28 @@ const styles = StyleSheet.create({
         borderColor: COLORS.black,
         borderRadius: 5,
         backgroundColor: COLORS.white,
-        maxWidth: 100, // Tamaño del contenedor del dropdown
+        maxWidth: 200,
     },
-    additionalInfo: {
-        fontFamily: "Delivery2", // Fuente secundaria para información adicional
-        color: COLORS.grey,
-        fontSize: 12,
-        marginBottom: 20,
-    },
-    costText: {
-        fontFamily: "Delivery", // Fuente personalizada para texto de costos
+    sectionLabel: {
+        fontFamily: "Delivery",
         fontSize: FONT_SIZES.medium,
-        textAlign: 'center',
-        marginTop: 20,
-    },
-    costAmount: {
-        fontFamily: "Delivery", // Fuente personalizada para montos
-        fontSize: 30,
-        textAlign: 'center',
+        marginBottom: 10,
         color: COLORS.black,
     },
+    costText: {
+        fontFamily: "Delivery",
+        textAlign: 'center',
+        fontSize: 14,
+        color: COLORS.grayDark,
+    },
+    costAmount: {
+        fontFamily: "Delivery",
+        textAlign: 'center',
+        fontSize: 28,
+        fontWeight: "bold",
+        color: COLORS.black,
+        marginVertical: 10,
+    },
 });
-
 
 export default ShipmentForm3;

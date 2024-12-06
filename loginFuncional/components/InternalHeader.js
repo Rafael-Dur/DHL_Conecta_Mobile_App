@@ -38,7 +38,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 30,
     width: "100%",
-    ///marginVertical: 20,
+    // Sombra para Android
+    elevation: 3,
+    // Sombra para iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
   },
   backButton: {
     position: "absolute",
