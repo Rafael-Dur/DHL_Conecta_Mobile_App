@@ -10,7 +10,6 @@ import BodyContainer from '../components/BodyContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, responseMessage, clearError } from '../features/auth/authSlice';
 import { COLORS } from '../constants/constants';
-import InternalHeader from '../components/InternalHeader';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('popo@gmail.com');
@@ -68,27 +67,7 @@ export default function LoginScreen({ navigation }) {
           clickeableText="Regístrate ahora"
           styleType="link"
         />
-        <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate('PaymentMethodScreen')}
-          title="Ver Servicios"
-          clickeableText="Ir"
-          styleType="link"
-        />
 
-        {loading && <Text style={styles.loadingText}>Cargando...</Text>}
-
-        <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate('ShipmentForm4')}
-          clickeableText="ShipmentForm4"
-          styleType="link"
-          singleLink
-        />
-
-        <TouchableOpacity onPress={() => setIsErrorModalVisible(true)}>
-          <Text style={styles.errorButtonText}>Error Modal</Text>
-        </TouchableOpacity>
         <ErrorModal
           visible={!!error} // Mostrar el modal si hay un error
           title="¡Hubo un problema!"

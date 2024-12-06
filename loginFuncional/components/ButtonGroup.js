@@ -5,16 +5,22 @@ import Button from './Button';
 const ButtonGroup = ({ leftButtonTitle, rightButtonTitle, onLeftPress, onRightPress, leftStyleType, rightStyleType }) => {
   return (
     <View style={styles.buttonGroup}>
-      <Button 
-        title={leftButtonTitle} 
-        onPress={onLeftPress} 
-        styleType={leftStyleType} 
-      />
-      <Button 
-        title={rightButtonTitle} 
-        onPress={onRightPress} 
-        styleType={rightStyleType} 
-      />
+      {/* Renderiza el botón izquierdo solo si tiene un título */}
+      {leftButtonTitle ? (
+        <Button 
+          title={leftButtonTitle} 
+          onPress={onLeftPress} 
+          styleType={leftStyleType} 
+        />
+      ) : null}
+      {/* Renderiza el botón derecho solo si tiene un título */}
+      {rightButtonTitle ? (
+        <Button 
+          title={rightButtonTitle} 
+          onPress={onRightPress} 
+          styleType={rightStyleType} 
+        />
+      ) : null}
     </View>
   );
 };

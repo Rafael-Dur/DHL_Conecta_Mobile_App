@@ -1,65 +1,75 @@
 import React from "react";
-import { StyleSheet, Text, ScrollView, View } from "react-native";
-import ServiceCard from "../components/ServiceCard";
+import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity } from "react-native";
 import BodyContainer from "../components/BodyContainer";
 import { COLORS } from "../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
-import InternalHeader from '../components/InternalHeader';
+import InternalHeader from "../components/InternalHeader";
 import { ShipmentPackageType } from "../constants/enums";
+import Button from "../components/Button";
+
+// Importar imágenes locales
+import FamilyPresentsImage from "../assets/images/Servicio_3.png";
+import BooksImage from "../assets/images/Servicio_1.png";
+import ClothesImage from "../assets/images/Servicio_2.png";
 
 
-export default function ServiceSelection({navigation}) {
+export default function ServiceSelection({ navigation }) {
   const dispatch = useDispatch();
-  const { success, error, loading, shipment } = useSelector((state) => state.shipments);
 
   const services = [
     {
       title: "Regalos Familiares",
       description:
         "Amet nulla facilisi morbi tempus iaculis urna id volutpat lacus. Sed faucibus turpis in eu mi bibendum. Amet consectetur adipiscing elit pellentesque habitant morbi tristique.",
-      image: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/tmot3k27lzb-I1782%3A232928%3B1150%3A1127?alt=media&token=1e5e48ef-50f7-48f9-87c1-09c58ee3e8b4",
+      image: FamilyPresentsImage,
       packageType: ShipmentPackageType.FamilyPresents,
     },
     {
       title: "Libros",
       description:
         "Amet nulla facilisi morbi tempus iaculis urna id volutpat lacus. Sed faucibus turpis in eu mi bibendum. Amet consectetur adipiscing elit pellentesque habitant morbi tristique.",
-      image: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/tmot3k27lzb-I1782%3A232928%3B1150%3A1166?alt=media&token=dcb096de-e96d-4bbc-baf6-e43ddc91bc63",
+      image: BooksImage,
       packageType: ShipmentPackageType.Books,
     },
     {
       title: "Ropa",
       description:
         "Amet nulla facilisi morbi tempus iaculis urna id volutpat lacus. Sed faucibus turpis in eu mi bibendum. Amet consectetur adipiscing elit pellentesque habitant morbi tristique.",
-      image: "https://firebasestorage.googleapis.com/v0/b/unify-v3-copy.appspot.com/o/tmot3k27lzb-I1782%3A232928%3B1150%3A1127?alt=media&token=1e5e48ef-50f7-48f9-87c1-09c58ee3e8b4",
+      image: ClothesImage,
       packageType: ShipmentPackageType.Clothes,
     },
   ];
 
-  
-// Maneja la selección de una tarjeta
-const handleStore = (type) => {
-  dispatch(updateShipmentField({ key: "shipmentPackageType", value: type })); // Actualiza el campo en el store
+  const handleStore = (type) => {
+    dispatch(updateShipmentField({ key: "shipmentPackageType", value: type }));
+  };
 
-};
-const handleCardPress = (type) => {
-  handleStore(type);
-  navigation.navigate("ShipmentMethodScreen"); 
-};
+  const handleCardPress = (type) => {
+    handleStore(type);
+    navigation.navigate("ShipmentMethodScreen");
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <InternalHeader showBackButton={true} />
       <BodyContainer isGrayBackground={true}>
         <Text style={styles.headerText}>Comenzar envío</Text>
         {services.map((service, index) => (
-          <ServiceCard
-            key={index}
-            title={service.title}
-            description={service.description}
-            image={service.image}
-            onPress={() => handleCardPress(service.packageType)}
-          />
+          <View key={index} style={styles.card}>
+             <Text style={styles.cardTitle}>{service.title}</Text>
+             <Image source={service.image} style={styles.image} />
+            <View style={styles.cardContent}>
+              <Text style={styles.cardDescription}>{service.description}</Text>
+              <View style={styles.button}>
+              <Button 
+                onPress={() => handleCardPress(service.packageType)}                
+                title={"Comenzar"}>
+              </Button>
+              </View>
+
+            </View>
+          </View>
         ))}
         <Text style={styles.footerText}>
           ¿Problemas? <Text style={styles.footerLink}>Contáctanos</Text>
@@ -77,6 +87,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     flexGrow: 1,
   },
+  button: {
+    backgroundColor: COLORS.white,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 20,
+    flexGrow: 1,
+  },
   headerText: {
     fontSize: 24,
     fontWeight: "bold",
@@ -84,39 +101,55 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
   },
-  loadingText: {
-    color: COLORS.grayDark,
-    fontSize: 16,
-    textAlign: "center",
+  card: {
+    backgroundColor: COLORS.white,
+    borderRadius: 10,
     marginVertical: 10,
+    padding: 15,
+    width: "90%",
+    alignSelf: "center",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
-  successContainer: {
-    marginVertical: 20,
-    padding: 10,
-    backgroundColor: COLORS.greenLight,
+  image: {
+    width: "100%",
+    height: 150,
+    borderRadius: 8,
+    resizeMode: "cover",
+    marginBottom: 10,
+  },
+  cardContent: {
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: COLORS.black,
+    marginBottom: 10,
+  },
+  cardDescription: {
+    fontSize: 14,
+    color: COLORS.black,
+    marginBottom: 20,
+  },
+  button2: {
+    backgroundColor: COLORS.red,
+    paddingVertical: 10,
     borderRadius: 5,
+    alignItems: "center",
   },
-  successText: {
-    color: COLORS.green,
+  buttonText: {
+    color: COLORS.white,
     fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center",
-  },
-  referenceText: {
-    color: COLORS.greenDark,
-    fontSize: 14,
-    textAlign: "center",
-    marginTop: 5,
-  },
-  errorText: {
-    color: COLORS.red,
-    fontSize: 16,
-    textAlign: "center",
-    marginVertical: 10,
   },
   footerText: {
     fontSize: 14,
-    color: COLORS.grayDark,
+    color: COLORS.black,
     textAlign: "center",
     marginTop: 20,
   },
