@@ -144,11 +144,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   welcomeText: {
+    fontFamily: "Delivery", // Fuente personalizada principal
     fontSize: 24,
-    fontWeight: "bold",
     color: COLORS.black,
   },
   subText: {
+    fontFamily: "Delivery2", // Fuente personalizada secundaria
     fontSize: 16,
     color: COLORS.black,
     marginTop: 5,
@@ -185,9 +186,10 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   cardTitle: {
+    fontFamily: "Delivery", // Fuente personalizada principal
     fontSize: 16,
-    fontWeight: "bold",
     color: COLORS.black,
     textAlign: "center",
   },
 });
+

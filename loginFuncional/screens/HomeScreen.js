@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import InternalHeader from "../components/InternalHeader";
 import { ShipmentType } from "../constants/enums";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import { COLORS } from "../constants/constants";
 
 const packageIcon = require("../assets/package-icon.png");
 const documentIcon = require("../assets/document-icon.png");
@@ -106,14 +107,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   welcomeText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000",
+    fontFamily: "Delivery",
+    fontSize: 30,
+    marginBottom: 10,
   },
   subText: {
-    fontSize: 18,
-    color: "#555",
-    marginTop: 5,
+    fontFamily: "Delivery2",
+    fontSize: 20,
+    color: "#666",
+    marginBottom: 10,
   },
   cardContainer: {
     flexDirection: "row",
@@ -143,15 +145,17 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   cardTitle: {
-    fontSize: 16,
+    fontFamily: "Delivery",
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#C00",
+    color: COLORS.black,
     marginBottom: 5,
   },
   cardDescription: {
+    fontFamily: "Delivery2",
     textAlign: "center",
-    fontSize: 12,
-    color: "#777",
+    fontSize: 14,
+    color: COLORS.black,
   },
   infoIcon: {
     marginTop: 10,
@@ -167,5 +171,10 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     position: "absolute",
     bottom: 0,
+  },
+  addButtonContainer: {
+    position: "absolute",
+    top: -30, // Sobresale hacia arriba de la barra de navegación
+    alignSelf: "center",
   },
 });

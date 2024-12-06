@@ -95,8 +95,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   headerText: {
+    fontFamily: "Delivery", // Fuente personalizada
     fontSize: 24,
-    fontWeight: "bold",
     color: COLORS.black,
     marginVertical: 20,
     textAlign: "center",
@@ -126,12 +126,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   cardTitle: {
+    fontFamily: "Delivery", // Fuente personalizada
     fontSize: 18,
-    fontWeight: "bold",
     color: COLORS.black,
     marginBottom: 10,
   },
   cardDescription: {
+    fontFamily: "Delivery2", // Fuente secundaria
     fontSize: 14,
     color: COLORS.black,
     marginBottom: 20,
@@ -143,18 +144,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
+    fontFamily: "Delivery", // Fuente personalizada
     color: COLORS.white,
     fontSize: 16,
-    fontWeight: "bold",
   },
   footerText: {
+    fontFamily: "Delivery2", // Fuente secundaria
     fontSize: 14,
     color: COLORS.black,
     textAlign: "center",
     marginTop: 20,
   },
   footerLink: {
+    fontFamily: "Delivery", // Fuente personalizada
     color: COLORS.red,
-    fontWeight: "bold",
   },
 });

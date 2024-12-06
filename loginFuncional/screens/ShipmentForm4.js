@@ -196,28 +196,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    //paddingHorizontal: 20,
-    //paddingTop: 80, //cambiar esto cuando esté el banner
   },
   bodyContainer: {
     flex: 1,
     width: '90%',
     backgroundColor: COLORS.white,
-    //paddingHorizontal: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
+    fontFamily: "Delivery", // Fuente personalizada principal
     alignSelf: 'center',
     marginBottom: 10,
     marginTop: 20,
-    fontWeight: 'bold',
     color: COLORS.black,
     fontSize: FONT_SIZES.large,
     width: '100%',
     maxWidth: 350,
   },
   pickerContainer: {
+    fontFamily: "Delivery2", // Fuente personalizada secundaria
     width: '100%',
     backgroundColor: COLORS.white,
     borderWidth: 1,
@@ -227,16 +225,17 @@ const styles = StyleSheet.create({
     maxWidth: 350,
   },
   infoText: {
+    fontFamily: "Delivery2", // Fuente secundaria
     alignSelf: 'center',
     marginBottom: 10,
     marginTop: 10,
-    fontWeight: 'bold',
     color: COLORS.black,
     fontSize: FONT_SIZES.medium,
     width: '100%',
     maxWidth: 350,
   },
   card: {
+    fontFamily: "Delivery", // Fuente personalizada para el contenido de tarjetas
     backgroundColor: COLORS.gray,
     borderRadius: 10,
     padding: 20,
@@ -244,11 +243,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    fontWeight: 'bold',
+    fontFamily: "Delivery", // Fuente personalizada para etiquetas
     marginBottom: 5,
     color: COLORS.black,
   },
   additionalInfo: {
+    fontFamily: "Delivery2", // Fuente personalizada secundaria
     color: COLORS.grey,
     fontSize: 12,
     marginBottom: 10,
@@ -271,28 +271,27 @@ const styles = StyleSheet.create({
   },
   addButtonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end', // Alinea todo el contenido a la derecha
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    //marginVertical: 10,
     marginRight: 10,
   },
   addButtonText: {
+    fontFamily: "Delivery", // Fuente personalizada principal
     fontSize: FONT_SIZES.medium,
-    fontWeight: 'bold',
     marginLeft: 10,
     color: COLORS.black,
     marginTop: 15,
   },
-
   footer: {
     alignItems: 'center',
     marginVertical: 20,
   },
   footerText: {
-    fontWeight: 'bold',
+    fontFamily: "Delivery", // Fuente personalizada principal
     fontSize: FONT_SIZES.medium,
   },
   viewArticles: {
+    fontFamily: "Delivery2", // Fuente secundaria para enlaces
     color: COLORS.blue,
     textDecorationLine: 'underline',
     marginTop: 5,

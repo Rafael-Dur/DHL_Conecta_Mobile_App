@@ -136,14 +136,14 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
     },
     subheaderText: {
+        fontFamily: "Delivery", // Fuente personalizada principal
         fontSize: 24,
-        fontWeight: "bold",
         textAlign: "center",
         marginVertical: 10,
     },
     subheaderTextSecondary: {
+        fontFamily: "Delivery2", // Fuente personalizada secundaria
         fontSize: 16,
-        fontWeight: "600",
         textAlign: "center",
         marginBottom: 20,
     },
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     inputLabel: {
+        fontFamily: "Delivery2", // Fuente secundaria para etiquetas
         fontSize: 14,
-        fontWeight: "500",
         marginBottom: 5,
     },
     input: {
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         height: 50,
         paddingHorizontal: 10,
+        fontFamily: "Delivery2", // Fuente personalizada en campos de entrada
     },
     phoneInputContainer: {
         borderColor: COLORS.greenBright2,
@@ -193,18 +194,18 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 15,
         alignItems: "center",
-        borderRadius: 8,
     },
     buttonText: {
+        fontFamily: "Delivery", // Fuente personalizada en botones
         color: COLORS.white,
         fontSize: 16,
-        fontWeight: "bold",
     },
     backButtonText: {
+        fontFamily: "Delivery", // Fuente personalizada en el texto del botón de retroceso
         color: COLORS.red,
         fontSize: 16,
-        fontWeight: "bold",
     },
 });
+
 
 export default ShipmentForm2;

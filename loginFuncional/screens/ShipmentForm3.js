@@ -191,17 +191,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
+        fontFamily: "Delivery", // Fuente personalizada principal
         alignSelf: 'center',
         marginBottom: 10,
         marginTop: 20,
-        fontWeight: 'bold',
         color: COLORS.black,
         fontSize: FONT_SIZES.large,
         width: '100%',
         maxWidth: 350,
     },
     subtitle: {
-        //alignSelf: 'flex-end',
+        fontFamily: "Delivery2", // Fuente personalizada secundaria
         marginBottom: 30,
         marginTop: 20,
         color: COLORS.black,
@@ -215,7 +215,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
         width: '100%',
-        //maxWidth: 350,
     },
     card: {
         backgroundColor: "#fff",
@@ -235,12 +234,11 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     cardTitle: {
+        fontFamily: "Delivery", // Fuente personalizada para títulos
         fontSize: 16,
-        fontWeight: "bold",
         color: "#C00",
         marginBottom: 5,
     },
-
     boxButton: {
         backgroundColor: COLORS.lightGray,
         padding: 15,
@@ -250,19 +248,19 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     boxText: {
+        fontFamily: "Delivery", // Fuente personalizada para botones
         fontSize: FONT_SIZES.medium,
-        fontWeight: 'bold',
     },
     sectionLabel: {
+        fontFamily: "Delivery", // Fuente personalizada para etiquetas
         fontSize: FONT_SIZES.medium,
-        fontWeight: 'bold',
         marginBottom: 25,
     },
     infoIcon: {
+        fontFamily: "Delivery2", // Fuente secundaria para íconos
         fontSize: FONT_SIZES.small,
         color: COLORS.grey,
     },
-
     dropdownWrapper: {
         marginBottom: 15,
         backgroundColor: COLORS.white,
@@ -271,6 +269,7 @@ const styles = StyleSheet.create({
         zIndex: 10, // Asegura que el dropdown no quede oculto detrás de otros componentes
     },
     dropdown: {
+        fontFamily: "Delivery2", // Fuente personalizada en el dropdown
         borderColor: COLORS.black,
         borderWidth: 1,
         borderRadius: 5,
@@ -286,22 +285,24 @@ const styles = StyleSheet.create({
         maxWidth: 100, // Tamaño del contenedor del dropdown
     },
     additionalInfo: {
+        fontFamily: "Delivery2", // Fuente secundaria para información adicional
         color: COLORS.grey,
         fontSize: 12,
         marginBottom: 20,
     },
     costText: {
+        fontFamily: "Delivery", // Fuente personalizada para texto de costos
         fontSize: FONT_SIZES.medium,
-        fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 20,
     },
     costAmount: {
+        fontFamily: "Delivery", // Fuente personalizada para montos
         fontSize: 30,
-        fontWeight: 'bold',
         textAlign: 'center',
         color: COLORS.black,
     },
 });
+
 
 export default ShipmentForm3;
