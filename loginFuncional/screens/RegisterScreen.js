@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../features/auth/accountSlice';
 import SuccessModal from '../components/SuccessModal'; // Asegúrate de tener este componente
 import ErrorModal from '../components/ErrorModal'; // Asegúrate de tener este componente
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function RegisterScreen({ navigation }) {
   const [responseMessage, setResponseMessage] = React.useState('');
@@ -18,7 +19,7 @@ export default function RegisterScreen({ navigation }) {
   const dispatch = useDispatch();
   const { loading, error, success, message } = useSelector((state) => state.account);
 
-  
+
   const handleSuccessfulRegister = (registerData) => {
     dispatch(registerUser(registerData))
       .then((action) => {
@@ -42,50 +43,56 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <HeaderContainer>
-        <Header title="¡Regístrate!" subtitle="Crea una cuenta para continuar" />
-      </HeaderContainer>
-      <BodyContainer>
-        <RegisterForm onRegister={handleSuccessfulRegister} />
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <HeaderContainer>
+          <Header title="¡Regístrate!" subtitle="Crea una cuenta para continuar" />
+        </HeaderContainer>
+        <BodyContainer>
+          <RegisterForm onRegister={handleSuccessfulRegister} />
 
-        <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate('Login')}
-          title="¿Ya tienes una cuenta?"
-          clickeableText="Inicia sesión"
-          styleType="link"
-        />
+          <ClickeableText
+            navigation={navigation}
+            onPress={() => navigation.navigate('Login')}
+            title="¿Ya tienes una cuenta?"
+            clickeableText="Inicia sesión"
+            styleType="link"
+          />
 
-        {loading && <Text style={styles.loadingText}>Cargando...</Text>}
+          {loading && <Text style={styles.loadingText}>Cargando...</Text>}
 
-        {/* Mostrar el mensaje de respuesta */} 
+          {/* Mostrar el mensaje de respuesta */}
 
-        <SuccessModal 
-          visible={isSuccessModalVisible}
-          title="¡Registro exitoso!"
-          subtitle={responseMessage}
-          message="Recibirás un correo ni bien te aprueben el acceso."
-          onClose={handleCloseModal}
-        />
-        
-        <ErrorModal
-          visible={isErrorModalVisible}
-          leftButtonText='Intentar luego'
-          rightButtonText='Reintentar'
-          title="¡Hubo un problema!"
-          message={responseMessage}
-          subtitle="No se pudo registrar la cuenta de usuario :("
-          showButton
-          onLeftPress={handleCloseModal}
-          onRightPress={() => setIsErrorModalVisible(false)}
-        />
-      </BodyContainer>
-    </ScrollView>
+          <SuccessModal
+            visible={isSuccessModalVisible}
+            title="¡Registro exitoso!"
+            subtitle={responseMessage}
+            message="Recibirás un correo ni bien te aprueben el acceso."
+            onClose={handleCloseModal}
+          />
+
+          <ErrorModal
+            visible={isErrorModalVisible}
+            leftButtonText='Intentar luego'
+            rightButtonText='Reintentar'
+            title="¡Hubo un problema!"
+            message={responseMessage}
+            subtitle="No se pudo registrar la cuenta de usuario :("
+            showButton
+            onLeftPress={handleCloseModal}
+            onRightPress={() => setIsErrorModalVisible(false)}
+          />
+        </BodyContainer>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
   scrollContainer: {
     backgroundColor: COLORS.white,
     justifyContent: 'center',

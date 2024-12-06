@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Modal, StyleSheet } from 'react-native';
 import Button from '../components/Button';
+import { COLORS } from '../constants/constants';
 
 const ArticlesModal = ({ isVisible, items, totalQuantity, totalValue, onClose, onRemoveItem }) => {
     return (

@@ -157,14 +157,14 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: COLORS.greenBright2,
+        //borderColor: COLORS.greenBright2,
         borderRadius: 5,
         height: 50,
         paddingHorizontal: 10,
         fontFamily: "Delivery2", // Fuente personalizada en campos de entrada
     },
     phoneInputContainer: {
-        borderColor: COLORS.greenBright2,
+        //borderColor: COLORS.greenBright2,
         borderWidth: 1,
         borderRadius: 5,
         backgroundColor: COLORS.white,

@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 const ShipmentForm1 = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
-    const { sender } = useSelector((state) => state.shipments    );
+    const { sender } = useSelector((state) => state.shipments);
 
 
     const [formData, setFormData] = useState({
@@ -164,14 +164,14 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: COLORS.greenBright2,
+        //borderColor: COLORS.greenBright2,
         borderRadius: 5,
         height: 50,
         paddingHorizontal: 10,
         fontFamily: "Delivery2", // Fuente personalizada en campos de entrada
     },
     phoneInputContainer: {
-        borderColor: COLORS.greenBright2,
+        //borderColor: COLORS.greenBright2,
         borderWidth: 1,
         borderRadius: 5,
         backgroundColor: COLORS.white,

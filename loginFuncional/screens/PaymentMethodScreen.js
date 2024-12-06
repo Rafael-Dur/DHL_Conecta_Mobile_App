@@ -19,6 +19,7 @@ import BodyContainer from "../components/BodyContainer";
 import ErrorModal from "../components/ErrorModal";
 import SuccessModal from "../components/SuccessModal"; // Asegúrate de tener un componente para éxito
 import ProgressBar from "../components/ProgressBar"; // Asegúrate de tener un componente para progreso
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const banks = [
   { id: Banks.BROU, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
@@ -33,8 +34,8 @@ export default function PaymentMethodScreen({ navigation }) {
   const [selectedBank, setSelectedBank] = useState(null); // Estado local para el banco seleccionado
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { success, error, loading, DHLConfirmation  } = useSelector((state) => state.shipments);
-   const shipments = useSelector((state) => state.shipments);
+  const { success, error, loading, DHLConfirmation } = useSelector((state) => state.shipments);
+  const shipments = useSelector((state) => state.shipments);
 
   const handleBankSelect = (bankId) => {
     setSelectedBank(bankId); // Actualiza el estado local
@@ -51,14 +52,14 @@ export default function PaymentMethodScreen({ navigation }) {
   };
 
   const handleCloseErrorModal = () => {
-   // dispatch(clearShipmentError());
+    // dispatch(clearShipmentError());
     navigation.goBack(); // Redirige al usuario después de cerrar el modal de error
   };
 
   const handleCloseSuccessModal = () => {
     dispatch(clearShipmentState());
     navigation.navigate("Home"); // Redirige al usuario después de cerrar el modal de éxito
-  
+
   };
 
   // Maneja cambios en éxito o error
@@ -69,75 +70,87 @@ export default function PaymentMethodScreen({ navigation }) {
   }, [success]);
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <SafeAreaView style={styles.safeArea}>
       {/* Header */}
       <InternalHeader showBackButton={true} />
 
-      {/* Título */}
-      <BodyContainer isGrayBackground={true}>
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.welcomeText}>Medio de Pago</Text>
-        </View>
-        {/* Indicador de Progreso */}
-        <ProgressBar currentStep={6} />
-        <View style={styles.welcomeContainer}>
-          <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
-        </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
 
-        {/* Tarjetas de Bancos */}
-        <View style={styles.cardContainer}>
-          {banks.map((bank) => (
-            <TouchableOpacity
-              key={bank.id}
-              style={[
-                styles.card,
-                selectedBank === bank.id && styles.selectedCard, // Resalta la tarjeta seleccionada
-              ]}
-              onPress={() => handleBankSelect(bank.id)}
-            >
-              <Image source={bank.logo} style={styles.cardIcon} />
-              <Text style={styles.cardTitle}>{bank.name}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </BodyContainer>
 
-      {/* Botones */}
-      <View>
-        <ButtonGroup
-          leftButtonTitle="Volver"
-          onLeftPress={() => navigation.goBack()}
-          leftStyleType="outlined"
-          rightButtonTitle={loading ? "Enviando..." : "Pagar"}
-          onRightPress={handlePayment}
-        />
-      </View>
+        {/* Título */}
+        <BodyContainer isGrayBackground={true}>
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.welcomeText}>Medio de Pago</Text>
+          </View>
+          {/* Indicador de Progreso */}
+          <ProgressBar currentStep={6} />
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
+          </View>
 
-      {/* Modales */}
-      <ErrorModal
-        visible={!!error}
-        title="¡Hubo un problema!"
-        subtitle="No hemos podido procesar el pago."
-        message={typeof error === "string" ? error : "Algo salió mal. Intenta nuevamente."}
-        onClose={handleCloseErrorModal}
-      />
-      <SuccessModal
-        visible={!!success}
-        title="¡Éxito!"
-        subtitle="El pago fue procesado con éxito."
-        message={`Confirmación: ${DHLConfirmation}`}
-        onClose={handleCloseSuccessModal}
-      />
-    </ScrollView>
+          {/* Tarjetas de Bancos */}
+          <View style={styles.cardContainer}>
+            {banks.map((bank) => (
+              <TouchableOpacity
+                key={bank.id}
+                style={[
+                  styles.card,
+                  selectedBank === bank.id && styles.selectedCard, // Resalta la tarjeta seleccionada
+                ]}
+                onPress={() => handleBankSelect(bank.id)}
+              >
+                <Image source={bank.logo} style={styles.cardIcon} />
+                <Text style={styles.cardTitle}>{bank.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+
+          {/* Botones */}
+          <View>
+            <ButtonGroup
+              leftButtonTitle="Volver"
+              onLeftPress={() => navigation.goBack()}
+              leftStyleType="outlined"
+              rightButtonTitle={loading ? "Enviando..." : "Pagar"}
+              onRightPress={handlePayment}
+            />
+          </View>
+
+
+          {/* Modales */}
+          <ErrorModal
+            visible={!!error}
+            title="¡Hubo un problema!"
+            subtitle="No hemos podido procesar el pago."
+            message={typeof error === "string" ? error : "Algo salió mal. Intenta nuevamente."}
+            onClose={handleCloseErrorModal}
+          />
+          <SuccessModal
+            visible={!!success}
+            title="¡Éxito!"
+            subtitle="El pago fue procesado con éxito."
+            message={`Confirmación: ${DHLConfirmation}`}
+            onClose={handleCloseSuccessModal}
+          />
+        </BodyContainer>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
   scrollContainer: {
+    flexGrow: 1,
     backgroundColor: COLORS.gray,
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 20,
+    //paddingBottom: 20,
+    paddingTop: 220,
   },
   welcomeContainer: {
     marginVertical: 10,
@@ -158,7 +171,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    width: "100%",
+    //width: "100%",
+    maxWidth: '100%',
+    maxHeight: '100%',
     marginVertical: 20,
   },
   card: {
@@ -171,8 +186,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
-    width: "45%",
-    height: "45%", // Tarjetas cuadradas
+    width: "40%",
+    height: "20%", // Tarjetas cuadradas
     marginBottom: 20,
   },
   selectedCard: {
@@ -180,8 +195,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   cardIcon: {
-    width: 50,
-    height: 50,
+    width: '40%',
+    height: '30%',
     marginBottom: 10,
     resizeMode: "contain",
   },
