@@ -10,7 +10,7 @@ import ButtonGroup from '../components/ButtonGroup';
 import { useNavigation } from '@react-navigation/native';
 import { BoxType } from '../constants/enums';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateShipmentField ,shipmentBox } from "../features/Shipments/ShipmentSlice";
+import { updateShipmentField, shipmentBox } from "../features/Shipments/ShipmentSlice";
 import ProgressBar from '../components/ProgressBar';
 //import { shipmentBox } from '../features/Shipments/ShipmentSlice';
 
@@ -62,7 +62,7 @@ const ShipmentForm3 = () => {
         const volumetricWeight = (lengthInCm * widthInCm * heightInCm) / 5000;
 
         // Determinar el peso aplicable y calcular el costo
-         setapplicableWeight( Math.max(volumetricWeight, weightInKg));
+        setapplicableWeight(Math.max(volumetricWeight, weightInKg));
         const calculatedCost = applicableWeight * 6.25; // Tarifa por kg (ajustar según necesidad)
         setCost(calculatedCost.toFixed(2)); // Actualizar el costo con 2 decimales
     };
@@ -94,7 +94,7 @@ const ShipmentForm3 = () => {
 
         console.log("Datos de paquete:", shipmentBox);
         (shipmentPackageType === 2) ? navigation.navigate("ShipmentForm5") : navigation.navigate("ShipmentForm4")
-        
+
     };
 
     return (
@@ -104,7 +104,10 @@ const ShipmentForm3 = () => {
             <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
             <BodyContainer>
                 <View style={styles.row}>
-                    <TouchableOpacity style={styles.card}>
+                    <TouchableOpacity style={[styles.card, selectedButton === 1 && styles.selectedButton,
+                    ]}
+                        onPress={() => handlePress(1)}
+                    >
                         <Image
                             source={shipmentPackageType === 2 ? envelopeIcon : packageIcon}
                             style={styles.cardIcon}
@@ -112,37 +115,31 @@ const ShipmentForm3 = () => {
                         <Text style={styles.cardTitle}>
                             {shipmentPackageType === 2 ? "Sobre" : "Caja"}
                         </Text>
-                    <TouchableOpacity
-                        style={[
-                            styles.card,
-                            selectedButton === 1 && styles.selectedButton,
-                        ]}
-                        onPress={() => handlePress(1)}
-                    >
-                        <Image source={packageIcon} style={styles.cardIcon} />
-                        <Text style={styles.cardTitle}>Caja</Text>
                     </TouchableOpacity>
+
                     <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
                 </View>
 
                 {/* Mostrar desplegable solo si es tipo 2 */}
-                {shipmentPackageType === 2 && (
-                    <View style={styles.row}>
-                        <Text style={styles.sectionLabel}>Tipo de documento:</Text>
-                        <DropDownPicker
-                            open={isDocumentTypeDropdownOpen}
-                            value={documentType}
-                            items={[
-                                { label: 'Documentos', value: 'documentos' },
-                                { label: 'Pasaportes', value: 'pasaportes' },
-                            ]}
-                            setOpen={setIsDocumentTypeDropdownOpen}
-                            setValue={setDocumentType}
-                            style={styles.dropdown}
-                            dropDownContainerStyle={styles.dropdownContainer}
-                        />
-                    </View>
-                )}
+                {
+                    shipmentPackageType === 2 && (
+                        <View style={styles.row}>
+                            <Text style={styles.sectionLabel}>Tipo de documento:</Text>
+                            <DropDownPicker
+                                open={isDocumentTypeDropdownOpen}
+                                value={documentType}
+                                items={[
+                                    { label: 'Documentos', value: 'documentos' },
+                                    { label: 'Pasaportes', value: 'pasaportes' },
+                                ]}
+                                setOpen={setIsDocumentTypeDropdownOpen}
+                                setValue={setDocumentType}
+                                style={styles.dropdown}
+                                dropDownContainerStyle={styles.dropdownContainer}
+                            />
+                        </View>
+                    )
+                }
 
                 <Text style={styles.sectionLabel}>Ingresa las medidas:</Text>
                 <View style={styles.row}>
@@ -220,8 +217,8 @@ const ShipmentForm3 = () => {
                     rightButtonTitle="Siguiente"
                     onRightPress={() => handleNextButton()}
                 />
-            </BodyContainer>
-        </View>
+            </BodyContainer >
+        </View >
     );
 };
 

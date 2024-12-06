@@ -14,7 +14,7 @@ import { COLORS } from "../constants/constants"; // Colores
 import ButtonGroup from "../components/ButtonGroup"; // Grupo de botones
 import { Banks } from "../constants/enums"; // Enums de Bancos
 import { useDispatch, useSelector } from "react-redux";
-import { updateShipmentField, createShipment, clearShipmentState } from "../features/Shipments/ShipmentSlice";
+import { updateShipmentField, createShipment,createDocumentShipment, clearShipmentState } from "../features/Shipments/ShipmentSlice";
 import BodyContainer from "../components/BodyContainer";
 import ErrorModal from "../components/ErrorModal";
 import SuccessModal from "../components/SuccessModal"; // Asegúrate de tener un componente para éxito
@@ -33,8 +33,9 @@ export default function PaymentMethodScreen({ navigation }) {
   const [selectedBank, setSelectedBank] = useState(null); // Estado local para el banco seleccionado
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { success, error, loading, DHLConfirmation  } = useSelector((state) => state.shipments);
+  const { success, error, loading, DHLConfirmation,  } = useSelector((state) => state.shipments);
    const shipments = useSelector((state) => state.shipments);
+   const { shipmentPackageType } = useSelector((state) => state.shipments);
 
   const handleBankSelect = (bankId) => {
     setSelectedBank(bankId); // Actualiza el estado local
@@ -47,7 +48,8 @@ export default function PaymentMethodScreen({ navigation }) {
       return;
     }
     console.log(shipments);
-    dispatch(createShipment());
+    (shipmentPackageType === 1) ? dispatch(createShipment()) : dispatch(createDocumentShipment());
+
   };
 
   const handleCloseErrorModal = () => {

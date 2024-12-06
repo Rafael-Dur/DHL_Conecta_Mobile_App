@@ -4,7 +4,7 @@ import axiosShipmentInstance from '../../api/axiosShipmentsInstance';
 // Acción para crear el envío
 export const createShipment = createAsyncThunk(
   'shipments/createShipment',
-  async (shipmentData, {getState, rejectWithValue }) => {
+  async (shipmentData, { getState, rejectWithValue }) => {
     try {
       const { shipments } = getState();
       const response = await axiosShipmentInstance.post('/api/v1/shipments/packages', shipments);
@@ -134,6 +134,21 @@ const shipmentSlice = createSlice({
         state.DHLConfirmation = action.payload.data.internalDhlReference;
       })
       .addCase(createShipment.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Crear envío de documentos
+      .addCase(createDocumentShipment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createDocumentShipment.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.DHLConfirmation = action.payload.data.internalDhlReference;
+      })
+      .addCase(createDocumentShipment.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
