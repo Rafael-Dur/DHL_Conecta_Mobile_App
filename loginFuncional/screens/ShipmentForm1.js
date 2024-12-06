@@ -8,6 +8,7 @@ import { COLORS } from "../constants/constants";
 import ProgressBar from "../components/ProgressBar";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import { useDispatch, useSelector } from "react-redux";
+import ButtonGroup from "../components/ButtonGroup";
 
 
 const ShipmentForm1 = ({navigation}) => {
@@ -117,15 +118,16 @@ const ShipmentForm1 = ({navigation}) => {
                 </View>
 
                 {/* Botones: Atrás y Siguiente */}
+
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        style={[styles.button, styles.backButton]}
+                        style={styles.button2}
                         onPress={() => navigation.goBack()}
                     >
-                        <Text style={styles.backButtonText}>Atrás</Text>
+                        <Text style={styles.buttonText2}>Atrás</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleValidation}>
-                        <Text style={styles.buttonText}>Siguiente</Text>
+                        <Text style={styles.backButtonText}>Siguiente</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -186,26 +188,52 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        flex: 0.48,
         backgroundColor: COLORS.red,
-        padding: 15,
-        alignItems: "center",
-        borderRadius: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 7,
+        marginTop: 20,
+        width: '100%',
+        maxHeight: 40,
+        maxWidth: 150,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 25,
+        marginLeft: 25,
+
     },
-    backButton: {
+    button2: {
         backgroundColor: COLORS.white,
-        borderWidth: 3,
         borderColor: COLORS.red,
+        borderWidth: 1,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 7,
+        marginTop: 20,
+        width: '100%',
+        maxHeight: 40,
+        maxWidth: 150,
+        alignItems: 'center',
+        justifyContent: 'center',
+        outlineColor: COLORS.red,
+        marginRight: 25,
+        marginLeft: 5,
     },
     buttonText: {
         fontFamily: "Delivery", // Fuente personalizada en botones
         color: COLORS.white,
         fontSize: 16,
     },
-    backButtonText: {
-        fontFamily: "Delivery", // Fuente personalizada en el botón de retroceso
+    buttonText2: {
         color: COLORS.red,
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    backButtonText: {
+        color: COLORS.white,
         fontSize: 16,
+        fontWeight: 'bold',
+        alignContent: 'center',
     },
 });
 

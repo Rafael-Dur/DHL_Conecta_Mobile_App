@@ -178,24 +178,25 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.gray,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
     bodyContainer: {
         flex: 1,
-        width: '90%',
-        backgroundColor: COLORS.white,
+        width: '95%',
+        backgroundColor: COLORS.gray,
         paddingHorizontal: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
     title: {
-        fontSize: FONT_SIZES.large,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'flex-start',
+        fontFamily: "Delivery", // Fuente personalizada principal
+        fontSize: FONT_SIZES.xlarge,
+        color: COLORS.black,
+        marginTop: 10,
+        marginBottom: 10,
     },
     cardContainer: {
         width: '100%',
