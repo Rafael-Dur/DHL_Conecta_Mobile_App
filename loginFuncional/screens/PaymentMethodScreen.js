@@ -11,22 +11,32 @@ import {
 import InternalHeader from "../components/InternalHeader"; // Header
 import { COLORS } from "../constants/constants"; // Colores
 import Button from "../components/Button"; // Botón reutilizable
+import { Banks } from "../constants/enums"; // Enums de Bancos
+import ProgressIndicator from "../components/ProgressIndicator"; // Indicador de progreso
+import { useDispatch, useSelector } from "react-redux";
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 
 const banks = [
-  { id: 1, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
-  { id: 2, name: "HSBC", logo: require("../assets/BankIcon_HSBC.png") },
-  { id: 3, name: "ITAU", logo: require("../assets/BankIcon_ITAU.png") },
-  { id: 4, name: "Santander", logo: require("../assets/BankIcon_SANTANDER.png") },
-  { id: 5, name: "Scotiabank", logo: require("../assets/BankIcon_SCOTIA.png") },
-  { id: 6, name: "VISA", logo: require("../assets/BankIcon_VISA.png") },
+  { id: Banks.BROU, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
+  { id: Banks.HSBC, name: "HSBC", logo: require("../assets/BankIcon_HSBC.png") },
+  { id: Banks.ITAU, name: "ITAU", logo: require("../assets/BankIcon_ITAU.png") },
+  { id: Banks.SANTANDER, name: "Santander", logo: require("../assets/BankIcon_SANTANDER.png") },
+  { id: Banks.SCOTIABANK, name: "Scotiabank", logo: require("../assets/BankIcon_SCOTIA.png") },
+  { id: Banks.VISA, name: "VISA", logo: require("../assets/BankIcon_VISA.png") },
 ];
 
 export default function PaymentMethodScreen({ navigation }) {
-  const [selectedBank, setSelectedBank] = useState(null); // Estado para el banco seleccionado
+  const [selectedBank, setSelectedBank] = useState(null); // Estado local para el banco seleccionado
   const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
+  const { success, error, loading, bank } = useSelector((state) => state.shipments);
 
   const handleBankSelect = (bankId) => {
-    setSelectedBank(bankId);
+    setSelectedBank(bankId); // Actualiza el estado local
+    dispatch(updateShipmentField({ key: "bank", value: bankId })); // Actualiza el estado global
+
+    console.log("Banco seleccionado:", bank);
+
   };
 
   const handlePayment = () => {
@@ -44,25 +54,14 @@ export default function PaymentMethodScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <InternalHeader showBackButton={true} />
-
-      {/* Progreso */}
-      <View style={styles.progressContainer}>
-        {[...Array(6)].map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.progressStep,
-              index < 5 && styles.progressStepCompleted, // Estilo para pasos completados
-            ]}
-          />
-        ))}
-        <Text style={styles.stepNumber}>6</Text>
-      </View>
-
+      <InternalHeader showBackButton={true} /> 
       {/* Título */}
       <View style={styles.welcomeContainer}>
         <Text style={styles.welcomeText}>Medio de Pago</Text>
+      </View>
+        {/* Indicador de Progreso */}
+        <ProgressIndicator totalPasos={6} pasoActual={6} />
+        <View style={styles.welcomeContainer}>
         <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
       </View>
 
@@ -73,7 +72,7 @@ export default function PaymentMethodScreen({ navigation }) {
             key={bank.id}
             style={[
               styles.card,
-              selectedBank === bank.id && styles.selectedCard, // Estilo para la tarjeta seleccionada
+              selectedBank === bank.id && styles.selectedCard, // Resalta la tarjeta seleccionada
             ]}
             onPress={() => handleBankSelect(bank.id)}
           >
@@ -84,14 +83,8 @@ export default function PaymentMethodScreen({ navigation }) {
       </View>
 
       {/* Botones */}
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={[styles.button, styles.backButton]}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.buttonText}>Atrás</Text>
-        </TouchableOpacity>
-        <Button title="Pagar" onPress={handlePayment} />
+      <View >
+           <Button title="Pagar" onPress={handlePayment} />
       </View>
     </View>
   );
@@ -103,28 +96,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightGray, // Fondo similar al de inicio
     alignItems: "center",
     paddingHorizontal: 20,
-  },
-  progressContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 20,
-  },
-  progressStep: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: COLORS.lightGray,
-    marginHorizontal: 5,
-  },
-  progressStepCompleted: {
-    backgroundColor: COLORS.green,
-  },
-  stepNumber: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginLeft: 10,
-    color: COLORS.black,
   },
   welcomeContainer: {
     marginVertical: 10,
@@ -158,6 +129,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
     width: "45%",
+    height: "45%", // Tarjetas cuadradas
     marginBottom: 20,
   },
   selectedCard: {

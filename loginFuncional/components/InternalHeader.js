@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 30,
     width: "100%",
+    marginVertical: 20,
   },
   backButton: {
     position: "absolute",
