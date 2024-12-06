@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, ScrollView, View, Image, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import {
+    ScrollView, View, Image, Text, StyleSheet, TouchableOpacity, Dimensions, KeyboardAvoidingView,
+    Platform,
+} from 'react-native';
 import InputField from '../components/InputField';
 import BodyContainer from '../components/BodyContainer';
 import { COLORS, FONT_SIZES } from '../constants/constants';
@@ -91,13 +94,17 @@ const ShipmentForm3 = () => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
-                <InternalHeader showBackButton={true} style={styles.header} />
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                style={styles.keyboardAvoidingView}
+            >
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
-                    <Text style={styles.title}>¿Cómo lo envías?</Text>
-                    <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
+                    <InternalHeader showBackButton={true} style={styles.header} />
                     <BodyContainer isGrayBackground={true}>
-                        <View style={styles.row}>
+                        <Text style={styles.title}>¿Cómo lo envías?</Text>
+                        <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
+
+                        <View style={styles.row2}>
                             <TouchableOpacity
                                 style={[
                                     styles.card,
@@ -113,6 +120,7 @@ const ShipmentForm3 = () => {
                                     {shipmentPackageType === 2 ? "Sobre" : "Caja"}
                                 </Text>
                             </TouchableOpacity>
+                            <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
                         </View>
 
                         {shipmentPackageType === 2 && (
@@ -207,7 +215,7 @@ const ShipmentForm3 = () => {
                         />
                     </BodyContainer>
                 </ScrollView>
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 };
@@ -217,63 +225,140 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#FFFFFF",
     },
-    container: {
+    keyboardAvoidingView: {
         flex: 1,
-        backgroundColor: COLORS.gray,
     },
     scrollContainer: {
-        paddingHorizontal: width * 0.05,
-        paddingVertical: height * 0.02,
-    },
-    header: {
-        width: "100%", // Ocupa todo el ancho de la pantalla
+        flexGrow: 1,
+        backgroundColor: COLORS.gray,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     title: {
-        fontSize: FONT_SIZES.large,
-        textAlign: "center",
+        alignSelf: 'center',
         marginBottom: 10,
-        color: COLORS.primary,
+        marginTop: 20,
+        fontWeight: 'bold',
+        color: COLORS.black,
+        fontSize: FONT_SIZES.large,
+        width: '100%',
+        maxWidth: 350,
     },
     subtitle: {
+        //alignSelf: 'flex-end',
+        marginBottom: 30,
+        marginTop: 20,
+        color: COLORS.black,
         fontSize: FONT_SIZES.medium,
-        textAlign: "center",
-        marginBottom: 15,
-        color: COLORS.text,
-    },
-    row: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginVertical: 10,
-    },
-    card: {
-        flex: 1,
-        alignItems: "center",
-        padding: height * 0.02,
-        backgroundColor: COLORS.lightGray,
-        borderRadius: 10,
-        margin: 5,
+        width: '100%',
+        maxWidth: 350,
     },
     selectedButton: {
-        borderColor: COLORS.primary,
+        borderColor: "#C00",
         borderWidth: 2,
     },
-    dropdown: {
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        width: '31%',
+        //maxWidth: 350,
+    },
+    row2: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        width: '100%',
+        //maxWidth: 350,
+    },
+    card: {
+        backgroundColor: "#fff",
+        padding: "5%",
+        borderRadius: 10,
+        alignItems: "center",
+        elevation: 5,
+        shadowColor: "#000",
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 5 },
+    },
+    cardIcon: {
+        width: 120,
+        height: 120,
+        marginBottom: 10,
+        resizeMode: "contain",
+    },
+    cardTitle: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#C00",
+        marginBottom: 5,
+    },
+
+    boxButton: {
+        backgroundColor: COLORS.lightGray,
+        padding: 15,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
         flex: 1,
-        maxWidth: 70,
+    },
+    boxText: {
+        fontSize: FONT_SIZES.medium,
+        fontWeight: 'bold',
+    },
+    sectionLabel: {
+        fontSize: FONT_SIZES.medium,
+        fontWeight: 'bold',
+        marginBottom: 25,
+    },
+    infoIcon: {
+        fontSize: FONT_SIZES.small,
+        color: COLORS.grey,
+    },
+
+    dropdownWrapper: {
+        marginBottom: 15,
+        backgroundColor: COLORS.white,
+        maxWidth: 100, // Tamaño del contenedor del dropdown
         maxHeight: 50,
+        zIndex: 10, // Asegura que el dropdown no quede oculto detrás de otros componentes
+    },
+    dropdown: {
+        borderColor: COLORS.black,
+        borderWidth: 1,
+        borderRadius: 5,
+        height: 50,
+        justifyContent: "center",
+        paddingHorizontal: 10,
+        maxWidth: 80,
+        marginBottom: 15,
+    },
+    dropdownContainer: {
+        borderWidth: 1,
+        borderColor: COLORS.black,
+        borderRadius: 5,
+        backgroundColor: COLORS.white,
+        maxWidth: 80, // Tamaño del contenedor del dropdown
+    },
+    additionalInfo: {
+        color: COLORS.grey,
+        fontSize: 12,
+        marginBottom: 20,
     },
     costText: {
-        textAlign: "center",
         fontSize: FONT_SIZES.medium,
-        color: COLORS.text,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 20,
     },
     costAmount: {
-        textAlign: "center",
-        fontSize: FONT_SIZES.large,
-        fontWeight: "bold",
-        color: COLORS.primary,
-        marginVertical: 5,
+        fontSize: 30,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: COLORS.black,
     },
 });
 

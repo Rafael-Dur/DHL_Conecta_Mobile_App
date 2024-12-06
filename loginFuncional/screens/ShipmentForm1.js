@@ -121,13 +121,13 @@ const ShipmentForm1 = () => {
 
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
-                        style={styles.button}
+                        style={styles.button2}
                         onPress={() => navigation.goBack()}
                     >
-                        <Text style={styles.backButtonText}>Atrás</Text>
+                        <Text style={styles.buttonText2}>Atrás</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button2} onPress={handleValidation}>
-                        <Text style={styles.buttonText2}>Siguiente</Text>
+                    <TouchableOpacity style={styles.button} onPress={handleValidation}>
+                        <Text style={styles.backButtonText}>Siguiente</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
