@@ -18,6 +18,7 @@ import ShipmentPage from './screens/ShipmentPage';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import ShipmentForm3 from './screens/ShipmentForm3';
 import ShipmentForm4 from './screens/ShipmentForm4';
+import ShipmentMethodScreen from './screens/ShipmentMethodScreen';
 
 const Stack = createStackNavigator();
 
@@ -103,8 +104,8 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="ShipmentPage"
-              component={ShipmentPage}
+              name="ShipmentMethodScreen"
+              component={ShipmentMethodScreen}
               options={{ headerShown: false }}
             />
             <Stack.Screen

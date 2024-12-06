@@ -17,10 +17,8 @@ const { width, height } = Dimensions.get("window");
 const ShipmentMethodScreen = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null); // Estado para la opción seleccionada
 
-  // Maneja la selección de una tarjeta
-  const handleCardPress = (type) => {
-    setSelectedCard(type);
-    dispatch(updateShipmentField({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
+  const handleNextPress = () => {
+    navigation.navigate("PaymentMethodScreen"); // Ajusta la navegación según tu flujo.
   };
 
   const handleOptionSelect = (option) => {
@@ -49,17 +47,16 @@ const ShipmentMethodScreen = ({ navigation }) => {
             <TouchableOpacity
               style={[
                 styles.option,
-                selectedOption === "recoleccion" && styles.selectedOption, // Estilo seleccionado
+                selectedOption === "recoleccion" && styles.selectedOption, // Aplicar estilo si está seleccionado
               ]}
               onPress={() => handleOptionSelect("recoleccion")}
             >
               <Image
                 source={require("../assets/delivery-van.png")}
                 style={styles.icon}
-                resizeMode="contain" // Mantener la proporción de la imagen
               />
+              <Text style={styles.optionText}>DHL vendrá a buscar el envío</Text>
             </TouchableOpacity>
-            <Text style={styles.optionText}>DHL vendrá a buscar el envío</Text> {/* Texto debajo */}
           </View>
 
           {/* Opción 2 */}
@@ -68,17 +65,16 @@ const ShipmentMethodScreen = ({ navigation }) => {
             <TouchableOpacity
               style={[
                 styles.option,
-                selectedOption === "sucursal" && styles.selectedOption, // Estilo seleccionado
+                selectedOption === "sucursal" && styles.selectedOption, // Aplicar estilo si está seleccionado
               ]}
               onPress={() => handleOptionSelect("sucursal")}
             >
               <Image
                 source={require("../assets/live-tracking.png")}
                 style={styles.icon}
-                resizeMode="contain" // Mantener la proporción de la imagen
               />
+              <Text style={styles.optionText}>Iré a una tienda de DHL</Text>
             </TouchableOpacity>
-            <Text style={styles.optionText}>Iré a una tienda de DHL</Text> {/* Texto debajo */}
           </View>
         </View>
 
@@ -118,7 +114,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04,
     color: COLORS.grayDark,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   optionsContainer: {
     flexDirection: "row", // Dos columnas en fila
@@ -141,9 +137,8 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
   },
   selectedOption: {
-    borderColor: COLORS.red, // Color del borde cuando está seleccionado
+    borderColor: COLORS.primary, // Color del borde cuando está seleccionado
     backgroundColor: COLORS.lightBlue, // Color de fondo cuando está seleccionado
-    borderWidth: 3,
   },
   subtitle: {
     fontSize: width * 0.045,
@@ -151,19 +146,17 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     marginBottom: 10,
     textAlign: "center",
-    marginBottom: 20,
   },
   icon: {
-    width: 150, // Ancho ajustado
-    height: 50, // Altura ajustada
-    marginBottom: 10,
+    width: width * 0.12,
+    height: width * 0.12,
+    marginBottom: 20,
   },
   optionText: {
     fontSize: width * 0.04,
     textAlign: "center",
     color: COLORS.black,
     marginHorizontal: 10,
-    marginTop: 20,
   },
 });
 

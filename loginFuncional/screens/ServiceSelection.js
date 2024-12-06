@@ -45,7 +45,7 @@ const handleStore = (type) => {
 };
 const handleCardPress = (type) => {
   handleStore(type);
-  navigation.navigate("ShipmentForm3"); 
+  navigation.navigate("ShipmentMethodScreen"); 
 };
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
