@@ -153,7 +153,7 @@ const ShipmentForm4 = () => {
           onLeftPress={() => navigation.navigate('ShipmentForm3')}
           leftStyleType="outlined"
           rightButtonTitle="Siguiente"
-          onRightPress={() => Alert.alert('Siguiente presionado')}
+          onRightPress={() => navigation.navigate('ShipmentForm5')}
         />
 
 
