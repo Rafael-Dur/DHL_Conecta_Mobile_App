@@ -140,9 +140,9 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
   },
   selectedOption: {
-    borderColor: "red", // Color rojo para el borde cuando está seleccionado
-    borderWidth: 3, // Grosor del borde
-    backgroundColor: COLORS.lightBlue, // Color de fondo cuando está seleccionado
+    borderColor: COLORS.red,
+    borderWidth: 3,
+    backgroundColor: COLORS.lightBlue,
   },
   subtitle: {
     fontSize: width * 0.045,

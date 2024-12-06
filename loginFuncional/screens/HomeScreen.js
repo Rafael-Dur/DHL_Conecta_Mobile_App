@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux"; // Redux hooks
+import { useDispatch, useSelector } from "react-redux";
 import InternalHeader from "../components/InternalHeader";
 import { ShipmentType } from "../constants/enums";
-import { updateShipmentField } from "../features/Shipments/ShipmentSlice"; // Importa la acción
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 
 const packageIcon = require("../assets/package-icon.png");
 const documentIcon = require("../assets/document-icon.png");
@@ -24,8 +24,7 @@ export default function HomeScreen({ navigation }) {
   // Navegación basada en la selección
   const handleAddButtonPress = () => {
     if (selectedCard === ShipmentType.Package) {
-      navigation.navigate("ServiceSelection"); // Página específica para paquetes
-      //      navigation.navigate("ServiceSelection"); // Página específica para paquetes
+      navigation.navigate("ServiceSelection");
     } else if (selectedCard === ShipmentType.Document) {
       navigation.navigate("ShipmentMethodScreen");
     } else {
