@@ -1,168 +1,172 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../components/InternalHeader";
-import Button from "../components/Button"; // Importar el componente Button
-import { COLORS } from "../constants/constants";
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Alert } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useDispatch, useSelector } from "react-redux"; // Redux hooks
+import InternalHeader from "../components/InternalHeader";
+import { ShipmentType } from "../constants/enums";
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice"; // Importa la acción
 
-const { width, height } = Dimensions.get("window");
+const packageIcon = require("../assets/package-icon.png");
+const documentIcon = require("../assets/document-icon.png");
 
-const ShipmentMethodScreen = ({ navigation }) => {
-  const [selectedOption, setSelectedOption] = useState(null); // Estado para la opción seleccionada
+export default function HomeScreen({ navigation }) {
+  const { width } = useWindowDimensions();
+  const [selectedCard, setSelectedCard] = useState(null); // Estado local para la tarjeta seleccionada
+  const dispatch = useDispatch();
+  const shipment = useSelector((state) => state.shipments); // Selector para obtener el estado actual
 
-  const handleNextPress = () => {
-    navigation.navigate("PaymentMethodScreen"); // Ajusta la navegación según tu flujo.
+  // Maneja la selección de una tarjeta
+  const handleCardPress = (type) => {
+    setSelectedCard(type);
+    dispatch(updateShipmentField ({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
   };
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option); // Establecer la opción seleccionada
+  // Navegación basada en la selección
+  const handleAddButtonPress = () => {
+    if (selectedCard === ShipmentType.Package) {
+      navigation.navigate("ServiceSelection"); // Página específica para paquetes
+      //      navigation.navigate("ServiceSelection"); // Página específica para paquetes
+    } else if (selectedCard === ShipmentType.Document) {
+      navigation.navigate("ShipmentMethodScreen");
+    } else {
+      Alert.alert("Error", "Por favor selecciona un tipo de envío antes de continuar.");
+    }
   };
 
+ 
   return (
-    <SafeAreaView style={styles.safeContainer}>
-      {/* Encabezado con botón de retroceso */}
-      <Header showBackButton={true} />
+    <View style={styles.container}>
+      {/* Header */}
+      <InternalHeader showBackButton={false} />
 
-      {/* Contenido principal */}
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Forma de envío</Text>
-          <Text style={styles.subHeaderText}>
-            Selecciona cómo quieres entregar el paquete a DHL.
-          </Text>
-        </View>
-
-        {/* Opciones de envío en dos columnas */}
-        <View style={styles.optionsContainer}>
-          {/* Opción 1 */}
-          <View style={styles.optionColumn}>
-            <Text style={styles.subtitle}>Recolección</Text> {/* Subtítulo */}
-            <TouchableOpacity
-              style={[
-                styles.option,
-                selectedOption === "recoleccion" && styles.selectedOption, // Estilo seleccionado
-              ]}
-              onPress={() => handleOptionSelect("recoleccion")}
-            >
-              <Image
-                source={require("../assets/delivery-van.png")}
-                style={styles.icon}
-                resizeMode="contain" // Mantener la proporción de la imagen
-              />
-            </TouchableOpacity>
-            <Text style={styles.optionText}>DHL vendrá a buscar el envío</Text> {/* Texto debajo */}
-          </View>
-
-          {/* Opción 2 */}
-          <View style={styles.optionColumn}>
-            <Text style={styles.subtitle}>En Sucursal</Text> {/* Subtítulo */}
-            <TouchableOpacity
-              style={[
-                styles.option,
-                selectedOption === "sucursal" && styles.selectedOption, // Estilo seleccionado
-              ]}
-              onPress={() => handleOptionSelect("sucursal")}
-            >
-              <Image
-                source={require("../assets/live-tracking.png")}
-                style={styles.icon}
-                resizeMode="contain" // Mantener la proporción de la imagen
-              />
-            </TouchableOpacity>
-            <Text style={styles.optionText}>Iré a una tienda de DHL</Text> {/* Texto debajo */}
-          </View>
-        </View>
-
-        {/* Botón siguiente */}
-        <Button
-          onPress={handleNextPress}
-          title="Siguiente"
-          styleType="default"
-        />
+      {/* Mensaje de bienvenida */}
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.welcomeText}>¡Bienvenido!</Text>
+        <Text style={styles.subText}>¿Qué necesitas enviar hoy?</Text>
       </View>
-    </SafeAreaView>
+
+      {/* Tarjetas de opciones */}
+      <View style={styles.cardContainer}>
+        {/* Tarjeta de Paquete */}
+        <TouchableOpacity
+          style={[
+            styles.card,
+            { width: width * 0.4 },
+            selectedCard === ShipmentType.Package && styles.selectedCard, // Estilo seleccionado
+          ]}
+          onPress={() => handleCardPress(ShipmentType.Package)}
+        >
+          <Image source={packageIcon} style={styles.cardIcon} />
+          <Text style={styles.cardTitle}>Paquete</Text>
+          <Text style={styles.cardDescription}>
+            Necesito enviar varios artículos a Uruguay
+          </Text>
+          <MaterialIcons name="info" size={20} color="#C00" style={styles.infoIcon} />
+        </TouchableOpacity>
+
+        {/* Tarjeta de Documento */}
+        <TouchableOpacity
+          style={[
+            styles.card,
+            { width: width * 0.4 },
+            selectedCard === ShipmentType.Document && styles.selectedCard, // Estilo seleccionado
+          ]}
+          onPress={() => handleCardPress(ShipmentType.Document)}
+        >
+          <Image source={documentIcon} style={styles.cardIcon} />
+          <Text style={styles.cardTitle}>Documento</Text>
+          <Text style={styles.cardDescription}>
+            Necesito enviar sólo papeles a Uruguay
+          </Text>
+          <MaterialIcons name="info" size={20} color="#C00" style={styles.infoIcon} />
+        </TouchableOpacity>
+      </View>
+
+      {/* Barra de navegación inferior */}
+      <View style={styles.bottomNav}>
+        <MaterialIcons name="location-on" size={30} color="#C00" />
+        <MaterialIcons name="notifications" size={30} color="#C00" />
+        <TouchableOpacity onPress={handleAddButtonPress}>
+          <MaterialIcons name="add-circle" size={50} color="#C00" />
+        </TouchableOpacity>
+        <MaterialIcons name="local-shipping" size={30} color="#C00" />
+        <MaterialIcons name="menu" size={30} color="#C00" />
+      </View>
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  safeContainer: {
+  container: {
     flex: 1,
-    backgroundColor: COLORS.white,
-  },
-  content: {
-    flex: 1,
-    padding: width * 0.05,
-    backgroundColor: COLORS.grayLight,
+    backgroundColor: "#f4f4f4",
     alignItems: "center",
   },
-  header: {
-    marginBottom: 40,
+  welcomeContainer: {
+    marginVertical: "5%",
+    alignItems: "center",
   },
-  headerText: {
-    fontSize: width * 0.06,
+  welcomeText: {
+    fontSize: 24,
     fontWeight: "bold",
-    color: COLORS.black,
-    marginBottom: 20,
-    marginTop: 20,
+    color: "#000",
   },
-  subHeaderText: {
-    fontSize: width * 0.04,
-    color: COLORS.grayDark,
+  subText: {
+    fontSize: 18,
+    color: "#555",
+    marginTop: 5,
+  },
+  cardContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginVertical: "5%",
+    width: "90%",
+  },
+  card: {
+    backgroundColor: "#fff",
+    padding: "5%",
+    borderRadius: 10,
+    alignItems: "center",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+  },
+  selectedCard: {
+    borderColor: "#C00",
+    borderWidth: 2,
+  },
+  cardIcon: {
+    width: 60,
+    height: 60,
+    marginBottom: 10,
+    resizeMode: "contain",
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#C00",
+    marginBottom: 5,
+  },
+  cardDescription: {
+    textAlign: "center",
+    fontSize: 12,
+    color: "#777",
+  },
+  infoIcon: {
     marginTop: 10,
-    marginBottom: 10,
   },
-  optionsContainer: {
-    flexDirection: "row", // Dos columnas en fila
-    justifyContent: "space-between",
-    marginBottom: height * 0.08,
-  },
-  optionColumn: {
-    flex: 1,
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
-    justifyContent: "center",
-  },
-  option: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: COLORS.white,
-    borderRadius: 8,
-    paddingVertical: 30,
-    marginHorizontal: width * 0.02,
-    borderWidth: 1,
-    borderColor: COLORS.gray,
-  },
-  selectedOption: {
-    borderColor: COLORS.red, // Color del borde cuando está seleccionado
-    backgroundColor: COLORS.lightBlue, // Color de fondo cuando está seleccionado
-    borderWidth: 3,
-  },
-  subtitle: {
-    fontSize: width * 0.045,
-    fontWeight: "bold",
-    color: COLORS.black,
-    marginBottom: 10,
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  icon: {
-    width: 150, // Ancho ajustado
-    height: 50, // Altura ajustada
-    marginBottom: 10,
-  },
-  optionText: {
-    fontSize: width * 0.04,
-    textAlign: "center",
-    color: COLORS.black,
-    marginHorizontal: 10,
-    marginTop: 20,
+    backgroundColor: "#fff",
+    width: "100%",
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderColor: "#ddd",
+    position: "absolute",
+    bottom: 0,
   },
 });
-
-export default ShipmentMethodScreen;
