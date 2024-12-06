@@ -7,11 +7,11 @@ import ButtonGroup from '../components/ButtonGroup';
 import Checkbox from '../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+//import { useNavigation } from '@react-navigation/native';
 
-const ShipmentForm5 = () => {
+const ShipmentForm5 = ({navigation})  => {
     const shipments = useSelector((state) => state.shipments); // Obtener datos desde Redux
-    const navigation = useNavigation();
+  //  const navigation = useNavigation();
 
     const [checkboxStates, setCheckboxStates] = useState({
         from: false,

@@ -4,14 +4,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
 import { COLORS } from "../constants/constants";
 //import PhoneInput from "react-native-phone-number-input";
-import { useNavigation } from "@react-navigation/native";
+//import { useNavigation } from "@react-navigation/native";
 import ProgressBar from "../components/ProgressBar";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 
-const ShipmentForm1 = () => {
-    const navigation = useNavigation();
+const ShipmentForm1 = ({navigation}) => {
+    //const navigation = useNavigation();
     const dispatch = useDispatch();
     const { sender } = useSelector((state) => state.shipments);
 

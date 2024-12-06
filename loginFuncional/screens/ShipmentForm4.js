@@ -13,13 +13,13 @@ import ArticlesModal from '../components/ArticlesModal';
 import ClickeableText from '../components/ClickeableText';
 import ButtonGroup from '../components/ButtonGroup';
 import InternalHeader from '../components/InternalHeader';
-import { useNavigation } from '@react-navigation/native';
+//import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField, fetchProductCategories } from "../features/Shipments/ShipmentSlice";
 import ProgressBar from '../components/ProgressBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const ShipmentForm4 = () => {
+const ShipmentForm4 = ({navigation})  => {
   const [description, setDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [value, setValue] = useState('');
@@ -28,7 +28,7 @@ const ShipmentForm4 = () => {
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalValue, setTotalValue] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const dispatch = useDispatch();
   const { loading, success, error, DHLConfirmation, productCategories } = useSelector(
     (state) => state.shipments

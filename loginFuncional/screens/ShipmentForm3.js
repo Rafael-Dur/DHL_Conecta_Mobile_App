@@ -7,7 +7,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import InternalHeader from "../components/InternalHeader";
 import ClickeableText from '../components/ClickeableText';
 import ButtonGroup from '../components/ButtonGroup';
-import { useNavigation } from '@react-navigation/native';
+//import { useNavigation } from '@react-navigation/native';
 import { BoxType } from '../constants/enums';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField, shipmentBox } from "../features/Shipments/ShipmentSlice";
@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window'); // Dimensiones de la pantalla
 
-const ShipmentForm3 = () => {
+const ShipmentForm3 = ({navigation}) => {
     const [length, setLength] = useState('');
     const [widthVal, setWidth] = useState('');
     const [heightVal, setHeight] = useState('');
@@ -28,7 +28,7 @@ const ShipmentForm3 = () => {
     const [documentType, setDocumentType] = useState("documentos");
     const [isDocumentTypeDropdownOpen, setIsDocumentTypeDropdownOpen] = useState(false);
     const [cost, setCost] = useState(0);
-    const navigation = useNavigation();
+   // const navigation = useNavigation();
     const packageIcon = require("../assets/package-icon.png");
     const envelopeIcon = require("../assets/document-icon.png");
     const { shipmentBox, shipmentPackageType } = useSelector((state) => state.shipments);
