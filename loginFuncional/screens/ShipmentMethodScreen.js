@@ -8,9 +8,10 @@ import {
   Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../components/InternalHeader";
+import InternalHeader from "../components/InternalHeader";
 import Button from "../components/Button"; // Importar el componente Button
 import { COLORS } from "../constants/constants";
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -18,7 +19,7 @@ const ShipmentMethodScreen = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null); // Estado para la opción seleccionada
 
   const handleNextPress = () => {
-    navigation.navigate("PaymentMethodScreen"); // Ajusta la navegación según tu flujo.
+    navigation.navigate("ShipmentForm1");
   };
 
   const handleOptionSelect = (option) => {
@@ -28,7 +29,7 @@ const ShipmentMethodScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeContainer}>
       {/* Encabezado con botón de retroceso */}
-      <Header showBackButton={true} />
+      <InternalHeader showBackButton={true} />
 
       {/* Contenido principal */}
       <View style={styles.content}>
@@ -161,6 +162,20 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     marginHorizontal: 10,
     marginTop: 20,
+  },
+  button: {
+    backgroundColor: COLORS.red, // Asegúrate de usar el color correcto
+    padding: 15,
+    alignItems: "center",
+    borderRadius: 8, // Ajusta el radio del borde si es necesario
+    marginTop: 20,
+    alignSelf: "center",
+    width: "90%",
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

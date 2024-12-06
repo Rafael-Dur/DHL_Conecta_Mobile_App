@@ -1,23 +1,24 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Provider } from 'react-redux';
-import store from './store/store';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as Font from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import ResetPasswordScreen from './screens/ResetPasswordScreen';
-import ValidateMailScreen from './screens/ValidateMailScreen';
-import SecurityCodeScreen from './screens/SecurityCodeScreen';
-import HomeScreen from './screens/HomeScreen';
-import NewShipment from './components/NewShipment';
-import ServiceSelection from './screens/ServiceSelection';
-import ShipmentPage from './screens/ShipmentPage';
-import PaymentMethodScreen from './screens/PaymentMethodScreen';
-import ShipmentForm4 from './screens/ShipmentForm4';
-import ShipmentMethodScreen from './screens/ShipmentMethodScreen';
+import React, { useEffect, useState, useCallback } from "react";
+import { View, StyleSheet } from "react-native";
+import { Provider } from "react-redux";
+import store from "./store/store";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import ResetPasswordScreen from "./screens/ResetPasswordScreen";
+import ValidateMailScreen from "./screens/ValidateMailScreen";
+import SecurityCodeScreen from "./screens/SecurityCodeScreen";
+import HomeScreen from "./screens/HomeScreen";
+import NewShipment from "./components/NewShipment";
+import ServiceSelection from "./screens/ServiceSelection";
+import ShipmentPage from "./screens/ShipmentPage";
+import PaymentMethodScreen from "./screens/PaymentMethodScreen";
+import ShipmentForm4 from "./screens/ShipmentForm4";
+import ShipmentMethodScreen from "./screens/ShipmentMethodScreen";
+import ShipmentForm1 from "./screens/ShipmentForm1"; // Asegúrate de que el nombre de este archivo sea correcto.
 
 const Stack = createStackNavigator();
 
@@ -32,8 +33,8 @@ export default function App() {
       try {
         // Cargar fuentes personalizadas
         await Font.loadAsync({
-          Delivery: require('./assets/fonts/Delivery_A_CdBlk.ttf'),
-          Delivery2: require('./assets/fonts/Delivery_A_CdLt.ttf'),
+          Delivery: require("./assets/fonts/Delivery_A_CdBlk.ttf"),
+          Delivery2: require("./assets/fonts/Delivery_A_CdLt.ttf"),
         });
         // Simular una carga lenta (puedes eliminarlo si no lo necesitas)
         await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -110,6 +111,11 @@ export default function App() {
             <Stack.Screen
               name="PaymentMethodScreen"
               component={PaymentMethodScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ShipmentForm1"
+              component={ShipmentForm1}
               options={{ headerShown: false }}
             />
             <Stack.Screen
