@@ -19,6 +19,8 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import ShipmentForm3 from './screens/ShipmentForm3';
 import ShipmentForm4 from './screens/ShipmentForm4';
 import ShipmentMethodScreen from './screens/ShipmentMethodScreen';
+import ShipmentForm1 from "./screens/ShipmentForm1";
+import ShipmentForm2 from "./screens/ShipmentForm2"; // Importar ShipmentForm2
 
 const Stack = createStackNavigator();
 
@@ -33,8 +35,8 @@ export default function App() {
       try {
         // Cargar fuentes personalizadas
         await Font.loadAsync({
-          Delivery: require('./assets/fonts/Delivery_A_CdBlk.ttf'),
-          Delivery2: require('./assets/fonts/Delivery_A_CdLt.ttf'),
+          Delivery: require("./assets/fonts/Delivery_A_CdBlk.ttf"),
+          Delivery2: require("./assets/fonts/Delivery_A_CdLt.ttf"),
         });
         // Simular una carga lenta (puedes eliminarlo si no lo necesitas)
         await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -111,6 +113,16 @@ export default function App() {
             <Stack.Screen
               name="PaymentMethodScreen"
               component={PaymentMethodScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ShipmentForm1"
+              component={ShipmentForm1}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ShipmentForm2"
+              component={ShipmentForm2}
               options={{ headerShown: false }}
             />
             <Stack.Screen
