@@ -6,7 +6,7 @@ import { COLORS } from "../constants/constants";
 import { useNavigation } from '@react-navigation/native';
 
 const Header = ({ showBackButton }) => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <LinearGradient
       colors={["#FFF0B2", "#FFDE59", "#FFCC00", "#FFCC00"]}
@@ -21,7 +21,7 @@ const Header = ({ showBackButton }) => {
       )}
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/LogoDHL.png')} 
+          source={require('../assets/LogoDHL.png')}
           style={styles.logo}
           resizeMode="contain"
         />
