@@ -21,6 +21,7 @@ import ShipmentForm4 from './screens/ShipmentForm4';
 import ShipmentMethodScreen from './screens/ShipmentMethodScreen';
 import ShipmentForm1 from "./screens/ShipmentForm1";
 import ShipmentForm2 from "./screens/ShipmentForm2"; // Importar ShipmentForm2
+import ShipmentForm5 from './screens/ShipmentForm5';
 
 const Stack = createStackNavigator();
 
@@ -133,6 +134,11 @@ export default function App() {
             <Stack.Screen
               name="ShipmentForm3"
               component={ShipmentForm3}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ShipmentForm5"
+              component={ShipmentForm5}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

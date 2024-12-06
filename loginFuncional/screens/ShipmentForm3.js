@@ -10,8 +10,10 @@ import ButtonGroup from '../components/ButtonGroup';
 import { useNavigation } from '@react-navigation/native';
 import { BoxType } from '../constants/enums';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import { updateShipmentField ,shipmentBox } from "../features/Shipments/ShipmentSlice";
 import ProgressBar from '../components/ProgressBar';
+//import { shipmentBox } from '../features/Shipments/ShipmentSlice';
+
 
 const ShipmentForm3 = () => {
     const [length, setLength] = useState('');
@@ -29,8 +31,13 @@ const ShipmentForm3 = () => {
     const navigation = useNavigation();
     const packageIcon = require("../assets/package-icon.png");
     const envelopeIcon = require("../assets/document-icon.png");
-    const dispatch = useDispatch();
     const { shipmentBox, shipmentPackageType } = useSelector((state) => state.shipments);
+    const [selectedButton, setSelectedButton] = useState(null);
+    const dispatch = useDispatch();
+
+    const handlePress = (buttonId) => {
+        setSelectedButton(buttonId);
+    };
 
     // Función para calcular el costo del envío
     const calculateShippingCost = () => {
@@ -94,9 +101,8 @@ const ShipmentForm3 = () => {
         <View style={styles.container}>
             <InternalHeader showBackButton={true} />
             <Text style={styles.title}>¿Cómo lo envías?</Text>
-            <ProgressBar currentStep={3} />
             <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
-            <BodyContainer isGrayBackground>
+            <BodyContainer>
                 <View style={styles.row}>
                     <TouchableOpacity style={styles.card}>
                         <Image
@@ -106,6 +112,15 @@ const ShipmentForm3 = () => {
                         <Text style={styles.cardTitle}>
                             {shipmentPackageType === 2 ? "Sobre" : "Caja"}
                         </Text>
+                    <TouchableOpacity
+                        style={[
+                            styles.card,
+                            selectedButton === 1 && styles.selectedButton,
+                        ]}
+                        onPress={() => handlePress(1)}
+                    >
+                        <Image source={packageIcon} style={styles.cardIcon} />
+                        <Text style={styles.cardTitle}>Caja</Text>
                     </TouchableOpacity>
                     <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
                 </View>
@@ -236,6 +251,10 @@ const styles = StyleSheet.create({
         width: '100%',
         maxWidth: 350,
     },
+    selectedButton: {
+        borderColor: "#C00",
+        borderWidth: 2,
+    },
     row: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -265,6 +284,35 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#C00",
         marginBottom: 5,
+    },
+    boxButton: {
+        backgroundColor: COLORS.gray,
+        padding: 15,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+    },
+    boxText: {
+        fontFamily: "Delivery", // Fuente personalizada para botones
+        fontSize: FONT_SIZES.medium,
+    },
+    sectionLabel: {
+        fontFamily: "Delivery", // Fuente personalizada para etiquetas
+        fontSize: FONT_SIZES.medium,
+        marginBottom: 25,
+    },
+    infoIcon: {
+        fontFamily: "Delivery2", // Fuente secundaria para íconos
+        fontSize: FONT_SIZES.small,
+        color: COLORS.grey,
+    },
+    dropdownWrapper: {
+        marginBottom: 15,
+        backgroundColor: COLORS.white,
+        maxWidth: 100, // Tamaño del contenedor del dropdown
+        maxHeight: 50,
+        zIndex: 10, // Asegura que el dropdown no quede oculto detrás de otros componentes
     },
     dropdown: {
         fontFamily: "Delivery2",
@@ -303,5 +351,6 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
 });
+
 
 export default ShipmentForm3;
