@@ -37,7 +37,7 @@ export default function RegisterForm({ onRegister }) {
       password,
       firstName,
       lastName,
-      phoneNumber: formattedPhoneNumber, // Usar el número formateado
+      phoneNumber: "+59897679522"//formattedPhoneNumber, // Usar el número formateado
     };
 
     onRegister(registerData);

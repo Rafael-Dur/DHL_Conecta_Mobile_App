@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -15,8 +15,10 @@ import ButtonGroup from "../components/ButtonGroup"; // Grupo de botones
 import { Banks } from "../constants/enums"; // Enums de Bancos
 import ProgressIndicator from "../components/ProgressIndicator"; // Indicador de progreso
 import { useDispatch, useSelector } from "react-redux";
-import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import { updateShipmentField, createShipment, clearShipmentError } from "../features/Shipments/ShipmentSlice";
 import BodyContainer from "../components/BodyContainer";
+import ErrorModal from "../components/ErrorModal";
+import SuccessModal from "../components/SuccessModal"; // Asegúrate de tener un componente para éxito
 
 const banks = [
   { id: Banks.BROU, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
@@ -31,74 +33,98 @@ export default function PaymentMethodScreen({ navigation }) {
   const [selectedBank, setSelectedBank] = useState(null); // Estado local para el banco seleccionado
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { success, error, loading, bank } = useSelector((state) => state.shipments);
-  const shipments = useSelector((state) => state.shipments);
-
+  const { success, error, loading, DHLConfirmation } = useSelector((state) => state.shipments);
 
   const handleBankSelect = (bankId) => {
     setSelectedBank(bankId); // Actualiza el estado local
     dispatch(updateShipmentField({ key: "bank", value: bankId })); // Actualiza el estado global
-
-    
   };
 
   const handlePayment = () => {
-    console.log("Datos hasta acá", shipments);
-    if (selectedBank) { 
-      Alert.alert(
-        "Pago realizado",
-        `Has seleccionado ${banks.find((bank) => bank.id === selectedBank)?.name}`
-      );
-      navigation.goBack(); // Navega hacia atrás
-    } else {
+    if (!selectedBank) {
       Alert.alert("Error", "Por favor selecciona un método de pago.");
+      return;
     }
+
+    dispatch(createShipment());
   };
+
+  const handleCloseErrorModal = () => {
+   // dispatch(clearShipmentError());
+    navigation.goBack(); // Redirige al usuario después de cerrar el modal de error
+  };
+
+  const handleCloseSuccessModal = () => {
+    navigation.goBack(); // Redirige al usuario después de cerrar el modal de éxito
+  };
+
+  // Maneja cambios en éxito o error
+  useEffect(() => {
+    if (success) {
+      Alert.alert("Pago exitoso", `Confirmación: ${DHLConfirmation}`);
+    }
+  }, [success]);
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {/* Header */}
-      <InternalHeader showBackButton={true} /> 
+      <InternalHeader showBackButton={true} />
+
       {/* Título */}
       <BodyContainer isGrayBackground={true}>
-      <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Medio de Pago</Text>
-      </View>
+        <View style={styles.welcomeContainer}>
+          <Text style={styles.welcomeText}>Medio de Pago</Text>
+        </View>
         {/* Indicador de Progreso */}
         <ProgressIndicator totalPasos={6} pasoActual={6} />
         <View style={styles.welcomeContainer}>
-        <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
-      </View>
+          <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
+        </View>
 
-      {/* Tarjetas de Bancos */}
-      <View style={styles.cardContainer}>
-        {banks.map((bank) => (
-          <TouchableOpacity
-            key={bank.id}
-            style={[
-              styles.card,
-              selectedBank === bank.id && styles.selectedCard, // Resalta la tarjeta seleccionada
-            ]}
-            onPress={() => handleBankSelect(bank.id)}
-          >
-            <Image source={bank.logo} style={styles.cardIcon} />
-            <Text style={styles.cardTitle}>{bank.name}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+        {/* Tarjetas de Bancos */}
+        <View style={styles.cardContainer}>
+          {banks.map((bank) => (
+            <TouchableOpacity
+              key={bank.id}
+              style={[
+                styles.card,
+                selectedBank === bank.id && styles.selectedCard, // Resalta la tarjeta seleccionada
+              ]}
+              onPress={() => handleBankSelect(bank.id)}
+            >
+              <Image source={bank.logo} style={styles.cardIcon} />
+              <Text style={styles.cardTitle}>{bank.name}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </BodyContainer>
 
       {/* Botones */}
-  
-    </BodyContainer>
-    <View >
-           <ButtonGroup
-            leftButtonTitle="Volver"
-            onLeftPress= {() => navigation.goBack()}
-            leftStyleType="outlined"
-            rightButtonTitle="Pagar"
-            onRightPress={handlePayment}
-          />
+      <View>
+        <ButtonGroup
+          leftButtonTitle="Volver"
+          onLeftPress={() => navigation.goBack()}
+          leftStyleType="outlined"
+          rightButtonTitle={loading ? "Enviando..." : "Pagar"}
+          onRightPress={handlePayment}
+        />
       </View>
+
+      {/* Modales */}
+      <ErrorModal
+        visible={!!error}
+        title="¡Hubo un problema!"
+        subtitle="No hemos podido procesar el pago."
+        message={typeof error === "string" ? error : "Algo salió mal. Intenta nuevamente."}
+        onClose={handleCloseErrorModal}
+      />
+      <SuccessModal
+        visible={!!success}
+        title="¡Éxito!"
+        subtitle="El pago fue procesado con éxito."
+        message={`Confirmación: ${DHLConfirmation}`}
+        onClose={handleCloseSuccessModal}
+      />
     </ScrollView>
   );
 }
@@ -106,11 +132,10 @@ export default function PaymentMethodScreen({ navigation }) {
 const styles = StyleSheet.create({
   scrollContainer: {
     backgroundColor: COLORS.gray,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingBottom: 20,
   },
-  
   welcomeContainer: {
     marginVertical: 10,
     alignItems: "center",
@@ -161,25 +186,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.black,
     textAlign: "center",
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
-  },
-  button: {
-    flex: 1,
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginHorizontal: 5,
-  },
-  backButton: {
-    backgroundColor: COLORS.lightRed,
-  },
-  buttonText: {
-    color: COLORS.white,
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

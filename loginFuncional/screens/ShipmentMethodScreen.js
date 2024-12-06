@@ -69,8 +69,7 @@ const ShipmentMethodScreen = ({ navigation }) => {
                 styles.option,
                 selectedOption === "sucursal" && styles.selectedOption, // Estilo seleccionado
               ]}
-              onPress={() => handleOptionSelect("sucursal")}
-            >
+              onPress={() => handleOptionSelect("sucursal")}            >
               <Image
                 source={require("../assets/live-tracking.png")}
                 style={styles.icon}
