@@ -21,6 +21,14 @@ const ShipmentForm3 = () => {
     const [cost, setCost] = useState(0);
     const navigation = useNavigation();
     const packageIcon = require("../assets/package-icon.png");
+    const [selectedButton, setSelectedButton] = useState(null);
+
+
+
+
+    const handlePress = (buttonId) => {
+        setSelectedButton(buttonId);
+    };
 
     // Función para calcular el costo del envío
     const calculateShippingCost = () => {
@@ -58,11 +66,18 @@ const ShipmentForm3 = () => {
     return (
         <View style={styles.container}>
             <InternalHeader />
-            <Text style={styles.title}>¿Cómo lo envías?</Text>
-            <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
+
             <BodyContainer>
+                <Text style={styles.title}>¿Cómo lo envías?</Text>
+                <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
                 <View style={styles.row}>
-                    <TouchableOpacity style={styles.card}>
+                    <TouchableOpacity
+                        style={[
+                            styles.card,
+                            selectedButton === 1 && styles.selectedButton,
+                        ]}
+                        onPress={() => handlePress(1)}
+                    >
                         <Image source={packageIcon} style={styles.cardIcon} />
                         <Text style={styles.cardTitle}>Caja</Text>
                     </TouchableOpacity>
@@ -177,6 +192,10 @@ const styles = StyleSheet.create({
         fontSize: FONT_SIZES.medium,
         width: '100%',
         maxWidth: 350,
+    },
+    selectedButton: {
+        borderColor: "#C00",
+        borderWidth: 2,
     },
     row: {
         flexDirection: 'row',
