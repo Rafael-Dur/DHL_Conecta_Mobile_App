@@ -37,6 +37,13 @@ const ShipmentForm4 = () => {
     dispatch(fetchProductCategories());
   }, [dispatch]);
 
+  const handleNext = () => {
+    console.log("lista de articulos", items);
+    dispatch(updateShipmentField({ key: "shipmentItems", value: items }));
+    
+    navigation.navigate('PaymentMethodScreen');
+  };
+
 
   const handleAddItem = () => {
     if (!description.trim() || !selectedCategory || !value.trim() || quantity <= 0) {
@@ -45,10 +52,11 @@ const ShipmentForm4 = () => {
 
     const newItem = {
       description,
-      category: selectedCategory,
+      shipmentProductTypeId: selectedCategory,
       value: parseFloat(value),
       quantity,
     };
+
 
 
 
@@ -161,7 +169,8 @@ const ShipmentForm4 = () => {
           onLeftPress={() => navigation.navigate('ShipmentForm3')}
           leftStyleType="outlined"
           rightButtonTitle="Siguiente"
-          onRightPress={() => navigation.navigate('PaymentMethodScreen')}
+          onRightPress={() => handleNext()}
+        //navigation.navigate('PaymentMethodScreen')}
         />
 
 

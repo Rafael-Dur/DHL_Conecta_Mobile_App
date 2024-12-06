@@ -4,21 +4,31 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
 import Button from "../components/Button";
 import { COLORS } from "../constants/constants";
-
+import { useDispatch, useSelector } from "react-redux";
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import { ShippingMethod } from "../constants/enums";
 
 const { width, height } = Dimensions.get("window");
 
 const ShipmentMethodScreen = ({ navigation }) => {
   const [selectedOption, setSelectedOption] = useState(null); // Estado para la opción seleccionada
+  const dispatch = useDispatch();
 
   const handleNextPress = () => {
+    if (!selectedOption) {
+      alert("Por favor selecciona una opción de envío.");
+      return;
+    }
+
+    // Actualizar el estado global con la opción seleccionada
+    dispatch(updateShipmentField({ key: "shippingMethod", value: selectedOption }));
+
     navigation.navigate("ShipmentForm1");
   };
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option); // Establecer la opción seleccionada
   };
-  
 
   return (
     <SafeAreaView style={styles.safeContainer}>
@@ -34,47 +44,48 @@ const ShipmentMethodScreen = ({ navigation }) => {
 
         {/* Opciones de envío en dos columnas */}
         <View style={styles.optionsContainer}>
-          {/* Opción 1 */}
+          {/* Opción 1: Recolección */}
           <View style={styles.optionColumn}>
-            <Text style={styles.subtitle}>Recolección</Text> {/* Subtítulo */}
+            <Text style={styles.subtitle}>Recolección</Text>
             <TouchableOpacity
               style={[
                 styles.option,
-                selectedOption === "recoleccion" && styles.selectedOption, // Estilo seleccionado
+                selectedOption === ShippingMethod.HousePickUp && styles.selectedOption, // Usando el enum
               ]}
-              onPress={() => handleOptionSelect("recoleccion")}
+              onPress={() => handleOptionSelect(ShippingMethod.HousePickUp)} // Usando el enum
             >
               <Image
                 source={require("../assets/delivery-van.png")}
                 style={styles.icon}
-                resizeMode="contain" // Mantener la proporción de la imagen
+                resizeMode="contain"
               />
             </TouchableOpacity>
-            <Text style={styles.optionText}>DHL vendrá a buscar el envío</Text> {/* Texto debajo */}
+            <Text style={styles.optionText}>DHL vendrá a buscar el envío</Text>
           </View>
 
-          {/* Opción 2 */}
+          {/* Opción 2: En Sucursal */}
           <View style={styles.optionColumn}>
-            <Text style={styles.subtitle}>En Sucursal</Text> {/* Subtítulo */}
+            <Text style={styles.subtitle}>En Sucursal</Text>
             <TouchableOpacity
               style={[
                 styles.option,
-                selectedOption === "sucursal" && styles.selectedOption, // Estilo seleccionado
+                selectedOption === ShippingMethod.Store && styles.selectedOption, // Usando el enum
               ]}
-              onPress={() => handleOptionSelect("sucursal")}            >
+              onPress={() => handleOptionSelect(ShippingMethod.Store)} // Usando el enum
+            >
               <Image
                 source={require("../assets/live-tracking.png")}
                 style={styles.icon}
-                resizeMode="contain" // Mantener la proporción de la imagen
+                resizeMode="contain"
               />
             </TouchableOpacity>
-            <Text style={styles.optionText}>Iré a una tienda de DHL</Text> {/* Texto debajo */}
+            <Text style={styles.optionText}>Iré a una tienda de DHL</Text>
           </View>
         </View>
 
         {/* Botón siguiente */}
         <Button
-          onPress={() => handleNextPress()} 
+          onPress={handleNextPress}
           title="Siguiente"
           styleType="default"
         />
@@ -111,7 +122,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   optionsContainer: {
-    flexDirection: "row", // Dos columnas en fila
+    flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: height * 0.08,
   },
@@ -153,20 +164,6 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     marginHorizontal: 10,
     marginTop: 20,
-  },
-  button: {
-    backgroundColor: COLORS.red, // Asegúrate de usar el color correcto
-    padding: 15,
-    alignItems: "center",
-    borderRadius: 8, // Ajusta el radio del borde si es necesario
-    marginTop: 20,
-    alignSelf: "center",
-    width: "90%",
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
 

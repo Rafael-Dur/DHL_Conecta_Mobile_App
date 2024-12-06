@@ -15,7 +15,7 @@ import ButtonGroup from "../components/ButtonGroup"; // Grupo de botones
 import { Banks } from "../constants/enums"; // Enums de Bancos
 import ProgressIndicator from "../components/ProgressIndicator"; // Indicador de progreso
 import { useDispatch, useSelector } from "react-redux";
-import { updateShipmentField, createShipment, clearShipmentError } from "../features/Shipments/ShipmentSlice";
+import { updateShipmentField, createShipment, clearShipmentState } from "../features/Shipments/ShipmentSlice";
 import BodyContainer from "../components/BodyContainer";
 import ErrorModal from "../components/ErrorModal";
 import SuccessModal from "../components/SuccessModal"; // Asegúrate de tener un componente para éxito
@@ -56,8 +56,9 @@ export default function PaymentMethodScreen({ navigation }) {
   };
 
   const handleCloseSuccessModal = () => {
-   navigation.navigate("Home"); // Redirige al usuario después de cerrar el modal de éxito
-   dispatch(clearShipmentState)
+    dispatch(clearShipmentState());
+    navigation.navigate("Home"); // Redirige al usuario después de cerrar el modal de éxito
+  
   };
 
   // Maneja cambios en éxito o error

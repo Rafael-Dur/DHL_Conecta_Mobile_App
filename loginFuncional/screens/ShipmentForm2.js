@@ -5,11 +5,16 @@ import InternalHeader from "../components/InternalHeader";
 import { COLORS } from "../constants/constants";
 //import PhoneInput from "react-native-phone-number-input";
 import ProgressBar from "../components/ProgressBar";
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
 const validateCedula = (CI) => /^[0-9]{6,8}$/.test(CI);
 
 const ShipmentForm2 = ({ navigation }) => {
+
+    const dispatch = useDispatch();
+    const { receiver } = useSelector((state) => state.shipments);
+
     const [formData, setFormData] = useState({
         nombre: "",
         direccion: "",
@@ -26,6 +31,20 @@ const ShipmentForm2 = ({ navigation }) => {
         setFormData({ ...formData, [name]: value });
     };
 
+    const handleStore = () => {
+        const receiver = {
+            name: formData.nombre,
+            address: formData.direccion,
+            country: formData.pais,
+            postalCode: formData.codigoPostal,
+            neighborhood: formData.barrio,
+            city: formData.ciudad,
+            phoneNumber: formData.telefono,
+        };
+        dispatch(updateShipmentField({ key: "receiver", value: receiver }));
+
+    };
+
     const handleValidation = () => {
         const { nombre, CI, direccion, pais, codigoPostal, barrio, ciudad } = formData;
 
@@ -36,9 +55,12 @@ const ShipmentForm2 = ({ navigation }) => {
         if (!codigoPostal.trim()) return alert("El código postal es obligatorio.");
         if (!barrio.trim()) return alert("El barrio es obligatorio.");
         if (!ciudad.trim()) return alert("La ciudad es obligatoria.");
-      //  if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
+        //  if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
+        handleStore();
+        console.log("formData", formData);
+        console.log("receiver de store", receiver);
 
-        navigation.navigate("PaymentMethodScreen");
+        navigation.navigate("ShipmentForm3");
     };
 
     return (
@@ -75,7 +97,7 @@ const ShipmentForm2 = ({ navigation }) => {
                 {/* Teléfono con formato internacional */}
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabel}>Teléfono</Text>
-                      {/* Teléfono con formato internacional 
+                    {/* Teléfono con formato internacional 
                     <PhoneInput
                         defaultCode="UY"
                         layout="first"
