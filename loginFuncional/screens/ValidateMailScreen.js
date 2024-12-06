@@ -8,6 +8,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  View,
 } from 'react-native';
 import Button from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
@@ -122,6 +123,11 @@ const ValidateMailScreen = () => {
             message={responseMessage}
             onClose={handleCloseModal}
           />
+          <View>
+            <Text> </Text>
+            <Text> </Text>
+            <Text> </Text>
+          </View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField, shipmentBox } from "../features/Shipments/ShipmentSlice";
 import ProgressBar from '../components/ProgressBar';
 //import { shipmentBox } from '../features/Shipments/ShipmentSlice';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const ShipmentForm3 = () => {
@@ -98,131 +99,204 @@ const ShipmentForm3 = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <InternalHeader showBackButton={true} />
-            <Text style={styles.title}>¿Cómo lo envías?</Text>
-            <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
-            <BodyContainer>
-                <View style={styles.row}>
-                    <TouchableOpacity style={[styles.card, selectedButton === 1 && styles.selectedButton,
-                    ]}
-                        onPress={() => handlePress(1)}
-                    >
-                        <Image
-                            source={shipmentPackageType === 2 ? envelopeIcon : packageIcon}
-                            style={styles.cardIcon}
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+                <InternalHeader showBackButton={true} />
+                <Text style={styles.title}>¿Cómo lo envías?</Text>
+                <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
+                <BodyContainer>
+                    <View style={styles.row}>
+                        <TouchableOpacity style={[styles.card, selectedButton === 1 && styles.selectedButton,
+                        ]}
+                            onPress={() => handlePress(1)}
+                        >
+                            <Image
+                                source={shipmentPackageType === 2 ? envelopeIcon : packageIcon}
+                                style={styles.cardIcon}
+                            />
+                            <Text style={styles.cardTitle}>
+                                {shipmentPackageType === 2 ? "Sobre" : "Caja"}
+                            </Text>
+                        </TouchableOpacity>
+
+                        <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
+                    </View>
+
+                    {/* Mostrar desplegable solo si es tipo 2 */}
+                    {
+                        shipmentPackageType === 2 && (
+                            <View style={styles.row}>
+                                <Text style={styles.sectionLabel}>Tipo de documento:</Text>
+                                <DropDownPicker
+                                    open={isDocumentTypeDropdownOpen}
+                                    value={documentType}
+                                    items={[
+                                        { label: 'Documentos', value: 'documentos' },
+                                        { label: 'Pasaportes', value: 'pasaportes' },
+                                    ]}
+                                    setOpen={setIsDocumentTypeDropdownOpen}
+                                    setValue={setDocumentType}
+                                    style={styles.dropdown}
+                                    dropDownContainerStyle={styles.dropdownContainer}
+                                />
+                            </View>
+                        )
+                    }
+
+                    <Text style={styles.sectionLabel}>Ingresa las medidas:</Text>
+                    <View style={styles.row}>
+                        <InputField
+                            placeholder="Largo"
+                            value={length}
+                            onChangeText={setLength}
+                            keyboardType="numeric"
+                            styleType="small"
                         />
-                        <Text style={styles.cardTitle}>
-                            {shipmentPackageType === 2 ? "Sobre" : "Caja"}
-                        </Text>
-                    </TouchableOpacity>
-
-                    <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
-                </View>
-
-                {/* Mostrar desplegable solo si es tipo 2 */}
-                {
-                    shipmentPackageType === 2 && (
-                        <View style={styles.row}>
-                            <Text style={styles.sectionLabel}>Tipo de documento:</Text>
+                        <InputField
+                            placeholder="Ancho"
+                            value={width}
+                            onChangeText={setWidth}
+                            keyboardType="numeric"
+                            styleType="small"
+                        />
+                        <InputField
+                            placeholder="Alto"
+                            value={height}
+                            onChangeText={setHeight}
+                            keyboardType="numeric"
+                            styleType="small"
+                        />
+                        <View style={styles.dropdownWrapper}>
                             <DropDownPicker
-                                open={isDocumentTypeDropdownOpen}
-                                value={documentType}
+                                open={isDropdownOpen}
+                                value={dimensionUnit}
                                 items={[
-                                    { label: 'Documentos', value: 'documentos' },
-                                    { label: 'Pasaportes', value: 'pasaportes' },
+                                    { label: 'cm', value: 'cm' },
+                                    { label: 'in', value: 'in' },
                                 ]}
-                                setOpen={setIsDocumentTypeDropdownOpen}
-                                setValue={setDocumentType}
+                                onPress={() => handlePress(1)}
+                            >
+                                <Image source={packageIcon} style={styles.cardIcon} />
+                                <Text style={styles.cardTitle}>Caja</Text>
+                            </DropDownPicker>
+                            <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
+                        </View>
+
+                        <Text style={styles.sectionLabel}>Ingresa las medidas:</Text>
+                        <View style={styles.row}>
+                            <InputField
+                                placeholder="Largo"
+                                value={length}
+                                onChangeText={setLength}
+                                keyboardType="numeric"
+                                styleType="small"
+                            />
+                            <InputField
+                                placeholder="Ancho"
+                                value={width}
+                                onChangeText={setWidth}
+                                keyboardType="numeric"
+                                styleType="small"
+                            />
+                            <InputField
+                                placeholder="Alto"
+                                value={height}
+                                onChangeText={setHeight}
+                                keyboardType="numeric"
+                                styleType="small"
+                            />
+                            <View style={styles.dropdownWrapper}>
+                                <DropDownPicker
+                                    open={isDropdownOpen}
+                                    value={dimensionUnit}
+                                    items={[
+                                        { label: 'cm', value: 'cm' },
+                                        { label: 'in', value: 'in' },
+                                    ]}
+                                    setOpen={setIsDropdownOpen}
+                                    setValue={setDimensionUnit}
+                                    style={styles.dropdown}
+                                    dropDownContainerStyle={styles.dropdownContainer}
+                                />
+                            </View>
+                        </View>
+
+                        <Text style={styles.sectionLabel}>¿Cuánto pesa?</Text>
+                        <View style={styles.row}>
+                            <InputField
+                                placeholder="Peso"
+                                value={weight}
+                                onChangeText={setWeight}
+                                keyboardType="numeric"
+                                styleType="small"
+                            />
+                            <View style={styles.dropdownWrapper}>
+                                <DropDownPicker
+                                    open={isWeightDropdownOpen}
+                                    value={weightUnit}
+                                    items={[
+                                        { label: 'kg', value: 'kg' },
+                                        { label: 'lb', value: 'lb' },
+                                    ]}
+                                    setOpen={setIsWeightDropdownOpen}
+                                    setValue={setWeightUnit}
+                                    style={styles.dropdown}
+                                    dropDownContainerStyle={styles.dropdownContainer}
+                                />
+                            </View>
+                        </View>
+
+                        <Text style={styles.costText}>
+                            Costo de envío por: {weight || 0} {weightUnit}
+                        </Text>
+                        <Text style={styles.costAmount}>USD {cost}</Text>
+
+                        <ButtonGroup
+                            leftButtonTitle="Atrás"
+                            onLeftPress={() => navigation.goBack()}
+                            leftStyleType="outlined"
+                            rightButtonTitle="Siguiente"
+                            onRightPress={() => handleNextButton()}
+                        />
+                        <View style={styles.dropdownWrapper}>
+                            <DropDownPicker
+                                open={isWeightDropdownOpen}
+                                value={weightUnit}
+                                items={[
+                                    { label: 'kg', value: 'kg' },
+                                    { label: 'lb', value: 'lb' },
+                                ]}
+                                setOpen={setIsWeightDropdownOpen}
+                                setValue={setWeightUnit}
                                 style={styles.dropdown}
                                 dropDownContainerStyle={styles.dropdownContainer}
                             />
                         </View>
-                    )
-                }
+                    </View >
 
-                <Text style={styles.sectionLabel}>Ingresa las medidas:</Text>
-                <View style={styles.row}>
-                    <InputField
-                        placeholder="Largo"
-                        value={length}
-                        onChangeText={setLength}
-                        keyboardType="numeric"
-                        styleType="small"
-                    />
-                    <InputField
-                        placeholder="Ancho"
-                        value={width}
-                        onChangeText={setWidth}
-                        keyboardType="numeric"
-                        styleType="small"
-                    />
-                    <InputField
-                        placeholder="Alto"
-                        value={height}
-                        onChangeText={setHeight}
-                        keyboardType="numeric"
-                        styleType="small"
-                    />
-                    <View style={styles.dropdownWrapper}>
-                        <DropDownPicker
-                            open={isDropdownOpen}
-                            value={dimensionUnit}
-                            items={[
-                                { label: 'cm', value: 'cm' },
-                                { label: 'in', value: 'in' },
-                            ]}
-                            setOpen={setIsDropdownOpen}
-                            setValue={setDimensionUnit}
-                            style={styles.dropdown}
-                            dropDownContainerStyle={styles.dropdownContainer}
-                        />
-                    </View>
-                </View>
+                    <Text style={styles.costText}>
+                        Costo de envío por: {applicableWeight || 0} {weightUnit}
+                    </Text>
+                    <Text style={styles.costAmount}>USD {cost}</Text>
 
-                <Text style={styles.sectionLabel}>¿Cuánto pesa?</Text>
-                <View style={styles.row}>
-                    <InputField
-                        placeholder="Peso"
-                        value={weight}
-                        onChangeText={setWeight}
-                        keyboardType="numeric"
-                        styleType="small"
+                    <ButtonGroup
+                        leftButtonTitle="Atrás"
+                        onLeftPress={() => navigation.goBack()}
+                        leftStyleType="outlined"
+                        rightButtonTitle="Siguiente"
+                        onRightPress={() => handleNextButton()}
                     />
-                    <View style={styles.dropdownWrapper}>
-                        <DropDownPicker
-                            open={isWeightDropdownOpen}
-                            value={weightUnit}
-                            items={[
-                                { label: 'kg', value: 'kg' },
-                                { label: 'lb', value: 'lb' },
-                            ]}
-                            setOpen={setIsWeightDropdownOpen}
-                            setValue={setWeightUnit}
-                            style={styles.dropdown}
-                            dropDownContainerStyle={styles.dropdownContainer}
-                        />
-                    </View>
-                </View>
-
-                <Text style={styles.costText}>
-                    Costo de envío por: {applicableWeight || 0} {weightUnit}
-                </Text>
-                <Text style={styles.costAmount}>USD {cost}</Text>
-
-                <ButtonGroup
-                    leftButtonTitle="Atrás"
-                    onLeftPress={() => navigation.goBack()}
-                    leftStyleType="outlined"
-                    rightButtonTitle="Siguiente"
-                    onRightPress={() => handleNextButton()}
-                />
-            </BodyContainer >
-        </View >
+                </BodyContainer >
+            </View >
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: "#FFFFFF",
+    },
     container: {
         flex: 1,
         backgroundColor: COLORS.gray,

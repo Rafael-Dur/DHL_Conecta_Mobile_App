@@ -17,7 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField, fetchProductCategories } from "../features/Shipments/ShipmentSlice";
 import ProgressBar from '../components/ProgressBar';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ShipmentForm4 = () => {
   const [description, setDescription] = useState('');
@@ -88,108 +88,114 @@ const ShipmentForm4 = () => {
 
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <InternalHeader showBackButton={true} />
-      <BodyContainer isGrayBackground>
-        <Text style={styles.title}>Completa los datos</Text>
-        <ProgressBar currentStep={4} />
-        <Text style={styles.infoText}>Declara cada artículo: </Text>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <InternalHeader showBackButton={true} />
+        <BodyContainer isGrayBackground>
+          <Text style={styles.title}>Completa los datos</Text>
+          <ProgressBar currentStep={4} />
+          <Text style={styles.infoText}>Declara cada artículo: </Text>
 
-        <View style={styles.card}>
+          <View style={styles.card}>
 
-          <Text style={styles.label}>Descripción </Text>
-          <InputField
-            placeholder="Label/Placeholder"
-            value={description}
-            onChangeText={setDescription}
+            <Text style={styles.label}>Descripción </Text>
+            <InputField
+              placeholder="Descripción"
+              value={description}
+              onChangeText={setDescription}
+            />
+            <Text style={styles.additionalInfo}>Información adicional</Text>
+
+
+            <Text style={styles.label}>Selecciona una categoría </Text>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={selectedCategory}
+                onValueChange={(itemValue) => setSelectedCategory(itemValue)}
+              >
+                <Picker.Item label="Seleccione una categoría" value="" />
+                {productCategories.map((category) => (
+                  <Picker.Item label={`${category.name} - ${category.description}`} //{category.label} 
+                    value={category.id}
+                    key={category.id} />
+                ))}
+              </Picker>
+            </View>
+            <Text style={styles.additionalInfo}>Información adicional</Text>
+
+
+            <View style={styles.row}>
+              <View style={styles.columnLeft}>
+                <Text style={styles.label}>Valor (USD)</Text>
+                <InputField
+                  placeholder="Ingrese el valor"
+                  value={value}
+                  onChangeText={setValue}
+                  keyboardType="numeric"
+                />
+              </View>
+              <View style={styles.columnRight}>
+                <Text style={styles.label}>Cantidad</Text>
+                <QuantitySelector value={quantity} onChange={setQuantity} />
+              </View>
+            </View>
+
+
+            <View style={styles.addButtonContainer}>
+              <Text style={styles.addButtonText}>Agregar</Text>
+              <View>
+                <Button title="+" styleType="small" onPress={handleAddItem} />
+              </View>
+            </View>
+
+          </View>
+
+
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>
+              Artículos: {totalQuantity} | Valor total: USD {totalValue.toFixed(2)}
+            </Text>
+
+            <ClickeableText
+              onPress={toggleModal}
+              clickeableText="Ver artículos"
+              styleType="link"
+              singleLink
+            />
+          </View>
+
+
+          {/* Botones de navegación */}
+
+          <ButtonGroup
+            leftButtonTitle="Atrás"
+            onLeftPress={() => navigation.navigate('ShipmentForm3')}
+            leftStyleType="outlined"
+            rightButtonTitle="Siguiente"
+            onRightPress={() => handleNext()}
+          //navigation.navigate('PaymentMethodScreen')}
           />
-          <Text style={styles.additionalInfo}>Información adicional</Text>
 
 
-          <Text style={styles.label}>Selecciona una categoría </Text>
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={selectedCategory}
-              onValueChange={(itemValue) => setSelectedCategory(itemValue)}
-            >
-              <Picker.Item label="Seleccione una categoría" value="" />
-              {productCategories.map((category) => (
-                <Picker.Item label={`${category.name} - ${category.description}`} //{category.label} 
-                  value={category.id}
-                  key={category.id} />
-              ))}
-            </Picker>
-          </View>
-          <Text style={styles.additionalInfo}>Información adicional</Text>
-
-
-          <View style={styles.row}>
-            <View style={styles.columnLeft}>
-              <Text style={styles.label}>Valor (USD)</Text>
-              <InputField
-                placeholder="Ingrese el valor"
-                value={value}
-                onChangeText={setValue}
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.columnRight}>
-              <Text style={styles.label}>Cantidad</Text>
-              <QuantitySelector value={quantity} onChange={setQuantity} />
-            </View>
-          </View>
-
-
-          <View style={styles.addButtonContainer}>
-            <Text style={styles.addButtonText}>Agregar</Text>
-            <View>
-              <Button title="+" styleType="small" onPress={handleAddItem} />
-            </View>
-          </View>
-
-        </View>
-
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            Artículos: {totalQuantity} | Valor total: USD {totalValue.toFixed(2)}
-          </Text>
-
-          <ClickeableText
-            onPress={toggleModal}
-            clickeableText="Ver artículos"
-            styleType="link"
-            singleLink
+          <ArticlesModal
+            isVisible={isModalVisible}
+            items={items}
+            totalQuantity={totalQuantity}
+            totalValue={totalValue}
+            onClose={toggleModal}
+            onRemoveItem={removeItem}
           />
-        </View>
-
-
-        {/* Botones de navegación */}
-
-        <ButtonGroup
-          leftButtonTitle="Atrás"
-          onLeftPress={() => navigation.navigate('ShipmentForm3')}
-          leftStyleType="outlined"
-          rightButtonTitle="Siguiente"
-          onRightPress={() => handleNext()}
-        //navigation.navigate('PaymentMethodScreen')}
-        />
-
-
-        <ArticlesModal
-          isVisible={isModalVisible}
-          items={items}
-          totalQuantity={totalQuantity}
-          totalValue={totalValue}
-          onClose={toggleModal}
-          onRemoveItem={removeItem}
-        />
-      </BodyContainer>
-    </ScrollView>
+        </BodyContainer>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
   container: {
     flex: 1,
     backgroundColor: COLORS.gray,

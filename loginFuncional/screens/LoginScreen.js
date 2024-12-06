@@ -10,6 +10,7 @@ import BodyContainer from '../components/BodyContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, responseMessage, clearError } from '../features/auth/authSlice';
 import { COLORS } from '../constants/constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('popo@gmail.com');
@@ -34,61 +35,80 @@ export default function LoginScreen({ navigation }) {
   }, [jwtToken, navigation]);
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <HeaderContainer>
-        <Header title="Bienvenido a" title2="Envíos DHL Conecta" />
-      </HeaderContainer>
-      <BodyContainer>
-        <InputField
-          placeholder="Correo electrónico"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <InputField
-          placeholder="Contraseña"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={secureTextEntry}
-          setSecureTextEntry={setSecureTextEntry}
-        />
-        <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate('Validate_Mail')}
-          clickeableText="¿Olvidó la contraseña?"
-          styleType="link"
-          singleLink
-        />
-        <Button title="Ingresar" onPress={handleLogin} />
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <HeaderContainer>
+          <Header title="Bienvenido a" title2="Envíos DHL Conecta" />
+        </HeaderContainer>
+        <BodyContainer>
+          <InputField
+            placeholder="Correo electrónico"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <InputField
+            placeholder="Contraseña"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={secureTextEntry}
+            setSecureTextEntry={setSecureTextEntry}
+          />
+          <ClickeableText
+            navigation={navigation}
+            onPress={() => navigation.navigate('Validate_Mail')}
+            clickeableText="¿Olvidó la contraseña?"
+            styleType="link"
+            singleLink
+          />
+          <Button title="Ingresar" onPress={handleLogin} />
 
-        <ClickeableText
-          navigation={navigation}
-          onPress={() => navigation.navigate('Register')}
-          title="¿No tienes Usuario?"
-          clickeableText="Regístrate ahora"
-          styleType="link"
-        />
+          <ClickeableText
+            navigation={navigation}
+            onPress={() => navigation.navigate('Register')}
+            title="¿No tienes Usuario?"
+            clickeableText="Regístrate ahora"
+            styleType="link"
+          />
 
-        <ErrorModal
-          visible={!!error} // Mostrar el modal si hay un error
-          title="¡Hubo un problema!"
-          subtitle="No hemos podido iniciar sesión."
-          message={typeof error === 'string' ? error : 'No se ha podido iniciar sesión.'}
-          onClose={handleCloseModal}
-        />
-      </BodyContainer>
-    </ScrollView>
+          <ErrorModal
+            visible={!!error} // Mostrar el modal si hay un error
+            title="¡Hubo un problema!"
+            subtitle="No hemos podido iniciar sesión."
+            message={typeof error === 'string' ? error : 'No se ha podido iniciar sesión.'}
+            onClose={handleCloseModal}
+          />
+        </BodyContainer>
+        <View>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+          <Text> </Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
   scrollContainer: {
     backgroundColor: COLORS.white,
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 20,
-    
-    
-    
+
+
+
   },
   loadingText: {
     color: COLORS.white,

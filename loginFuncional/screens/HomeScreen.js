@@ -6,6 +6,7 @@ import InternalHeader from "../components/InternalHeader";
 import { ShipmentType } from "../constants/enums";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import { COLORS } from "../constants/constants";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const packageIcon = require("../assets/package-icon.png");
 const documentIcon = require("../assets/document-icon.png");
@@ -19,7 +20,7 @@ export default function HomeScreen({ navigation }) {
   // Maneja la selección de una tarjeta
   const handleCardPress = (type) => {
     setSelectedCard(type);
-    dispatch(updateShipmentField ({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
+    dispatch(updateShipmentField({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
   };
 
   // Navegación basada en la selección
@@ -33,70 +34,76 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
- 
+
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <InternalHeader showBackButton={false} />
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* Header */}
+        <InternalHeader showBackButton={false} />
 
-      {/* Mensaje de bienvenida */}
-      <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>¡Bienvenido!</Text>
-        <Text style={styles.subText}>¿Qué necesitas enviar hoy?</Text>
+        {/* Mensaje de bienvenida */}
+        <View style={styles.welcomeContainer}>
+          <Text style={styles.welcomeText}>¡Bienvenido!</Text>
+          <Text style={styles.subText}>¿Qué necesitas enviar hoy?</Text>
+        </View>
+
+        {/* Tarjetas de opciones */}
+        <View style={styles.cardContainer}>
+          {/* Tarjeta de Paquete */}
+          <TouchableOpacity
+            style={[
+              styles.card,
+              { width: width * 0.4 },
+              selectedCard === ShipmentType.Package && styles.selectedCard, // Estilo seleccionado
+            ]}
+            onPress={() => handleCardPress(ShipmentType.Package)}
+          >
+            <Image source={packageIcon} style={styles.cardIcon} />
+            <Text style={styles.cardTitle}>Paquete</Text>
+            <Text style={styles.cardDescription}>
+              Necesito enviar varios artículos a Uruguay
+            </Text>
+            <MaterialIcons name="info" size={20} color="#C00" style={styles.infoIcon} />
+          </TouchableOpacity>
+
+          {/* Tarjeta de Documento */}
+          <TouchableOpacity
+            style={[
+              styles.card,
+              { width: width * 0.4 },
+              selectedCard === ShipmentType.Document && styles.selectedCard, // Estilo seleccionado
+            ]}
+            onPress={() => handleCardPress(ShipmentType.Document)}
+          >
+            <Image source={documentIcon} style={styles.cardIcon} />
+            <Text style={styles.cardTitle}>Documento</Text>
+            <Text style={styles.cardDescription}>
+              Necesito enviar sólo papeles a Uruguay
+            </Text>
+            <MaterialIcons name="info" size={20} color="#C00" style={styles.infoIcon} />
+          </TouchableOpacity>
+        </View>
+
+        {/* Barra de navegación inferior */}
+        <View style={styles.bottomNav}>
+          <MaterialIcons name="location-on" size={30} color="#C00" />
+          <MaterialIcons name="notifications" size={30} color="#C00" />
+          <TouchableOpacity onPress={handleAddButtonPress}>
+            <MaterialIcons name="add-circle" size={50} color="#C00" />
+          </TouchableOpacity>
+          <MaterialIcons name="local-shipping" size={30} color="#C00" />
+          <MaterialIcons name="menu" size={30} color="#C00" />
+        </View>
       </View>
-
-      {/* Tarjetas de opciones */}
-      <View style={styles.cardContainer}>
-        {/* Tarjeta de Paquete */}
-        <TouchableOpacity
-          style={[
-            styles.card,
-            { width: width * 0.4 },
-            selectedCard === ShipmentType.Package && styles.selectedCard, // Estilo seleccionado
-          ]}
-          onPress={() => handleCardPress(ShipmentType.Package)}
-        >
-          <Image source={packageIcon} style={styles.cardIcon} />
-          <Text style={styles.cardTitle}>Paquete</Text>
-          <Text style={styles.cardDescription}>
-            Necesito enviar varios artículos a Uruguay
-          </Text>
-          <MaterialIcons name="info" size={20} color="#C00" style={styles.infoIcon} />
-        </TouchableOpacity>
-
-        {/* Tarjeta de Documento */}
-        <TouchableOpacity
-          style={[
-            styles.card,
-            { width: width * 0.4 },
-            selectedCard === ShipmentType.Document && styles.selectedCard, // Estilo seleccionado
-          ]}
-          onPress={() => handleCardPress(ShipmentType.Document)}
-        >
-          <Image source={documentIcon} style={styles.cardIcon} />
-          <Text style={styles.cardTitle}>Documento</Text>
-          <Text style={styles.cardDescription}>
-            Necesito enviar sólo papeles a Uruguay
-          </Text>
-          <MaterialIcons name="info" size={20} color="#C00" style={styles.infoIcon} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Barra de navegación inferior */}
-      <View style={styles.bottomNav}>
-        <MaterialIcons name="location-on" size={30} color="#C00" />
-        <MaterialIcons name="notifications" size={30} color="#C00" />
-        <TouchableOpacity onPress={handleAddButtonPress}>
-          <MaterialIcons name="add-circle" size={50} color="#C00" />
-        </TouchableOpacity>
-        <MaterialIcons name="local-shipping" size={30} color="#C00" />
-        <MaterialIcons name="menu" size={30} color="#C00" />
-      </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
   container: {
     flex: 1,
     backgroundColor: "#f4f4f4",
@@ -172,4 +179,4 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
   },
- });
+});

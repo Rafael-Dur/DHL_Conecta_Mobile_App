@@ -7,6 +7,7 @@ import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import InternalHeader from "../components/InternalHeader";
 import { ShipmentPackageType } from "../constants/enums";
 import Button from "../components/Button";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Importar imágenes locales
 import FamilyPresentsImage from "../assets/images/Servicio_3.png";
@@ -51,35 +52,41 @@ export default function ServiceSelection({ navigation }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <InternalHeader showBackButton={true} />
-      <BodyContainer isGrayBackground={true}>
-        <Text style={styles.headerText}>Comenzar envío</Text>
-        {services.map((service, index) => (
-          <View key={index} style={styles.card}>
-             <Text style={styles.cardTitle}>{service.title}</Text>
-             <Image source={service.image} style={styles.image} />
-            <View style={styles.cardContent}>
-              <Text style={styles.cardDescription}>{service.description}</Text>
-              <View style={styles.button}>
-              <Button 
-                onPress={() => handleCardPress(service.packageType)}                
-                title={"Comenzar"}>
-              </Button>
-              </View>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <InternalHeader showBackButton={true} />
+        <BodyContainer isGrayBackground={true}>
+          <Text style={styles.headerText}>Comenzar envío</Text>
+          {services.map((service, index) => (
+            <View key={index} style={styles.card}>
+              <Text style={styles.cardTitle}>{service.title}</Text>
+              <Image source={service.image} style={styles.image} />
+              <View style={styles.cardContent}>
+                <Text style={styles.cardDescription}>{service.description}</Text>
+                <View style={styles.button}>
+                  <Button
+                    onPress={() => handleCardPress(service.packageType)}
+                    title={"Comenzar"}>
+                  </Button>
+                </View>
 
+              </View>
             </View>
-          </View>
-        ))}
-        <Text style={styles.footerText}>
-          ¿Problemas? <Text style={styles.footerLink}>Contáctanos</Text>
-        </Text>
-      </BodyContainer>
-    </ScrollView>
+          ))}
+          <Text style={styles.footerText}>
+            ¿Problemas? <Text style={styles.footerLink}>Contáctanos</Text>
+          </Text>
+        </BodyContainer>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
   scrollContainer: {
     backgroundColor: COLORS.gray,
     justifyContent: "center",

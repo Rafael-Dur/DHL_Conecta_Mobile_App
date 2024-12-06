@@ -18,15 +18,15 @@ const ClickeableText = ({ onPress, title, clickeableText, styleType, singleLink 
 const getStyles = (styleType) =>
   StyleSheet.create({
     container: {
-      flex :1,
+      flex: 1,
       alignItems: 'center',
-      marginVertical: 50, 
+      marginVertical: 50,
       width: '100%',
 
     },
     singleLinkContainer: {
       alignItems: 'flex-end',
-      backgroundColor: COLORS.white,
+      //backgroundColor: COLORS.white,
       width: '100%',
       marginBottom: 15,
       maxHeight: 40,
