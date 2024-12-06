@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 
 import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
 import { COLORS } from "../constants/constants";
-import PhoneInput from "react-native-phone-number-input";
+//import PhoneInput from "react-native-phone-number-input";
 import ProgressBar from "../components/ProgressBar";
 
 const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
@@ -16,7 +16,7 @@ const ShipmentForm2 = ({ navigation }) => {
         pais: "",
         codigoPostal: "",
         barrio: "",
-        telefono: "",
+        telefono: "+59897679522",
         ciudad: "",
     });
 
@@ -36,7 +36,7 @@ const ShipmentForm2 = ({ navigation }) => {
         if (!codigoPostal.trim()) return alert("El código postal es obligatorio.");
         if (!barrio.trim()) return alert("El barrio es obligatorio.");
         if (!ciudad.trim()) return alert("La ciudad es obligatoria.");
-        if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
+      //  if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
 
         navigation.navigate("PaymentMethodScreen");
     };
@@ -75,6 +75,7 @@ const ShipmentForm2 = ({ navigation }) => {
                 {/* Teléfono con formato internacional */}
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabel}>Teléfono</Text>
+                      {/* Teléfono con formato internacional 
                     <PhoneInput
                         defaultCode="UY"
                         layout="first"
@@ -83,6 +84,7 @@ const ShipmentForm2 = ({ navigation }) => {
                         textContainerStyle={styles.phoneInputTextContainer}
                         flagButtonStyle={styles.flagButton}
                     />
+                    */}
                 </View>
 
                 {/* Botones: Atrás y Siguiente */}

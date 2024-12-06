@@ -3,9 +3,11 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 
 import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
 import { COLORS } from "../constants/constants";
-import PhoneInput from "react-native-phone-number-input";
+//import PhoneInput from "react-native-phone-number-input";
 import { useNavigation } from "@react-navigation/native";
 import ProgressBar from "../components/ProgressBar";
+import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+
 
 const ShipmentForm1 = () => {
     const navigation = useNavigation();
@@ -16,7 +18,7 @@ const ShipmentForm1 = () => {
         pais: "",
         codigoPostal: "",
         barrio: "",
-        telefono: "",
+        telefono: "+59897679522",
         ciudad: "",
     });
 
@@ -38,7 +40,7 @@ const ShipmentForm1 = () => {
         if (!codigoPostal.trim()) return alert("El código postal es obligatorio.");
         if (!barrio.trim()) return alert("El barrio es obligatorio.");
         if (!ciudad.trim()) return alert("La ciudad es obligatoria.");
-        if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
+      //  if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
 
         navigation.navigate("ShipmentForm2");
     };
@@ -77,6 +79,7 @@ const ShipmentForm1 = () => {
                 {/* Teléfono con formato internacional */}
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabel}>Teléfono</Text>
+                   {/* Teléfono con formato internacional 
                     <PhoneInput
                         defaultCode="UY"
                         layout="first"
@@ -85,6 +88,7 @@ const ShipmentForm1 = () => {
                         textContainerStyle={styles.phoneInputTextContainer}
                         flagButtonStyle={styles.flagButton}
                     />
+                    */}
                 </View>
 
                 {/* Botones: Atrás y Siguiente */}
