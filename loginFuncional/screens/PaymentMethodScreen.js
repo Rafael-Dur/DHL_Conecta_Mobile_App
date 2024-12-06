@@ -44,7 +44,7 @@ export default function PaymentMethodScreen({ navigation }) {
 
   const handlePayment = () => {
     console.log("Datos hasta acá", shipments);
-    if (selectedBank) {
+    if (selectedBank) { 
       Alert.alert(
         "Pago realizado",
         `Has seleccionado ${banks.find((bank) => bank.id === selectedBank)?.name}`

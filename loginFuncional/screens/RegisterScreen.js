@@ -18,6 +18,7 @@ export default function RegisterScreen({ navigation }) {
   const dispatch = useDispatch();
   const { loading, error, success, message } = useSelector((state) => state.account);
 
+  
   const handleSuccessfulRegister = (registerData) => {
     dispatch(registerUser(registerData))
       .then((action) => {

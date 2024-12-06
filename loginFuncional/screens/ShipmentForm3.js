@@ -184,7 +184,7 @@ const ShipmentForm3 = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.grey,
+        backgroundColor: COLORS.gray,
         alignItems: 'center',
         justifyContent: 'center',
     },

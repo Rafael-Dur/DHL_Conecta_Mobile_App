@@ -22,17 +22,19 @@ import { COLORS, FONT_SIZES } from '../constants/constants';
 
 const SecurityCodeScreen = () => {
   const storedCode = useSelector((state) => state.account.code); // Código almacenado en Redux
-  const [securityCode, setSecurityCode] = useState('');
+  const [securityCode, setSecurityCode] = useState();
   const navigation = useNavigation();
   let otpInput = null;
 
-  // Sincroniza el código almacenado con el estado local
+      // Sincroniza el código almacenado con el estado local y el campo OTP
   useEffect(() => {
     if (storedCode) {
       setSecurityCode(storedCode);
+      otpInput?.setValue(storedCode); // Rellena automáticamente el OTP
     }
   }, [storedCode]);
-
+  
+    console.log("storedCode", storedCode);
   // Validación del código de seguridad
   const validateSecurityCode = (code) => /^\d{6}$/.test(code);
 
@@ -78,6 +80,8 @@ const SecurityCodeScreen = () => {
               handleTextChange={setSecurityCode}
               containerStyle={styles.otpContainer}
               textInputStyle={styles.otpInput}
+              tintColor={COLORS.red}
+              setValue={storedCode}
             />
 
             <Text style={styles.instructionText}>
