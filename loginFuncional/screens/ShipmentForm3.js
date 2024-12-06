@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, ScrollView, View, Image, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import InputField from '../components/InputField';
 import BodyContainer from '../components/BodyContainer';
 import { COLORS, FONT_SIZES } from '../constants/constants';
@@ -11,17 +11,16 @@ import { useNavigation } from '@react-navigation/native';
 import { BoxType } from '../constants/enums';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField, shipmentBox } from "../features/Shipments/ShipmentSlice";
-import ProgressBar from '../components/ProgressBar';
-//import { shipmentBox } from '../features/Shipments/ShipmentSlice';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+const { width, height } = Dimensions.get('window'); // Dimensiones de la pantalla
 
 const ShipmentForm3 = () => {
     const [length, setLength] = useState('');
-    const [width, setWidth] = useState('');
-    const [height, setHeight] = useState('');
+    const [widthVal, setWidth] = useState('');
+    const [heightVal, setHeight] = useState('');
     const [weight, setWeight] = useState('');
-    const [applicableWeight, setapplicableWeight] = useState('');
+    const [applicableWeight, setApplicableWeight] = useState('');
     const [dimensionUnit, setDimensionUnit] = useState("cm");
     const [weightUnit, setWeightUnit] = useState("kg");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -40,91 +39,83 @@ const ShipmentForm3 = () => {
         setSelectedButton(buttonId);
     };
 
-    // Función para calcular el costo del envío
     const calculateShippingCost = () => {
         let lengthInCm = parseFloat(length || 0);
-        let widthInCm = parseFloat(width || 0);
-        let heightInCm = parseFloat(height || 0);
+        let widthInCm = parseFloat(widthVal || 0);
+        let heightInCm = parseFloat(heightVal || 0);
         let weightInKg = parseFloat(weight || 0);
 
-        // Convertir dimensiones a cm si están en pulgadas
         if (dimensionUnit === "in") {
             lengthInCm *= 2.54;
             widthInCm *= 2.54;
             heightInCm *= 2.54;
         }
 
-        // Convertir peso a kg si está en libras
         if (weightUnit === "lb") {
             weightInKg *= 0.453592;
         }
 
-        // Calcular peso volumétrico en kg
         const volumetricWeight = (lengthInCm * widthInCm * heightInCm) / 5000;
 
-        // Determinar el peso aplicable y calcular el costo
-        setapplicableWeight(Math.max(volumetricWeight, weightInKg));
-        const calculatedCost = applicableWeight * 6.25; // Tarifa por kg (ajustar según necesidad)
-        setCost(calculatedCost.toFixed(2)); // Actualizar el costo con 2 decimales
+        setApplicableWeight(Math.max(volumetricWeight, weightInKg));
+        const calculatedCost = applicableWeight * 6.25;
+        setCost(calculatedCost.toFixed(2));
     };
 
-    // Recalcular el costo cada vez que cambien las dimensiones, el peso o las unidades
     useEffect(() => {
         calculateShippingCost();
-    }, [length, width, height, weight, dimensionUnit, weightUnit]);
+    }, [length, widthVal, heightVal, weight, dimensionUnit, weightUnit]);
 
-    // Actualizar shipmentBox en el store
     const handleStore = () => {
         dispatch(
             updateShipmentField({
                 key: "shipmentBox",
                 value: {
-                    boxType: BoxType.Box, // Por ejemplo, para tipo de caja
+                    boxType: BoxType.Box,
                     length: parseFloat(length || 3),
-                    width: parseFloat(width || 3),
-                    height: parseFloat(height || 3),
-                    shipmentPackageUnit: dimensionUnit === "cm" ? 1 : 2, // 1 = cm, 2 = in
+                    width: parseFloat(widthVal || 3),
+                    height: parseFloat(heightVal || 3),
+                    shipmentPackageUnit: dimensionUnit === "cm" ? 1 : 2,
                     weight: parseFloat(weight || 3),
-                    weightUnit: weightUnit === "kg" ? 1 : 2, // 1 = kg, 2 = lb
+                    weightUnit: weightUnit === "kg" ? 1 : 2,
                 },
             })
         );
     };
+
     const handleNextButton = () => {
         handleStore();
-
         console.log("Datos de paquete:", shipmentBox);
-        (shipmentPackageType === 2) ? navigation.navigate("ShipmentForm5") : navigation.navigate("ShipmentForm4")
-
+        shipmentPackageType === 2 ? navigation.navigate("ShipmentForm5") : navigation.navigate("ShipmentForm4");
     };
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <InternalHeader showBackButton={true} />
-                <Text style={styles.title}>¿Cómo lo envías?</Text>
-                <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
-                <BodyContainer>
-                    <View style={styles.row}>
-                        <TouchableOpacity style={[styles.card, selectedButton === 1 && styles.selectedButton,
-                        ]}
-                            onPress={() => handlePress(1)}
-                        >
-                            <Image
-                                source={shipmentPackageType === 2 ? envelopeIcon : packageIcon}
-                                style={styles.cardIcon}
-                            />
-                            <Text style={styles.cardTitle}>
-                                {shipmentPackageType === 2 ? "Sobre" : "Caja"}
-                            </Text>
-                        </TouchableOpacity>
+                <InternalHeader showBackButton={true} style={styles.header} />
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    <Text style={styles.title}>¿Cómo lo envías?</Text>
+                    <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
+                    <BodyContainer isGrayBackground={true}>
+                        <View style={styles.row}>
+                            <TouchableOpacity
+                                style={[
+                                    styles.card,
+                                    selectedButton === 1 && styles.selectedButton,
+                                ]}
+                                onPress={() => handlePress(1)}
+                            >
+                                <Image
+                                    source={shipmentPackageType === 2 ? envelopeIcon : packageIcon}
+                                    style={styles.cardIcon}
+                                />
+                                <Text style={styles.cardTitle}>
+                                    {shipmentPackageType === 2 ? "Sobre" : "Caja"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
 
-                        <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
-                    </View>
-
-                    {/* Mostrar desplegable solo si es tipo 2 */}
-                    {
-                        shipmentPackageType === 2 && (
+                        {shipmentPackageType === 2 && (
                             <View style={styles.row}>
                                 <Text style={styles.sectionLabel}>Tipo de documento:</Text>
                                 <DropDownPicker
@@ -140,47 +131,7 @@ const ShipmentForm3 = () => {
                                     dropDownContainerStyle={styles.dropdownContainer}
                                 />
                             </View>
-                        )
-                    }
-
-                    <Text style={styles.sectionLabel}>Ingresa las medidas:</Text>
-                    <View style={styles.row}>
-                        <InputField
-                            placeholder="Largo"
-                            value={length}
-                            onChangeText={setLength}
-                            keyboardType="numeric"
-                            styleType="small"
-                        />
-                        <InputField
-                            placeholder="Ancho"
-                            value={width}
-                            onChangeText={setWidth}
-                            keyboardType="numeric"
-                            styleType="small"
-                        />
-                        <InputField
-                            placeholder="Alto"
-                            value={height}
-                            onChangeText={setHeight}
-                            keyboardType="numeric"
-                            styleType="small"
-                        />
-                        <View style={styles.dropdownWrapper}>
-                            <DropDownPicker
-                                open={isDropdownOpen}
-                                value={dimensionUnit}
-                                items={[
-                                    { label: 'cm', value: 'cm' },
-                                    { label: 'in', value: 'in' },
-                                ]}
-                                onPress={() => handlePress(1)}
-                            >
-                                <Image source={packageIcon} style={styles.cardIcon} />
-                                <Text style={styles.cardTitle}>Caja</Text>
-                            </DropDownPicker>
-                            <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
-                        </View>
+                        )}
 
                         <Text style={styles.sectionLabel}>Ingresa las medidas:</Text>
                         <View style={styles.row}>
@@ -193,32 +144,30 @@ const ShipmentForm3 = () => {
                             />
                             <InputField
                                 placeholder="Ancho"
-                                value={width}
+                                value={widthVal}
                                 onChangeText={setWidth}
                                 keyboardType="numeric"
                                 styleType="small"
                             />
                             <InputField
                                 placeholder="Alto"
-                                value={height}
+                                value={heightVal}
                                 onChangeText={setHeight}
                                 keyboardType="numeric"
                                 styleType="small"
                             />
-                            <View style={styles.dropdownWrapper}>
-                                <DropDownPicker
-                                    open={isDropdownOpen}
-                                    value={dimensionUnit}
-                                    items={[
-                                        { label: 'cm', value: 'cm' },
-                                        { label: 'in', value: 'in' },
-                                    ]}
-                                    setOpen={setIsDropdownOpen}
-                                    setValue={setDimensionUnit}
-                                    style={styles.dropdown}
-                                    dropDownContainerStyle={styles.dropdownContainer}
-                                />
-                            </View>
+                            <DropDownPicker
+                                open={isDropdownOpen}
+                                value={dimensionUnit}
+                                items={[
+                                    { label: 'cm', value: 'cm' },
+                                    { label: 'in', value: 'in' },
+                                ]}
+                                setOpen={setIsDropdownOpen}
+                                setValue={setDimensionUnit}
+                                style={styles.dropdown}
+                                dropDownContainerStyle={styles.dropdownContainer}
+                            />
                         </View>
 
                         <Text style={styles.sectionLabel}>¿Cuánto pesa?</Text>
@@ -230,35 +179,6 @@ const ShipmentForm3 = () => {
                                 keyboardType="numeric"
                                 styleType="small"
                             />
-                            <View style={styles.dropdownWrapper}>
-                                <DropDownPicker
-                                    open={isWeightDropdownOpen}
-                                    value={weightUnit}
-                                    items={[
-                                        { label: 'kg', value: 'kg' },
-                                        { label: 'lb', value: 'lb' },
-                                    ]}
-                                    setOpen={setIsWeightDropdownOpen}
-                                    setValue={setWeightUnit}
-                                    style={styles.dropdown}
-                                    dropDownContainerStyle={styles.dropdownContainer}
-                                />
-                            </View>
-                        </View>
-
-                        <Text style={styles.costText}>
-                            Costo de envío por: {weight || 0} {weightUnit}
-                        </Text>
-                        <Text style={styles.costAmount}>USD {cost}</Text>
-
-                        <ButtonGroup
-                            leftButtonTitle="Atrás"
-                            onLeftPress={() => navigation.goBack()}
-                            leftStyleType="outlined"
-                            rightButtonTitle="Siguiente"
-                            onRightPress={() => handleNextButton()}
-                        />
-                        <View style={styles.dropdownWrapper}>
                             <DropDownPicker
                                 open={isWeightDropdownOpen}
                                 value={weightUnit}
@@ -272,22 +192,22 @@ const ShipmentForm3 = () => {
                                 dropDownContainerStyle={styles.dropdownContainer}
                             />
                         </View>
-                    </View >
 
-                    <Text style={styles.costText}>
-                        Costo de envío por: {applicableWeight || 0} {weightUnit}
-                    </Text>
-                    <Text style={styles.costAmount}>USD {cost}</Text>
+                        <Text style={styles.costText}>
+                            Costo de envío por: {applicableWeight || 0} {weightUnit}
+                        </Text>
+                        <Text style={styles.costAmount}>USD {cost}</Text>
 
-                    <ButtonGroup
-                        leftButtonTitle="Atrás"
-                        onLeftPress={() => navigation.goBack()}
-                        leftStyleType="outlined"
-                        rightButtonTitle="Siguiente"
-                        onRightPress={() => handleNextButton()}
-                    />
-                </BodyContainer >
-            </View >
+                        <ButtonGroup
+                            leftButtonTitle="Atrás"
+                            onLeftPress={() => navigation.goBack()}
+                            leftStyleType="outlined"
+                            rightButtonTitle="Siguiente"
+                            onRightPress={() => handleNextButton()}
+                        />
+                    </BodyContainer>
+                </ScrollView>
+            </View>
         </SafeAreaView>
     );
 };
@@ -300,128 +220,61 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.gray,
-        alignItems: 'center',
-        justifyContent: 'center',
+    },
+    scrollContainer: {
+        paddingHorizontal: width * 0.05,
+        paddingVertical: height * 0.02,
+    },
+    header: {
+        width: "100%", // Ocupa todo el ancho de la pantalla
     },
     title: {
-        fontFamily: "Delivery",
-        alignSelf: 'center',
-        marginBottom: 10,
-        marginTop: 20,
-        color: COLORS.black,
         fontSize: FONT_SIZES.large,
-        width: '100%',
-        maxWidth: 350,
+        textAlign: "center",
+        marginBottom: 10,
+        color: COLORS.primary,
     },
     subtitle: {
-        fontFamily: "Delivery2",
-        marginBottom: 30,
-        marginTop: 20,
-        color: COLORS.black,
         fontSize: FONT_SIZES.medium,
-        width: '100%',
-        maxWidth: 350,
-    },
-    selectedButton: {
-        borderColor: "#C00",
-        borderWidth: 2,
+        textAlign: "center",
+        marginBottom: 15,
+        color: COLORS.text,
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        width: '100%',
-    },
-    card: {
-        backgroundColor: "#fff",
-        padding: "5%",
-        borderRadius: 10,
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
-        elevation: 5,
-        shadowColor: "#000",
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 5 },
-    },
-    cardIcon: {
-        width: 120,
-        height: 120,
-        marginBottom: 10,
-        resizeMode: "contain",
-    },
-    cardTitle: {
-        fontFamily: "Delivery",
-        fontSize: 16,
-        color: "#C00",
-        marginBottom: 5,
-    },
-    boxButton: {
-        backgroundColor: COLORS.gray,
-        padding: 15,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-    },
-    boxText: {
-        fontFamily: "Delivery", // Fuente personalizada para botones
-        fontSize: FONT_SIZES.medium,
-    },
-    sectionLabel: {
-        fontFamily: "Delivery", // Fuente personalizada para etiquetas
-        fontSize: FONT_SIZES.medium,
-        marginBottom: 25,
-    },
-    infoIcon: {
-        fontFamily: "Delivery2", // Fuente secundaria para íconos
-        fontSize: FONT_SIZES.small,
-        color: COLORS.grey,
-    },
-    dropdownWrapper: {
-        marginBottom: 15,
-        backgroundColor: COLORS.white,
-        maxWidth: 100, // Tamaño del contenedor del dropdown
-        maxHeight: 50,
-        zIndex: 10, // Asegura que el dropdown no quede oculto detrás de otros componentes
-    },
-    dropdown: {
-        fontFamily: "Delivery2",
-        borderColor: COLORS.black,
-        borderWidth: 1,
-        borderRadius: 5,
-        height: 50,
-        justifyContent: "center",
-        paddingHorizontal: 10,
-    },
-    dropdownContainer: {
-        borderWidth: 1,
-        borderColor: COLORS.black,
-        borderRadius: 5,
-        backgroundColor: COLORS.white,
-        maxWidth: 200,
-    },
-    sectionLabel: {
-        fontFamily: "Delivery",
-        fontSize: FONT_SIZES.medium,
-        marginBottom: 10,
-        color: COLORS.black,
-    },
-    costText: {
-        fontFamily: "Delivery",
-        textAlign: 'center',
-        fontSize: 14,
-        color: COLORS.grayDark,
-    },
-    costAmount: {
-        fontFamily: "Delivery",
-        textAlign: 'center',
-        fontSize: 28,
-        fontWeight: "bold",
-        color: COLORS.black,
         marginVertical: 10,
     },
+    card: {
+        flex: 1,
+        alignItems: "center",
+        padding: height * 0.02,
+        backgroundColor: COLORS.lightGray,
+        borderRadius: 10,
+        margin: 5,
+    },
+    selectedButton: {
+        borderColor: COLORS.primary,
+        borderWidth: 2,
+    },
+    dropdown: {
+        flex: 1,
+        maxWidth: 70,
+        maxHeight: 50,
+    },
+    costText: {
+        textAlign: "center",
+        fontSize: FONT_SIZES.medium,
+        color: COLORS.text,
+    },
+    costAmount: {
+        textAlign: "center",
+        fontSize: FONT_SIZES.large,
+        fontWeight: "bold",
+        color: COLORS.primary,
+        marginVertical: 5,
+    },
 });
-
 
 export default ShipmentForm3;
