@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 20,
     color: COLORS.black,
-    fontSize: FONT_SIZES.large,
+    fontSize: FONT_SIZES.xlarge,
     width: '100%',
     maxWidth: 350,
   },
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   card: {
     fontFamily: "Delivery", // Fuente personalizada para el contenido de tarjetas
-    backgroundColor: COLORS.gray,
+    backgroundColor: COLORS.white,
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,

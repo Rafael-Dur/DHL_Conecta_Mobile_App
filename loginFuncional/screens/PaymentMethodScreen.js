@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import InternalHeader from "../components/InternalHeader"; // Header
-import { COLORS } from "../constants/constants"; // Colores
+import { COLORS, FONT_SIZES } from "../constants/constants"; // Colores
 import ButtonGroup from "../components/ButtonGroup"; // Grupo de botones
 import { Banks } from "../constants/enums"; // Enums de Bancos
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,7 @@ import ProgressBar from "../components/ProgressBar"; // Asegúrate de tener un c
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const banks = [
-  { id: Banks.BROU, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
+  { id: Banks.BROU, name: "BROU", logo: require("../assets/LogoBROU.png") },
   { id: Banks.HSBC, name: "HSBC", logo: require("../assets/BankIcon_HSBC.png") },
   { id: Banks.ITAU, name: "ITAU", logo: require("../assets/BankIcon_ITAU.png") },
   { id: Banks.SANTANDER, name: "Santander", logo: require("../assets/BankIcon_SANTANDER.png") },
@@ -110,15 +110,15 @@ export default function PaymentMethodScreen({ navigation }) {
 
 
           {/* Botones */}
-          <View>
-            <ButtonGroup
-              leftButtonTitle="Volver"
-              onLeftPress={() => navigation.goBack()}
-              leftStyleType="outlined"
-              rightButtonTitle={loading ? "Enviando..." : "Pagar"}
-              onRightPress={handlePayment}
-            />
-          </View>
+
+          <ButtonGroup
+            leftButtonTitle="Volver"
+            onLeftPress={() => navigation.goBack()}
+            leftStyleType="outlined"
+            rightButtonTitle={loading ? "Enviando..." : "Pagar"}
+            onRightPress={handlePayment}
+          />
+
 
 
           {/* Modales */}
@@ -152,8 +152,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.gray,
     justifyContent: "center",
     alignItems: "center",
-    //paddingBottom: 20,
-    paddingTop: 220,
   },
   welcomeContainer: {
     marginVertical: 10,
@@ -161,14 +159,14 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontFamily: "Delivery", // Fuente personalizada principal
-    fontSize: 24,
+    fontSize: FONT_SIZES.xlarge,
     color: COLORS.black,
+    marginTop: 10,
   },
   subText: {
     fontFamily: "Delivery2", // Fuente personalizada secundaria
     fontSize: 16,
     color: COLORS.black,
-    marginTop: 5,
   },
   cardContainer: {
     flexDirection: "row",
@@ -190,7 +188,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
     width: "40%",
-    height: "20%", // Tarjetas cuadradas
+    height: "25%", // Tarjetas cuadradas
     marginBottom: 20,
   },
   selectedCard: {
@@ -198,8 +196,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   cardIcon: {
-    width: '40%',
-    height: '30%',
+    width: '50%',
+    height: '50%',
     marginBottom: 10,
     resizeMode: "contain",
   },
