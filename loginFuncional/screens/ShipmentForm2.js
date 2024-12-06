@@ -11,15 +11,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
 import { COLORS } from "../constants/constants";
 import PhoneInput from "react-native-phone-number-input";
-import Button from "../components/Button"; // Importar el componente Button
-import { useNavigation } from "@react-navigation/native";
-import ProgressBar from "../components/ProgressBar";
 
-const ShipmentForm1 = () => {
-  const navigation = useNavigation();
+const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
+const validateCedula = (CI) => /^[0-9]{6,8}$/.test(CI);
+
+const ShipmentForm2 = ({ navigation }) => {
   const [formData, setFormData] = useState({
     nombre: "",
-    cedula: "",
     direccion: "",
     pais: "",
     codigoPostal: "",
@@ -28,9 +26,7 @@ const ShipmentForm1 = () => {
     ciudad: "",
   });
 
-  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState(""); // Número formateado
-  const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
-  const validateCedula = (CI) => /^[0-9]{6,8}$/.test(CI);
+  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState("");
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -48,19 +44,17 @@ const ShipmentForm1 = () => {
     if (!ciudad.trim()) return alert("La ciudad es obligatoria.");
     if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
 
-    navigation.navigate("ShipmentForm2");
+    navigation.navigate("PaymentMethodScreen"); // Navegar a la pantalla de métodos de pago
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <InternalHeader showBackButton={true} />
-
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.subheaderText}>¿Quién envía?</Text>
+        <Text style={styles.subheaderText}>¿Quién recibe en Uruguay?</Text>
         <Text style={styles.subheaderTextSecondary}>
-          Completa los datos de remitente
+          Completa los datos de destinatario
         </Text>
-        <ProgressBar currentStep={1} />
 
         {/* Campos del formulario */}
         {[
@@ -96,7 +90,6 @@ const ShipmentForm1 = () => {
           />
         </View>
 
-        {/* Botón de siguiente */}
         <TouchableOpacity style={styles.button} onPress={handleValidation}>
           <Text style={styles.buttonText}>Siguiente</Text>
         </TouchableOpacity>
@@ -114,6 +107,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 20,
   },
+  subheaderText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  subheaderTextSecondary: {
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: 20,
+  },
   inputContainer: {
     marginBottom: 20,
   },
@@ -128,46 +133,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 50,
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    padding: 0,
-  },
-  subheaderText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 10,
-  },
-  subheaderTextSecondary: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  progressBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  stepCircle: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 2,
-  },
-  currentStep: {
-    borderColor: "#000",
-    backgroundColor: "#fff",
-  },
-  upcomingStep: {
-    borderColor: "#d3d3d3",
-    backgroundColor: "#f5f5f5",
-  },
-  stepText: {
-    color: "#000",
-    fontWeight: "600",
   },
   phoneInputContainer: {
     borderColor: COLORS.greenBright2,
@@ -178,16 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     marginBottom: 15,
-    paddingVertical: 10,
-    padding: 10,
-  },
-  phoneInputText: {
-    fontSize: 14,
-    padding: 10,
-    flex: 1,
-  },
-  flagButton: {
-    marginRight: 10,
+    padding: 0,
   },
   button: {
     backgroundColor: COLORS.red,
@@ -195,8 +151,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     marginTop: 20,
-    alignSelf: "center",
-    width: "90%",
   },
   buttonText: {
     color: "#FFFFFF",
@@ -205,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShipmentForm1;
+export default ShipmentForm2;
