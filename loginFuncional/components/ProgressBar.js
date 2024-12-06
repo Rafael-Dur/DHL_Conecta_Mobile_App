@@ -5,7 +5,7 @@ import { COLORS } from "../constants/constants";
 const ProgressBar = ({ currentStep }) => {
   return (
     <View style={styles.progressBar}>
-      {[1, 2, 3, 4, 5].map((step, index, steps) => (
+      {[1, 2, 3, 4, 5 , 6].map((step, index, steps) => (
         <React.Fragment key={index}>
           {/* Paso circular */}
           <View
@@ -22,7 +22,7 @@ const ProgressBar = ({ currentStep }) => {
                 currentStep >= step && styles.currentStepText,
               ]}
             >
-              {step}
+              {currentStep > step ? "✔" : step}
             </Text>
           </View>
 

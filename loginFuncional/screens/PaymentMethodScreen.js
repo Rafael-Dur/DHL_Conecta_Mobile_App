@@ -13,12 +13,12 @@ import InternalHeader from "../components/InternalHeader"; // Header
 import { COLORS } from "../constants/constants"; // Colores
 import ButtonGroup from "../components/ButtonGroup"; // Grupo de botones
 import { Banks } from "../constants/enums"; // Enums de Bancos
-import ProgressIndicator from "../components/ProgressIndicator"; // Indicador de progreso
 import { useDispatch, useSelector } from "react-redux";
 import { updateShipmentField, createShipment, clearShipmentState } from "../features/Shipments/ShipmentSlice";
 import BodyContainer from "../components/BodyContainer";
 import ErrorModal from "../components/ErrorModal";
 import SuccessModal from "../components/SuccessModal"; // Asegúrate de tener un componente para éxito
+import ProgressBar from "../components/ProgressBar"; // Asegúrate de tener un componente para progreso
 
 const banks = [
   { id: Banks.BROU, name: "BROU", logo: require("../assets/BankIcon_BROU.svg") },
@@ -79,7 +79,7 @@ export default function PaymentMethodScreen({ navigation }) {
           <Text style={styles.welcomeText}>Medio de Pago</Text>
         </View>
         {/* Indicador de Progreso */}
-        <ProgressIndicator totalPasos={6} pasoActual={6} />
+        <ProgressBar currentStep={6} />
         <View style={styles.welcomeContainer}>
           <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
         </View>

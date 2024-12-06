@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BoxType } from '../constants/enums';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
+import ProgressBar from '../components/ProgressBar';
 
 const ShipmentForm3 = () => {
     const [length, setLength] = useState('');
@@ -88,6 +89,7 @@ const ShipmentForm3 = () => {
         <View style={styles.container}>
             <InternalHeader  showBackButton={true}/>
             <Text style={styles.title}>¿Cómo lo envías?</Text>
+            <ProgressBar currentStep={3} />
             <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
             <BodyContainer isGrayBackground>
                 <View style={styles.row}>

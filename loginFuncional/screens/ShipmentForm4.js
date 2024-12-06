@@ -16,6 +16,7 @@ import InternalHeader from '../components/InternalHeader';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField, fetchProductCategories } from "../features/Shipments/ShipmentSlice";
+import ProgressBar from '../components/ProgressBar';
 
 
 const ShipmentForm4 = () => {
@@ -40,7 +41,7 @@ const ShipmentForm4 = () => {
   const handleNext = () => {
     console.log("lista de articulos", items);
     dispatch(updateShipmentField({ key: "shipmentItems", value: items }));
-    
+
     navigation.navigate('PaymentMethodScreen');
   };
 
@@ -91,6 +92,7 @@ const ShipmentForm4 = () => {
       <InternalHeader showBackButton={true} />
       <BodyContainer isGrayBackground>
         <Text style={styles.title}>Completa los datos</Text>
+        <ProgressBar currentStep={4} />
         <Text style={styles.infoText}>Declara cada artículo: </Text>
 
         <View style={styles.card}>
