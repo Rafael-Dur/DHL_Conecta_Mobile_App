@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS, FONT_SIZES } from '../constants/constants';
 import InternalHeader from '../components/InternalHeader';
@@ -7,22 +7,20 @@ import ButtonGroup from '../components/ButtonGroup';
 import Checkbox from '../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
-//import { useNavigation } from '@react-navigation/native';
 
 const ShipmentForm5 = ({navigation})  => {
-    const shipments = useSelector((state) => state.shipments); // Obtener datos desde Redux
-  //  const navigation = useNavigation();
+    const shipments = useSelector((state) => state.shipments);
 
     const [checkboxStates, setCheckboxStates] = useState({
         from: false,
         to: false,
         package: false,
         items: false,
-        insurance: false, // Última opción para seguro
+        insurance: false,
     });
 
-    const totalShippingCost = 125; // Costo inicial del envío (puedes actualizar esto con datos reales)
-    const insuranceCost = 15; // Costo del seguro
+    const totalShippingCost = 125;
+    const insuranceCost = 15;
     const totalCost = checkboxStates.insurance
         ? totalShippingCost + insuranceCost
         : totalShippingCost;
@@ -35,8 +33,8 @@ const ShipmentForm5 = ({navigation})  => {
     };
 
     const canProceed = Object.keys(checkboxStates)
-        .filter((key) => key !== 'insurance') // Excluir seguro de la validación obligatoria
-        .every((key) => checkboxStates[key]); // Verifica que todos los demás estén marcados
+        .filter((key) => key !== 'insurance')
+        .every((key) => checkboxStates[key]);
 
     const sender = shipments.sender;
     const receiver = shipments.receiver;
@@ -45,7 +43,7 @@ const ShipmentForm5 = ({navigation})  => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}>
                 <InternalHeader showBackButton={true} />
                 <View style={styles.bodyContainer}>
                     <Text style={styles.title}>Revisa y confirma antes del pago</Text>
@@ -166,7 +164,7 @@ const ShipmentForm5 = ({navigation})  => {
                         rightDisabled={!canProceed}
                     />
                 </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };
@@ -177,14 +175,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
     },
     container: {
-        flex: 1,
-        backgroundColor: COLORS.gray,
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexGrow: 1,
+        justifyContent: 'flex-start',
+        paddingBottom: 20, // Añadir un poco de espacio para el final
     },
     bodyContainer: {
-        flex: 1,
         width: '95%',
         backgroundColor: COLORS.gray,
         paddingHorizontal: 20,
@@ -192,7 +187,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontFamily: "Delivery", // Fuente personalizada principal
+        fontFamily: "Delivery",
         fontSize: FONT_SIZES.xlarge,
         color: COLORS.black,
         marginTop: 10,
