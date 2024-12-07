@@ -16,15 +16,15 @@ export default function RegisterForm({ onRegister }) {
   const [formattedPhoneNumber, setFormattedPhoneNumber] = useState(''); // Almacena el número formateado
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
-  const [CI, setCI] = useState('');
+  const [socialIdCardNumber, setCI] = useState('');
 
   const validateEmail = (email) => /^[\w.-]+@(gmail|hotmail|yahoo)\.com$/.test(email);
-  const validateCedula = (CI) => /^[0-9]{6,8}$/.test(CI);
+  const validateCedula = (socialIdCardNumber) => /^[0-9]{6,8}$/.test(socialIdCardNumber);
   const validatePassword = (password) => /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
 
   const handleRegister = () => {
     if (!firstName.trim()) return ErrorAlert('El nombre es obligatorio.');
-    if (!validateCedula(CI)) return alert("La cédula debe ser válida.");
+    if (!validateCedula(socialIdCardNumber)) return alert("La cédula debe ser válida.");
     if (!lastName.trim()) return ErrorAlert('El apellido es obligatorio.');
     if (!email.trim() || !validateEmail(email))
       return ErrorAlert('El correo debe ser válido y pertenecer a gmail, hotmail, yahoo o similar.');
@@ -37,11 +37,11 @@ export default function RegisterForm({ onRegister }) {
 
     const registerData = {
       email,
-      CI,
+      socialIdCardNumber,
       password,
       firstName,
       lastName,
-      phoneNumber: "+59897679522"//formattedPhoneNumber, // Usar el número formateado
+      phoneNumber,// : "+59897679522"//formattedPhoneNumber, // Usar el número formateado
     };
 
     onRegister(registerData);
@@ -52,10 +52,12 @@ export default function RegisterForm({ onRegister }) {
       <InputField placeholder="Nombre" value={firstName} onChangeText={setFirstName} />
       <InputField placeholder="Apellido" value={lastName} onChangeText={setLastName} />
       
+      <InputField placeholder="Telefono" value={phoneNumber} onChangeText={setPhoneNumber} />
+
       {/* Cédula de Identidad (CI) */}
       <InputField
         placeholder="Cédula de Identidad"
-        value={CI}
+        value={socialIdCardNumber}
         onChangeText={setCI} // Asocia el estado de la cédula
         keyboardType="numeric" // Solo permite números
       />
@@ -106,13 +108,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: COLORS.white,
-    width: '100%', 
+    width: '100%',
     height: 50, // Mantener la misma altura que los demás inputs
     justifyContent: 'center',
     paddingHorizontal: 10,
     marginBottom: 15,
   },
-  
+
   phoneInputTextContainer: {
     backgroundColor: COLORS.white,
     borderRadius: 5,
