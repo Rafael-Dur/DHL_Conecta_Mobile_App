@@ -14,7 +14,7 @@ const ShipmentForm2 = ({ navigation }) => {
 
     const dispatch = useDispatch();
     const { receiver } = useSelector((state) => state.shipments);
-
+    const { shipmentPackageType } = useSelector((state) => state.shipments);
     const [formData, setFormData] = useState({
         nombre: "",
         direccion: "",
@@ -71,7 +71,12 @@ const ShipmentForm2 = ({ navigation }) => {
                 <Text style={styles.subheaderTextSecondary}>
                     Completa los datos de destinatario
                 </Text>
-                <ProgressBar currentStep={2} />
+
+                {shipmentPackageType === 1 ? (
+                    <ProgressBar currentStep={1} totalSteps={6} />
+                ) : (
+                    <ProgressBar currentStep={1} totalSteps={5} />
+                )}
 
                 {/* Campos del formulario */}
                 {[

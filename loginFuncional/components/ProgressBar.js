@@ -2,41 +2,43 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { COLORS } from "../constants/constants";
 
-const ProgressBar = ({ currentStep }) => {
+const ProgressBar = ({ currentStep, totalSteps }) => {
   return (
     <View style={styles.progressBar}>
-      {[1, 2, 3, 4, 5 , 6].map((step, index, steps) => (
-        <React.Fragment key={index}>
-          {/* Paso circular */}
-          <View
-            style={[
-              styles.stepCircle,
-              currentStep >= step
-                ? styles.currentStep
-                : styles.upcomingStep,
-            ]}
-          >
-            <Text
-              style={[
-                styles.stepText,
-                currentStep >= step && styles.currentStepText,
-              ]}
-            >
-              {currentStep > step ? "✔" : step}
-            </Text>
-          </View>
-
-          {/* Línea entre pasos */}
-          {index < steps.length - 1 && (
+      {Array.from({ length: totalSteps }, (_, index) => index + 1).map(
+        (step, index) => (
+          <React.Fragment key={index}>
+            {/* Paso circular */}
             <View
               style={[
-                styles.stepLine,
-                currentStep > step && styles.currentLine,
+                styles.stepCircle,
+                currentStep >= step
+                  ? styles.currentStep
+                  : styles.upcomingStep,
               ]}
-            />
-          )}
-        </React.Fragment>
-      ))}
+            >
+              <Text
+                style={[
+                  styles.stepText,
+                  currentStep >= step && styles.currentStepText,
+                ]}
+              >
+                {currentStep > step ? "✔" : step}
+              </Text>
+            </View>
+
+            {/* Línea entre pasos */}
+            {index < totalSteps - 1 && (
+              <View
+                style={[
+                  styles.stepLine,
+                  currentStep > step && styles.currentLine,
+                ]}
+              />
+            )}
+          </React.Fragment>
+        )
+      )}
     </View>
   );
 };

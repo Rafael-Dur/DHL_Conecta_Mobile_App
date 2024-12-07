@@ -7,18 +7,18 @@ const ButtonGroup = ({ leftButtonTitle, rightButtonTitle, onLeftPress, onRightPr
     <View style={styles.buttonGroup}>
       {/* Renderiza el botón izquierdo solo si tiene un título */}
       {leftButtonTitle ? (
-        <Button 
-          title={leftButtonTitle} 
-          onPress={onLeftPress} 
-          styleType={leftStyleType} 
+        <Button
+          title={leftButtonTitle}
+          onPress={onLeftPress}
+          styleType={leftStyleType}
         />
       ) : null}
       {/* Renderiza el botón derecho solo si tiene un título */}
       {rightButtonTitle ? (
-        <Button 
-          title={rightButtonTitle} 
-          onPress={onRightPress} 
-          styleType={rightStyleType} 
+        <Button
+          title={rightButtonTitle}
+          onPress={onRightPress}
+          styleType={rightStyleType}
         />
       ) : null}
     </View>

@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from "rea
 import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
 import Button from "../components/Button";
-import { COLORS } from "../constants/constants";
+import { COLORS, FONT_SIZES } from "../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import { ShippingMethod } from "../constants/enums";
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -109,17 +110,20 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   headerText: {
-    fontSize: width * 0.06,
-    fontWeight: "bold",
-    color: COLORS.black,
-    marginBottom: 20,
+    fontFamily: "Delivery", // Fuente personalizada principal
+    alignSelf: 'center',
+    marginBottom: 10,
     marginTop: 20,
+    color: COLORS.black,
+    fontSize: FONT_SIZES.xlarge,
+    width: '100%',
+    maxWidth: 350,
   },
   subHeaderText: {
-    fontSize: width * 0.04,
-    color: COLORS.grayDark,
-    marginTop: 10,
-    marginBottom: 20,
+    fontFamily: 'Delivery2',
+    fontSize: 22,
+    color: '#666',
+    marginBottom: 10,
   },
   optionsContainer: {
     flexDirection: "row",
@@ -147,8 +151,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightBlue,
   },
   subtitle: {
+    fontFamily: 'Delivery',
     fontSize: width * 0.045,
-    fontWeight: "bold",
+    //fontWeight: "bold",
     color: COLORS.black,
     marginBottom: 10,
     textAlign: "center",
@@ -159,7 +164,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   optionText: {
-    fontSize: width * 0.04,
+    fontFamily: 'Delivery2',
+    fontSize: width * 0.05,
     textAlign: "center",
     color: COLORS.black,
     marginHorizontal: 10,

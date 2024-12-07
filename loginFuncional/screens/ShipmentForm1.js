@@ -11,11 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import ButtonGroup from "../components/ButtonGroup";
 
 
-const ShipmentForm1 = ({navigation}) => {
+const ShipmentForm1 = ({ navigation }) => {
     //const navigation = useNavigation();
     const dispatch = useDispatch();
     const { sender } = useSelector((state) => state.shipments);
-
+    const { shipmentPackageType } = useSelector((state) => state.shipments);
 
     const [formData, setFormData] = useState({
         nombre: "",
@@ -79,7 +79,14 @@ const ShipmentForm1 = ({navigation}) => {
                 <Text style={styles.subheaderTextSecondary}>
                     Completa los datos de remitente
                 </Text>
-                <ProgressBar currentStep={1} />
+
+                {shipmentPackageType === 1 ? (
+                    <ProgressBar currentStep={1} totalSteps={6} />
+                ) : (
+                    <ProgressBar currentStep={1} totalSteps={5} />
+                )}
+
+
 
                 {/* Campos del formulario */}
                 {[

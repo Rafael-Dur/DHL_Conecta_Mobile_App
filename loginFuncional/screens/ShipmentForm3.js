@@ -15,10 +15,11 @@ import { BoxType } from '../constants/enums';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateShipmentField, shipmentBox } from "../features/Shipments/ShipmentSlice";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ProgressBar from '../components/ProgressBar';
 
 const { width, height } = Dimensions.get('window'); // Dimensiones de la pantalla
 
-const ShipmentForm3 = ({navigation}) => {
+const ShipmentForm3 = ({ navigation }) => {
     const [length, setLength] = useState('');
     const [widthVal, setWidth] = useState('');
     const [heightVal, setHeight] = useState('');
@@ -31,7 +32,7 @@ const ShipmentForm3 = ({navigation}) => {
     const [documentType, setDocumentType] = useState("documentos");
     const [isDocumentTypeDropdownOpen, setIsDocumentTypeDropdownOpen] = useState(false);
     const [cost, setCost] = useState(0);
-   // const navigation = useNavigation();
+    // const navigation = useNavigation();
     const packageIcon = require("../assets/package-icon.png");
     const envelopeIcon = require("../assets/document-icon.png");
     const { shipmentBox, shipmentPackageType } = useSelector((state) => state.shipments);
@@ -102,6 +103,13 @@ const ShipmentForm3 = ({navigation}) => {
                     <InternalHeader showBackButton={true} style={styles.header} />
                     <BodyContainer isGrayBackground={true}>
                         <Text style={styles.title}>¿Cómo lo envías?</Text>
+
+                        {shipmentPackageType === 1 ? (
+                            <ProgressBar currentStep={1} totalSteps={6} />
+                        ) : (
+                            <ProgressBar currentStep={1} totalSteps={5} />
+                        )}
+
                         <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
 
                         <View style={styles.row2}>
@@ -120,12 +128,12 @@ const ShipmentForm3 = ({navigation}) => {
                                     {shipmentPackageType === 2 ? "Sobre" : "Caja"}
                                 </Text>
                             </TouchableOpacity>
-                            <ClickeableText clickeableText="¿No tienes caja?" styleType="link" />
+                            {shipmentPackageType === 1 ? (<ClickeableText clickeableText="¿No tienes caja?" styleType="link" />) : null}
                         </View>
 
                         {shipmentPackageType === 2 && (
-                            <View style={styles.row}>
-                                <Text style={styles.sectionLabel}>Tipo de documento:</Text>
+                            <View style={styles.row3}>
+                                <Text style={styles.sectionLabel}>Tipo de documento:   </Text>
                                 <DropDownPicker
                                     open={isDocumentTypeDropdownOpen}
                                     value={documentType}
@@ -135,8 +143,8 @@ const ShipmentForm3 = ({navigation}) => {
                                     ]}
                                     setOpen={setIsDocumentTypeDropdownOpen}
                                     setValue={setDocumentType}
-                                    style={styles.dropdown}
-                                    dropDownContainerStyle={styles.dropdownContainer}
+                                    style={styles.dropdown2}
+                                    dropDownContainerStyle={styles.dropdownContainer2}
                                 />
                             </View>
                         )}
@@ -224,15 +232,18 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         backgroundColor: "#FFFFFF",
+
     },
     keyboardAvoidingView: {
         flex: 1,
+
     },
     scrollContainer: {
         flexGrow: 1,
         backgroundColor: COLORS.gray,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 20,
     },
     title: {
         alignSelf: 'center',
@@ -271,6 +282,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
         width: '100%',
+        //maxWidth: 350,
+    },
+    row3: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        width: '53%',
         //maxWidth: 350,
     },
     card: {
@@ -342,6 +361,23 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: COLORS.white,
         maxWidth: 80, // Tamaño del contenedor del dropdown
+    },
+    dropdown2: {
+        borderColor: COLORS.black,
+        borderWidth: 1,
+        borderRadius: 5,
+        height: 50,
+        justifyContent: "center",
+        paddingHorizontal: 10,
+        maxWidth: 150,
+        marginBottom: 15,
+    },
+    dropdownContainer2: {
+        borderWidth: 1,
+        borderColor: COLORS.black,
+        borderRadius: 5,
+        backgroundColor: COLORS.white,
+        maxWidth: 150, // Tamaño del contenedor del dropdown
     },
     additionalInfo: {
         color: COLORS.grey,
