@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Image } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,8 +19,8 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import ShipmentForm3 from './screens/ShipmentForm3';
 import ShipmentForm4 from './screens/ShipmentForm4';
 import ShipmentMethodScreen from './screens/ShipmentMethodScreen';
-import ShipmentForm1 from "./screens/ShipmentForm1";
-import ShipmentForm2 from "./screens/ShipmentForm2"; // Importar ShipmentForm2
+import ShipmentForm1 from './screens/ShipmentForm1';
+import ShipmentForm2 from './screens/ShipmentForm2';
 import ShipmentForm5 from './screens/ShipmentForm5';
 
 const Stack = createStackNavigator();
@@ -36,34 +36,44 @@ export default function App() {
       try {
         // Cargar fuentes personalizadas
         await Font.loadAsync({
-          Delivery: require("./assets/fonts/Delivery_A_CdBlk.ttf"),
-          Delivery2: require("./assets/fonts/Delivery_A_CdLt.ttf"),
+          Delivery: require('./assets/fonts/Delivery_A_CdBlk.ttf'),
+          Delivery2: require('./assets/fonts/Delivery_A_CdLt.ttf'),
         });
         // Simular una carga lenta (puedes eliminarlo si no lo necesitas)
         await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (e) {
         console.warn(e);
       } finally {
-        setAppIsReady(true);
+        setAppIsReady(true); // Indicar que la app está lista
       }
     }
 
     prepareApp();
   }, []);
 
-  const onLayoutRootView = useCallback(() => {
+  // Una vez la app esté lista, ocultamos el Splash Screen
+  useEffect(() => {
     if (appIsReady) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync(); // Ocultar splash cuando la app esté lista
     }
   }, [appIsReady]);
 
   if (!appIsReady) {
-    return null; // No renderizar nada hasta que la app esté lista
+    // Mostrar splash personalizado mientras la app se carga
+    return (
+      <View style={styles.splashContainer}>
+        <Image
+          source={require('./assets/splashDHL.png')} // Ruta de la imagen de splash
+          style={styles.splashImage}
+          resizeMode="cover" // Asegura que la imagen cubra toda la pantalla
+        />
+      </View>
+    );
   }
 
   return (
     <Provider store={store}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
+      <View style={styles.container}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen
@@ -151,5 +161,15 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  splashContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000', // Color de fondo mientras se carga la imagen
+  },
+  splashImage: {
+    width: '100%', // Asegura que cubra toda la pantalla
+    height: '100%',
   },
 });
