@@ -40,12 +40,22 @@ const ShipmentForm4 = ({ navigation }) => {
     if (!description.trim() || !selectedCategory || !value.trim() || quantity <= 0) {
       return Alert.alert('Error', 'Por favor, complete todos los campos antes de agregar.');
     }
-    const newItem = {
-      description,
-      shipmentProductTypeId: selectedCategory,
-      value: parseFloat(value),
-      quantity,
-    };
+    // Buscar el nombre de la categoría seleccionada
+    const category = productCategories.find((cat) => cat.id === selectedCategory);
+    const categoryName = category ? category.name : 'Categoría desconocida';
+
+
+     const newItem = {
+    description,
+    shipmentProductTypeId: selectedCategory,
+    value: parseFloat(value),
+    quantity,
+    name: categoryName, // Capturar el nombre de la categoría
+  };
+
+
+
+
     setItems([...items, newItem]);
     setTotalQuantity(totalQuantity + quantity);
     setTotalValue(totalValue + newItem.value * quantity);
