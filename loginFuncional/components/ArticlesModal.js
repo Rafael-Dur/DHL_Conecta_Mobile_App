@@ -18,7 +18,8 @@ const ArticlesModal = ({ isVisible, items, totalQuantity, totalValue, onClose, o
                         <View key={index} style={styles.itemCard}>
                             <View style={styles.itemInfo}>
                                 <Text style={styles.itemName}>{item.description}</Text>
-                                <Text style={styles.itemCategory}>{item.category}</Text>
+                                <Text style={styles.itemCategory}>{item.name}</Text>
+                        
                             </View>
                             <View style={styles.itemDetails}>
                                 <Text style={styles.itemPrice}>USD {item.value * item.quantity}</Text>

@@ -19,7 +19,7 @@ import { updateShipmentField, fetchProductCategories } from "../features/Shipmen
 import ProgressBar from '../components/ProgressBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const ShipmentForm4 = ({navigation})  => {
+const ShipmentForm4 = ({ navigation }) => {
   const [description, setDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [value, setValue] = useState('');
@@ -50,13 +50,18 @@ const ShipmentForm4 = ({navigation})  => {
     if (!description.trim() || !selectedCategory || !value.trim() || quantity <= 0) {
       return Alert.alert('Error', 'Por favor, complete todos los campos antes de agregar.');
     }
+    // Buscar el nombre de la categoría seleccionada
+    const category = productCategories.find((cat) => cat.id === selectedCategory);
+    const categoryName = category ? category.name : 'Categoría desconocida';
 
-    const newItem = {
-      description,
-      shipmentProductTypeId: selectedCategory,
-      value: parseFloat(value),
-      quantity,
-    };
+
+     const newItem = {
+    description,
+    shipmentProductTypeId: selectedCategory,
+    value: parseFloat(value),
+    quantity,
+    name: categoryName, // Capturar el nombre de la categoría
+  };
 
 
 
