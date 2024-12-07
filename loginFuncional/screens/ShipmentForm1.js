@@ -3,16 +3,11 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 
 import { SafeAreaView } from "react-native-safe-area-context";
 import InternalHeader from "../components/InternalHeader";
 import { COLORS } from "../constants/constants";
-//import PhoneInput from "react-native-phone-number-input";
-//import { useNavigation } from "@react-navigation/native";
 import ProgressBar from "../components/ProgressBar";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import { useDispatch, useSelector } from "react-redux";
-import ButtonGroup from "../components/ButtonGroup";
-
 
 const ShipmentForm1 = ({ navigation }) => {
-    //const navigation = useNavigation();
     const dispatch = useDispatch();
     const { sender } = useSelector((state) => state.shipments);
     const { shipmentPackageType } = useSelector((state) => state.shipments);
@@ -24,14 +19,12 @@ const ShipmentForm1 = ({ navigation }) => {
         pais: "",
         codigoPostal: "",
         barrio: "",
-        telefono: "+59897679522",
+        telefono: "",
         ciudad: "",
     });
 
-
-    const [formattedPhoneNumber, setFormattedPhoneNumber] = useState("");
-
     const validateCedula = (CI) => /^[0-9]{6,8}$/.test(CI);
+    const validatePhone = (phone) => /^[+]?[0-9]{10,15}$/.test(phone);  // Expresión regular para validar teléfono
 
     const handleInputChange = (name, value) => {
         setFormData({ ...formData, [name]: value });
@@ -48,27 +41,23 @@ const ShipmentForm1 = ({ navigation }) => {
             phoneNumber: formData.telefono,
         };
         dispatch(updateShipmentField({ key: "sender", value: sender }));
-
     };
 
-
     const handleValidation = () => {
-        const { nombre, cedula, direccion, pais, codigoPostal, barrio, ciudad } = formData;
+        const { nombre, cedula, telefono, direccion, pais, codigoPostal, barrio, ciudad } = formData;
 
         if (!nombre.trim()) return alert("El nombre es obligatorio.");
         if (!validateCedula(cedula)) return alert("La cédula debe ser válida.");
+        if (!validatePhone(telefono)) return alert("El teléfono debe ser válido.");
         if (!direccion.trim()) return alert("La dirección es obligatoria.");
         if (!pais.trim()) return alert("El país es obligatorio.");
         if (!codigoPostal.trim()) return alert("El código postal es obligatorio.");
         if (!barrio.trim()) return alert("El barrio es obligatorio.");
         if (!ciudad.trim()) return alert("La ciudad es obligatoria.");
-        //  if (!formattedPhoneNumber.trim()) return alert("El teléfono debe ser válido.");
 
         handleStore();
         navigation.navigate("ShipmentForm2");
         console.log("formData", formData);
-        console.log("sender de store", sender);
-
     };
 
     return (
@@ -86,12 +75,11 @@ const ShipmentForm1 = ({ navigation }) => {
                     <ProgressBar currentStep={1} totalSteps={5} />
                 )}
 
-
-
                 {/* Campos del formulario */}
                 {[
                     { label: "Nombre", key: "nombre" },
                     { label: "Cédula", key: "cedula" },
+                    { label: "Teléfono", key: "telefono" },
                     { label: "Dirección", key: "direccion" },
                     { label: "País", key: "pais" },
                     { label: "Código Postal", key: "codigoPostal" },
@@ -105,27 +93,11 @@ const ShipmentForm1 = ({ navigation }) => {
                             placeholder={`Ingresa ${label.toLowerCase()}`}
                             value={formData[key]}
                             onChangeText={(value) => handleInputChange(key, value)}
+                            keyboardType={key === "telefono" ? "phone-pad" : "default"}
                         />
                     </View>
                 ))}
-
-                {/* Teléfono con formato internacional */}
-                <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabel}>Teléfono</Text>
-                    {/* Teléfono con formato internacional 
-                    <PhoneInput
-                        defaultCode="UY"
-                        layout="first"
-                        onChangeFormattedText={setFormattedPhoneNumber}
-                        containerStyle={styles.phoneInputContainer}
-                        textContainerStyle={styles.phoneInputTextContainer}
-                        flagButtonStyle={styles.flagButton}
-                    />
-                    */}
-                </View>
-
                 {/* Botones: Atrás y Siguiente */}
-
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={styles.button2}
@@ -173,21 +145,10 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        //borderColor: COLORS.greenBright2,
         borderRadius: 5,
         height: 50,
         paddingHorizontal: 10,
         fontFamily: "Delivery2", // Fuente personalizada en campos de entrada
-    },
-    phoneInputContainer: {
-        //borderColor: COLORS.greenBright2,
-        borderWidth: 1,
-        borderRadius: 5,
-        backgroundColor: COLORS.white,
-        height: 50,
-        justifyContent: "center",
-        width: "100%",
-        marginBottom: 15,
     },
     buttonContainer: {
         flexDirection: "row",
@@ -207,7 +168,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginRight: 25,
         marginLeft: 25,
-
     },
     button2: {
         backgroundColor: COLORS.white,
