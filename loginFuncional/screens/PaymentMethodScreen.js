@@ -34,10 +34,9 @@ export default function PaymentMethodScreen({ navigation }) {
   const [selectedBank, setSelectedBank] = useState(null); // Estado local para el banco seleccionado
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
-  const { success, error, loading, DHLConfirmation, } = useSelector((state) => state.shipments);
+  const { success, error, loading, DHLConfirmation } = useSelector((state) => state.shipments);
   const shipments = useSelector((state) => state.shipments);
   const { shipmentPackageType } = useSelector((state) => state.shipments);
-
 
   const handleBankSelect = (bankId) => {
     setSelectedBank(bankId); // Actualiza el estado local
@@ -51,7 +50,6 @@ export default function PaymentMethodScreen({ navigation }) {
     }
     console.log(shipments);
     (shipmentPackageType === 1) ? dispatch(createShipment()) : dispatch(createDocumentShipment());
-
   };
 
   const handleCloseErrorModal = () => {
@@ -62,7 +60,6 @@ export default function PaymentMethodScreen({ navigation }) {
   const handleCloseSuccessModal = () => {
     dispatch(clearShipmentState());
     navigation.navigate("Home"); // Redirige al usuario después de cerrar el modal de éxito
-
   };
 
   // Maneja cambios en éxito o error
@@ -78,8 +75,6 @@ export default function PaymentMethodScreen({ navigation }) {
       <InternalHeader showBackButton={true} />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-
-
         {/* Título */}
         <BodyContainer isGrayBackground={true}>
           <View style={styles.welcomeContainer}>
@@ -108,9 +103,7 @@ export default function PaymentMethodScreen({ navigation }) {
             ))}
           </View>
 
-
           {/* Botones */}
-
           <ButtonGroup
             leftButtonTitle="Volver"
             onLeftPress={() => navigation.goBack()}
@@ -118,8 +111,6 @@ export default function PaymentMethodScreen({ navigation }) {
             rightButtonTitle={loading ? "Enviando..." : "Pagar"}
             onRightPress={handlePayment}
           />
-
-
 
           {/* Modales */}
           <ErrorModal
@@ -150,8 +141,9 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: COLORS.gray,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",  // Cambié 'center' por 'flex-start' para que el contenido se alinee desde arriba
+    alignItems: "center",  // Esto sigue centrando los elementos en el eje horizontal
+    paddingBottom: 20,
   },
   welcomeContainer: {
     marginVertical: 10,
@@ -172,9 +164,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    //width: "100%",
-    maxWidth: '100%',
-    maxHeight: '100%',
     marginVertical: 20,
   },
   card: {
@@ -188,7 +177,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
     width: "40%",
-    height: "25%", // Tarjetas cuadradas
+    height: 150, // Ajusté para hacer las tarjetas más consistentes
     marginBottom: 20,
   },
   selectedCard: {
@@ -208,4 +197,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
