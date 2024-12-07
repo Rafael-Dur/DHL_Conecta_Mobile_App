@@ -7,8 +7,9 @@ import ButtonGroup from '../components/ButtonGroup';
 import Checkbox from '../components/Checkbox';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
+import ProgressBar from '../components/ProgressBar';
 
-const ShipmentForm5 = ({navigation})  => {
+const ShipmentForm5 = ({ navigation }) => {
     const shipments = useSelector((state) => state.shipments);
 
     const [checkboxStates, setCheckboxStates] = useState({
@@ -40,13 +41,20 @@ const ShipmentForm5 = ({navigation})  => {
     const receiver = shipments.receiver;
     const shipmentBox = shipments.shipmentBox;
     const shipmentItems = shipments.shipmentItems;
-
+    const { shipmentPackageType } = useSelector((state) => state.shipments);
     return (
         <SafeAreaView style={styles.safeArea}>
             <ScrollView contentContainerStyle={styles.container}>
                 <InternalHeader showBackButton={true} />
                 <View style={styles.bodyContainer}>
                     <Text style={styles.title}>Revisa y confirma antes del pago</Text>
+
+                    {shipmentPackageType === 1 ? (
+                        <ProgressBar currentStep={4} totalSteps={6} />
+                    ) : (
+                        <ProgressBar currentStep={4} totalSteps={5} />
+                    )}
+
                     <View style={styles.cardContainer}>
                         {/* Sección "De" */}
                         <View style={styles.card}>
@@ -172,7 +180,7 @@ const ShipmentForm5 = ({navigation})  => {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: COLORS.gray,
     },
     container: {
         flexGrow: 1,

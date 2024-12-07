@@ -26,6 +26,7 @@ const ShipmentForm4 = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useDispatch();
   const { productCategories } = useSelector((state) => state.shipments);
+  const { shipmentBox, shipmentPackageType } = useSelector((state) => state.shipments);
 
   useEffect(() => {
     dispatch(fetchProductCategories());
@@ -45,13 +46,13 @@ const ShipmentForm4 = ({ navigation }) => {
     const categoryName = category ? category.name : 'Categoría desconocida';
 
 
-     const newItem = {
-    description,
-    shipmentProductTypeId: selectedCategory,
-    value: parseFloat(value),
-    quantity,
-    name: categoryName, // Capturar el nombre de la categoría
-  };
+    const newItem = {
+      description,
+      shipmentProductTypeId: selectedCategory,
+      value: parseFloat(value),
+      quantity,
+      name: categoryName, // Capturar el nombre de la categoría
+    };
 
 
 
@@ -87,7 +88,13 @@ const ShipmentForm4 = ({ navigation }) => {
           <InternalHeader showBackButton={true} />
           <BodyContainer isGrayBackground>
             <Text style={styles.title}>Completa los datos</Text>
-            <ProgressBar currentStep={4} />
+
+            {shipmentPackageType === 1 ? (
+              <ProgressBar currentStep={4} totalSteps={6} />
+            ) : (
+              <ProgressBar currentStep={4} totalSteps={5} />
+            )}
+
             <Text style={styles.infoText}>Declara cada artículo:</Text>
             <View style={styles.card}>
               <Text style={styles.label}>Descripción </Text>

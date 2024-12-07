@@ -73,9 +73,9 @@ const ShipmentForm2 = ({ navigation }) => {
                 </Text>
 
                 {shipmentPackageType === 1 ? (
-                    <ProgressBar currentStep={1} totalSteps={6} />
+                    <ProgressBar currentStep={2} totalSteps={6} />
                 ) : (
-                    <ProgressBar currentStep={1} totalSteps={5} />
+                    <ProgressBar currentStep={2} totalSteps={5} />
                 )}
 
                 {/* Campos del formulario */}

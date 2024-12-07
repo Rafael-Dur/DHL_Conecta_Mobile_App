@@ -105,9 +105,9 @@ const ShipmentForm3 = ({ navigation }) => {
                         <Text style={styles.title}>¿Cómo lo envías?</Text>
 
                         {shipmentPackageType === 1 ? (
-                            <ProgressBar currentStep={1} totalSteps={6} />
+                            <ProgressBar currentStep={3} totalSteps={6} />
                         ) : (
-                            <ProgressBar currentStep={1} totalSteps={5} />
+                            <ProgressBar currentStep={3} totalSteps={5} />
                         )}
 
                         <Text style={styles.subtitle}>Ingresa las características del embalaje</Text>
@@ -246,21 +246,18 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
     },
     title: {
-        alignSelf: 'center',
-        marginBottom: 10,
-        marginTop: 20,
-        fontWeight: 'bold',
-        color: COLORS.black,
-        fontSize: FONT_SIZES.large,
+        fontFamily: "Delivery", // Fuente personalizada principal
+        fontSize: 24,
+        textAlign: "center",
+        marginVertical: 10,
         width: '100%',
         maxWidth: 350,
     },
     subtitle: {
-        //alignSelf: 'flex-end',
-        marginBottom: 30,
-        marginTop: 20,
-        color: COLORS.black,
-        fontSize: FONT_SIZES.medium,
+        fontFamily: "Delivery2", // Fuente personalizada secundaria
+        fontSize: 18,
+        textAlign: "center",
+        marginBottom: 20,
         width: '100%',
         maxWidth: 350,
     },
