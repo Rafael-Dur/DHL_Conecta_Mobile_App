@@ -80,8 +80,12 @@ export default function PaymentMethodScreen({ navigation }) {
           <View style={styles.welcomeContainer}>
             <Text style={styles.welcomeText}>Medio de Pago</Text>
           </View>
-          {/* Indicador de Progreso */}
-          <ProgressBar currentStep={6} />
+          {shipmentPackageType === 1 ? (
+            <ProgressBar currentStep={6} totalSteps={6} />
+          ) : (
+            <ProgressBar currentStep={5} totalSteps={5} />
+          )}
+
           <View style={styles.welcomeContainer}>
             <Text style={styles.subText}>¿Cómo quieres pagarlo?</Text>
           </View>

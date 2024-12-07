@@ -42,6 +42,7 @@ const ShipmentForm5 = ({ navigation }) => {
     const shipmentBox = shipments.shipmentBox;
     const shipmentItems = shipments.shipmentItems;
     const { shipmentPackageType } = useSelector((state) => state.shipments);
+
     return (
         <SafeAreaView style={styles.safeArea}>
             <ScrollView contentContainerStyle={styles.container}>
@@ -50,7 +51,7 @@ const ShipmentForm5 = ({ navigation }) => {
                     <Text style={styles.title}>Revisa y confirma antes del pago</Text>
 
                     {shipmentPackageType === 1 ? (
-                        <ProgressBar currentStep={4} totalSteps={6} />
+                        <ProgressBar currentStep={5} totalSteps={6} />
                     ) : (
                         <ProgressBar currentStep={4} totalSteps={5} />
                     )}
