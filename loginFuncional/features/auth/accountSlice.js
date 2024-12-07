@@ -102,6 +102,12 @@ const initialState = {
   userData: null, // Para almacenar los datos obtenidos
   code: null,
   email: '',
+  socialIdCardNumber: '',
+   phoneNumber: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    dateOfBirth: '',
 };
 
 const accountSlice = createSlice({
