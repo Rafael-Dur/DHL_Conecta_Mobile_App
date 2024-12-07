@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import InternalHeader from "../components/InternalHeader";
 import { ShipmentType } from "../constants/enums";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
@@ -13,27 +13,17 @@ const documentIcon = require("../assets/document-icon.png");
 
 export default function HomeScreen({ navigation }) {
   const { width } = useWindowDimensions();
-  const [selectedCard, setSelectedCard] = useState(null); // Estado local para la tarjeta seleccionada
   const dispatch = useDispatch();
-  const shipment = useSelector((state) => state.shipments); // Selector para obtener el estado actual
 
-  // Maneja la selección de una tarjeta
+  // Maneja la selección de una tarjeta y la navegación
   const handleCardPress = (type) => {
-    setSelectedCard(type);
-    dispatch(updateShipmentField({ key: 'shipmentPackageType', value: type })); // Actualiza el campo en el store
-  };
-
-  // Navegación basada en la selección
-  const handleAddButtonPress = () => {
-    if (selectedCard === ShipmentType.Package) {
+    dispatch(updateShipmentField({ key: "shipmentPackageType", value: type })); // Actualiza el campo en el store
+    if (type === ShipmentType.Package) {
       navigation.navigate("ServiceSelection");
-    } else if (selectedCard === ShipmentType.Document) {
+    } else if (type === ShipmentType.Document) {
       navigation.navigate("ShipmentMethodScreen");
-    } else {
-      Alert.alert("Error", "Por favor selecciona un tipo de envío antes de continuar.");
     }
   };
-
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -51,11 +41,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.cardContainer}>
           {/* Tarjeta de Paquete */}
           <TouchableOpacity
-            style={[
-              styles.card,
-              { width: width * 0.4 },
-              selectedCard === ShipmentType.Package && styles.selectedCard, // Estilo seleccionado
-            ]}
+            style={[styles.card, { width: width * 0.4 }]}
             onPress={() => handleCardPress(ShipmentType.Package)}
           >
             <Image source={packageIcon} style={styles.cardIcon} />
@@ -68,11 +54,7 @@ export default function HomeScreen({ navigation }) {
 
           {/* Tarjeta de Documento */}
           <TouchableOpacity
-            style={[
-              styles.card,
-              { width: width * 0.4 },
-              selectedCard === ShipmentType.Document && styles.selectedCard, // Estilo seleccionado
-            ]}
+            style={[styles.card, { width: width * 0.4 }]}
             onPress={() => handleCardPress(ShipmentType.Document)}
           >
             <Image source={documentIcon} style={styles.cardIcon} />
@@ -88,7 +70,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.bottomNav}>
           <MaterialIcons name="location-on" size={30} color="#C00" />
           <MaterialIcons name="notifications" size={30} color="#C00" />
-          <TouchableOpacity onPress={handleAddButtonPress}>
+          <TouchableOpacity>
             <MaterialIcons name="add-circle" size={50} color="#C00" />
           </TouchableOpacity>
           <MaterialIcons name="local-shipping" size={30} color="#C00" />
@@ -140,10 +122,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 5 },
-  },
-  selectedCard: {
-    borderColor: "#C00",
-    borderWidth: 2,
   },
   cardIcon: {
     width: 60,
