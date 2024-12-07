@@ -24,12 +24,12 @@ export default function RegisterForm({ onRegister }) {
 
   const handleRegister = () => {
     if (!firstName.trim()) return ErrorAlert('El nombre es obligatorio.');
-    if (!validateCedula(socialIdCardNumber)) return alert("La cédula debe ser válida.");
+    // if (!validateCedula(socialIdCardNumber)) return alert("La cédula debe ser válida.");
     if (!lastName.trim()) return ErrorAlert('El apellido es obligatorio.');
     if (!email.trim() || !validateEmail(email))
       return ErrorAlert('El correo debe ser válido y pertenecer a gmail, hotmail, yahoo o similar.');
-    if (!formattedPhoneNumber.trim())
-      return ErrorAlert('Por favor, ingresa un número de teléfono válido.');
+    //  if (!formattedPhoneNumber.trim())
+    //   return ErrorAlert('Por favor, ingresa un número de teléfono válido.');
     if (!validatePassword(password))
       return ErrorAlert('La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.');
     if (password !== confirmPassword)
@@ -42,7 +42,11 @@ export default function RegisterForm({ onRegister }) {
       firstName,
       lastName,
       phoneNumber,// : "+59897679522"//formattedPhoneNumber, // Usar el número formateado
-    };
+      dateOfBirth: "2000-12-07T01:44:20.602Z", // Fecha de nacimiento por defecto
+   };
+
+   console.log(registerData);
+   
 
     onRegister(registerData);
   };
@@ -51,7 +55,7 @@ export default function RegisterForm({ onRegister }) {
     <View style={styles.container}>
       <InputField placeholder="Nombre" value={firstName} onChangeText={setFirstName} />
       <InputField placeholder="Apellido" value={lastName} onChangeText={setLastName} />
-      
+
       <InputField placeholder="Telefono" value={phoneNumber} onChangeText={setPhoneNumber} />
 
       {/* Cédula de Identidad (CI) */}
