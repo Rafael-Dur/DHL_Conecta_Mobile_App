@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const axiosAuthInstance = axios.create({
-  baseURL: 'http://10.116.28.1:8082',
+  baseURL: 'https://dhlconecta-qa-be.azurewebsites.net',
   headers: {
     'Content-Type': 'application/json',
   },
