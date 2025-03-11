@@ -22,6 +22,8 @@ import ShipmentMethodScreen from './screens/ShipmentMethodScreen';
 import ShipmentForm1 from './screens/ShipmentForm1';
 import ShipmentForm2 from './screens/ShipmentForm2';
 import ShipmentForm5 from './screens/ShipmentForm5';
+import ContactModal from './components/ContactModal';
+import MyShipmentsScreen from './screens/MyShipmentsScreen';
 
 const Stack = createStackNavigator();
 
@@ -149,6 +151,16 @@ export default function App() {
             <Stack.Screen
               name="ShipmentForm5"
               component={ShipmentForm5}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ContactModal"
+              component={ContactModal}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="MyShipments"
+              component={MyShipmentsScreen}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>

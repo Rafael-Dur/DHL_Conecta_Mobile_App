@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Alert } from "react-native";
+import React, { useState, useRef } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Alert, Animated } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import InternalHeader from "../components/InternalHeader";
@@ -7,6 +7,7 @@ import { ShipmentType } from "../constants/enums";
 import { updateShipmentField } from "../features/Shipments/ShipmentSlice";
 import { COLORS } from "../constants/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
+import DropdownMenu from "../components/DropdownMenu";
 
 const packageIcon = require("../assets/package-icon.png");
 const documentIcon = require("../assets/document-icon.png");
@@ -14,14 +15,26 @@ const documentIcon = require("../assets/document-icon.png");
 export default function HomeScreen({ navigation }) {
   const { width } = useWindowDimensions();
   const dispatch = useDispatch();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const menuButtonRef = useRef();
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
   // Maneja la selección de una tarjeta y la navegación
   const handleCardPress = (type) => {
-    dispatch(updateShipmentField({ key: "shipmentPackageType", value: type })); // Actualiza el campo en el store
+    dispatch(updateShipmentField({ key: "shipmentPackageType", value: type }));
     if (type === ShipmentType.Package) {
       navigation.navigate("ServiceSelection");
     } else if (type === ShipmentType.Document) {
       navigation.navigate("ShipmentMethodScreen");
+    }
+  };
+
+  const toggleMenu = () => {
+    if (menuButtonRef.current) {
+      menuButtonRef.current.measure((x, y, width, height, pageX, pageY) => {
+        setMenuPosition({ x: pageX, y: pageY });
+        setIsMenuVisible(!isMenuVisible);
+      });
     }
   };
 
@@ -68,14 +81,46 @@ export default function HomeScreen({ navigation }) {
 
         {/* Barra de navegación inferior */}
         <View style={styles.bottomNav}>
-          <MaterialIcons name="location-on" size={30} color="#C00" />
-          <MaterialIcons name="notifications" size={30} color="#C00" />
+          <TouchableOpacity>
+            <MaterialIcons name="location-on" size={30} color="#C00" />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <MaterialIcons name="notifications" size={30} color="#C00" />
+          </TouchableOpacity>
           <TouchableOpacity>
             <MaterialIcons name="add-circle" size={50} color="#C00" />
           </TouchableOpacity>
-          <MaterialIcons name="local-shipping" size={30} color="#C00" />
-          <MaterialIcons name="menu" size={30} color="#C00" />
+          <TouchableOpacity onPress={() => navigation.navigate('MyShipments')}>
+            <MaterialIcons name="local-shipping" size={30} color="#C00" />
+          </TouchableOpacity>
+          <View>
+            <TouchableOpacity 
+              ref={menuButtonRef}
+              onPress={toggleMenu}
+            >
+              <MaterialIcons name="menu" size={30} color="#C00" />
+            </TouchableOpacity>
+            <DropdownMenu 
+              visible={isMenuVisible}
+              onClose={() => setIsMenuVisible(false)}
+              navigation={navigation}
+              style={{
+                position: 'absolute',
+                right: 0,
+                bottom: '100%',
+              }}
+            />
+          </View>
         </View>
+
+        {/* Overlay para cerrar el menú al tocar fuera */}
+        {isMenuVisible && (
+          <TouchableOpacity 
+            style={styles.overlay} 
+            activeOpacity={1} 
+            onPress={() => setIsMenuVisible(false)}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -156,5 +201,13 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     position: "absolute",
     bottom: 0,
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'transparent',
   },
 });

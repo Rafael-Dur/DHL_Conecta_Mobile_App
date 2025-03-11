@@ -79,6 +79,13 @@ export default function LoginScreen({ navigation }) {
           />
         </BodyContainer>
         <View>
+        <ClickeableText
+            navigation={navigation}
+            onPress={() => navigation.navigate('ContactModal')}
+            title="¿Necesitas ayuda?"
+            clickeableText="Contáctanos"
+            styleType="link"
+          />
           <Text> </Text>
           <Text> </Text>
           <Text> </Text>

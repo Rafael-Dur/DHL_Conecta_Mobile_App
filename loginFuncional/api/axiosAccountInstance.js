@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosAccountInstance = axios.create({
-  baseURL: 'http://10.116.28.1:8083',
+  baseURL: 'https://dhlconecta-qa-be.azurewebsites.net',
   headers: {
     'Content-Type': 'application/json',
     //'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

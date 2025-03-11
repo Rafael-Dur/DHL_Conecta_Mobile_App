@@ -3,7 +3,7 @@ import axios from "axios";
 import store from "../store/store";  // Asegúrate de importar el store desde el archivo correcto
 
 const axiosShipmentInstance = axios.create({
-  baseURL: 'http://10.116.28.1:8084',
+  baseURL: 'https://dhlconecta-qa-be.azurewebsites.net',
   headers: {
     'Content-Type': 'application/json',
   },
