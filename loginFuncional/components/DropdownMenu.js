@@ -26,7 +26,7 @@ const DropdownMenu = ({ visible, onClose, selectedOption = 'Ayuda', style, navig
       <MenuItem 
         icon="person" 
         title="Cuenta" 
-        onPress={() => handleMenuItemPress('Account')} 
+        onPress={() => handleMenuItemPress('AccountScreen')} 
         selected={selectedOption === 'Cuenta'}
       />
       <MenuItem 

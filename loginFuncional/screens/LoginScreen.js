@@ -87,6 +87,13 @@ export default function LoginScreen({ navigation }) {
             styleType="link"
           />
           <Text> </Text>
+          <ClickeableText
+            navigation={navigation}
+            onPress={() => navigation.navigate('AccountScreen')}
+            title="Página Principal de la cuenta"
+            clickeableText="Clickeame"
+            styleType="link"
+          />
           <Text> </Text>
           <Text> </Text>
           <Text> </Text>
